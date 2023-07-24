@@ -98,7 +98,7 @@ jobs:
             sudo docker rm cgn-java-23-2-benjamin
             sudo docker run --pull=always --name cgn-java-23-2-benjamin --network capstones --ip 10.0.5.4 --restart always --detach --env MONGO_DB_URI=${{ secrets.MONGO_DB_URI }} ben21/capstone:latest
             sleep 15s
-            sudo docker logs example
+            sudo docker logs cgn-java-23-2-benjamin
 
       - name: Check the deployed service URL
         uses: jtalk/url-health-check-action@v3
