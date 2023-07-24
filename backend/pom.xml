@@ -15,6 +15,9 @@
     <description>backend</description>
     <properties>
         <java.version>20</java.version>
+        <sonar.organization>ben-21</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sona.projectname>ben-21_capstone-neuefische-backend</sona.projectname>
     </properties>
     <dependencies>
         <dependency>
