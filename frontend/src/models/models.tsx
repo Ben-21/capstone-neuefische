@@ -8,4 +8,4 @@ export type Project = {
     location: string;
 }
 
-export type Demand =  "MONEYDONATION" | "DONATIONINKIND" | "FOODDONATION" | "DRUGDONATION";
+export type Demand = "MONEYDONATION" | "DONATIONINKIND" | "FOODDONATION" | "DRUGDONATION";
