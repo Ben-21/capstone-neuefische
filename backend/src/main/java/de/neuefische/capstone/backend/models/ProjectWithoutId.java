@@ -1,17 +1,13 @@
 package de.neuefische.capstone.backend.models;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.List;
 
-@Document("projects")
-public record Project(
-        String id,
+public record ProjectWithoutId(
         String name,
         String description,
-       Category category,
+        Category category,
         List<Demand> demands,
         int progress,
         String location
-        ) {
+) {
 }
