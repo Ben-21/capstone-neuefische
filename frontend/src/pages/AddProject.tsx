@@ -5,11 +5,10 @@ import {TextField} from "@mui/material";
 import {Demand, Project} from "../models/models.tsx";
 
 
+
 export default function AddProject() {
 
     const postProject = useFetch(state => state.postProject);
-
-
 
 
     function handleChange(project: { [p: string]: FormDataEntryValue }) {
@@ -17,10 +16,11 @@ export default function AddProject() {
             name: project.name.toString(),
             description: project.description.toString(),
             category: project.category.toString() as "DONATION" | "PARTICIPATION",
-            demands: [project.category.toString() as Demand],
+            demands: [project.demands.toString() as Demand],
             progress: parseInt(project.progress.toString()),
             location: project.location.toString()
         };
+
 
         postProject(requestBody);
     }
@@ -31,7 +31,9 @@ export default function AddProject() {
         const data = Object.fromEntries(formData);
 
 
+
         handleChange(data);
+
 
 
     }
@@ -46,7 +48,7 @@ export default function AddProject() {
             <TextField id="project-demands" name="demands" label="Demands" variant="outlined"/>
             <TextField id="project-progress" name="progress" label="Progress" variant="outlined"/>
             <TextField id="project-location" name="location" label="Location" variant="outlined"/>
-
+            <button type={"submit"}>ADD</button>
         </StyledForm>
     )
 }
