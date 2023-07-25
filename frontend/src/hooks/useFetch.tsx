@@ -12,11 +12,8 @@ export const useFetch = create<State>(() => ({
 
 
     postProject: (requestBody: Project) => {
-
         axios
             .post("/api/projects", requestBody)
             .catch(console.error)
-
     }
-
 }));

@@ -5,7 +5,6 @@ import {TextField} from "@mui/material";
 import {Demand, Project} from "../models/models.tsx";
 
 
-
 export default function AddProject() {
 
     const postProject = useFetch(state => state.postProject);
@@ -20,22 +19,16 @@ export default function AddProject() {
             progress: parseInt(project.progress.toString()),
             location: project.location.toString()
         };
-
-
         postProject(requestBody);
     }
+
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formData: FormData = new FormData(event.currentTarget);
         const data = Object.fromEntries(formData);
 
-
-
         handleChange(data);
-
-
-
     }
 
 
