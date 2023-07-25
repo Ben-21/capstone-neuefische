@@ -7,13 +7,13 @@ export default function App() {
 
     return (
 
-        <StyledApp>
+        <>
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/add-project" element={<AddProject/>}/>
             </Routes>
 
-
+    <StyledApp>
             <Link to={"/"}>
                 <button>Home</button>
             </Link>
@@ -23,7 +23,7 @@ export default function App() {
 
 
         </StyledApp>
-
+</>
 
     )
 }
@@ -33,4 +33,5 @@ const StyledApp = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1.1em;
+  padding-top: 2em;
 `;
