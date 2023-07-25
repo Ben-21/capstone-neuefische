@@ -29,7 +29,7 @@ As a ..., I want to ..., so I can ...
 - [ ]
 
 # Sprint Ready Checklist 
-[ ] Acceptance criteria defined 
-[ ] Team understands acceptance criteria 
-[ ] Team has defined solution / steps to satisfy acceptance criteria 
-[ ] Acceptance criteria is verifiable / testable
+- [ ] Acceptance criteria defined 
+- [ ] Team understands acceptance criteria 
+- [ ] Team has defined solution / steps to satisfy acceptance criteria 
+- [ ] Acceptance criteria is verifiable / testable
