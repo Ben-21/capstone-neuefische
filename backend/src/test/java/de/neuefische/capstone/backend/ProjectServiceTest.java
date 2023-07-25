@@ -6,7 +6,7 @@ import de.neuefische.capstone.backend.models.Project;
 import de.neuefische.capstone.backend.models.ProjectWithoutId;
 import de.neuefische.capstone.backend.services.IdService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.springframework.aot.hint.TypeReference.listOf;
+
 
 class ProjectServiceTest {
 
