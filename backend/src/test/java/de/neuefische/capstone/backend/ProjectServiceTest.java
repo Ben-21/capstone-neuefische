@@ -24,6 +24,24 @@ class ProjectServiceTest {
 
 
     @Test
+    void whenProjectAdded_ThenReturnId(){
+        //Given
+        String expectedId = "01A";
+
+        //When
+        when(idService.createRandomId())
+                .thenReturn("01A");
+        String actualId = idService.createRandomId();
+
+        //Then
+        verify(idService).createRandomId();
+        assertEquals(expectedId, actualId);
+    }
+
+
+
+
+    @Test
     void whenProjectAdded_ThenReturnAddedProject() {
         //Given
         List<Demand> listOfDemands = new ArrayList<>(List.of(Demand.DONATIONINKIND));
