@@ -19,7 +19,7 @@ public class ProjectController {
 
     @PostMapping
     public Project addProject(@RequestBody ProjectWithoutId projectWithoutId) {
-        return projectService.createProject(projectWithoutId);
+        return projectService.addProject(projectWithoutId);
     }
 
 

@@ -17,7 +17,7 @@ public class ProjectService {
     }
 
 
-    public Project createProject(ProjectWithoutId projectWithoutId) {
+    public Project addProject(ProjectWithoutId projectWithoutId) {
         Project newProject = new Project(idService.createRandomId(),
                 projectWithoutId.name(),
                 projectWithoutId.description(),
