@@ -30,9 +30,10 @@ export const useFetch = create<State>((set, get) => ({
         },
 
         postProject: (requestBody: Project) => {
+            const { fetchProjects } = get();
             axios
                 .post("/api/projects", requestBody)
-                .then(get().fetchProjects)
+                .then(fetchProjects)
                 .then(() => toast.success("Project successfully added"))
                 .catch((error) => {
                     toast.error("Something went wrong");
