@@ -38,14 +38,8 @@ export const useFetch = create<State>((set, get) => ({
                 .catch((error) => {
                     toast.error("Something went wrong");
                     console.error(error);
-
                 })
         },
 
-
     }))
 ;
-
-
-
-
