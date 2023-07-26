@@ -1,5 +1,6 @@
 import ProjectCard from "../components/ProjectCard.tsx";
 import {useFetch} from "../hooks/useFetch.tsx";
+import styled from "styled-components";
 
 
 export default function Gallery() {
@@ -9,8 +10,24 @@ export default function Gallery() {
     return (
         <>
             <h1>Gallery</h1>
-            {projects.map((project) => (<ProjectCard project={project} key={project.id}/>))}
-        </>
+            <StyledGallery>
+
+                {projects.map((project) => (<ProjectCardWrapper><ProjectCard project={project} key={project.id}/></ProjectCardWrapper>))}
+            </StyledGallery>
+            </>
 
     )
 }
+
+
+const StyledGallery = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1em;
+`;
+
+const ProjectCardWrapper = styled.div`
+  min-width: 380px; /* Set the desired fixed width here */
+`;
