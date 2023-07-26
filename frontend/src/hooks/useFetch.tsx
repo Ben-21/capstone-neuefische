@@ -30,7 +30,7 @@ export const useFetch = create<State>((set, get) => ({
         },
 
         postProject: (requestBody: Project) => {
-            const { fetchProjects } = get();
+            const {fetchProjects} = get();
             axios
                 .post("/api/projects", requestBody)
                 .then(fetchProjects)
