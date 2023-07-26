@@ -36,7 +36,7 @@ class ProjectIntegrationTest {
                                             "category": "PARTICIPATION",
                                             "demands": ["DONATIONINKIND", "MONEYDONATION"],
                                             "progress": 20,
-                                            "location": "Turky"
+                                            "location": "Turkey"
                                         }
                                         """
                                 )
@@ -50,7 +50,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("category").value("PARTICIPATION"))
                 .andExpect(jsonPath("demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
                 .andExpect(jsonPath("progress").value(20))
-                .andExpect(jsonPath("location").value("Turky")
+                .andExpect(jsonPath("location").value("Turkey")
                 );
     }
 }
