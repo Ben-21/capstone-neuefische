@@ -2,7 +2,8 @@ import {useFetch} from "../hooks/useFetch.tsx";
 import React from "react";
 import styled from "styled-components";
 import {TextField} from "@mui/material";
-import {Demand, Project} from "../models/models.tsx";
+import {Demand, ProjectWithoutId} from "../models/models.tsx";
+
 
 
 
@@ -12,7 +13,7 @@ export default function AddProject() {
 
 
     function handleChange(project: { [p: string]: FormDataEntryValue }) {
-        const requestBody: Project = {
+        const requestBody: ProjectWithoutId = {
             name: project.name.toString(),
             description: project.description.toString(),
             category: project.category.toString() as "DONATION" | "PARTICIPATION",
