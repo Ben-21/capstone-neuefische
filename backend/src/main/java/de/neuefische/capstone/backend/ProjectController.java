@@ -3,10 +3,9 @@ package de.neuefische.capstone.backend;
 import de.neuefische.capstone.backend.models.Project;
 import de.neuefische.capstone.backend.models.ProjectWithoutId;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -20,6 +19,12 @@ public class ProjectController {
     @PostMapping
     public Project addProject(@RequestBody ProjectWithoutId projectWithoutId) {
         return projectService.addProject(projectWithoutId);
+    }
+
+
+    @GetMapping
+    public List<Project> getAllProjects() {
+        return projectService.getAllProjects();
     }
 
 
