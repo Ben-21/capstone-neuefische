@@ -14,7 +14,7 @@ type State = {
 
 export const useFetch = create<State>((set, get) => ({
         projects: [],
-        isLoading: false,
+        isLoading: true,
 
 
         fetchProjects: () => {

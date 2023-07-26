@@ -27,11 +27,11 @@ export default function ProjectCard(props: Props) {
                         {props.project.name}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        <p>{props.project.description}</p>
-                        <p>{props.project.category}</p>
-                        <p>{props.project.demands}</p>
-                        <p>{props.project.progress}</p>
-                        <p>{props.project.location}</p>
+                        {props.project.description}
+                        {props.project.category}
+                        {props.project.demands}
+                        {props.project.progress}
+                        {props.project.location}
                     </Typography>
                 </CardContent>
             </CardActionArea>

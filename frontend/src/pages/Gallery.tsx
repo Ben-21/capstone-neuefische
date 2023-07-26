@@ -9,10 +9,10 @@ export default function Gallery(){
     const projects = useFetch((state) => state.projects);
 
     return (
-
-
-        projects.map((project) => (<ProjectCard project={project} />))
-
+<>
+        <h1>Gallery</h1>
+    {projects.map((project) => (<ProjectCard project={project} key={project.id} />))}
+</>
 
     )
 }
