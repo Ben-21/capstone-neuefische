@@ -5,18 +5,46 @@ import {toast} from 'react-toastify';
 
 
 type State = {
+    projects: Project[],
+    fetchProjects: () => void,
     postProject: (requestBody: Project) => void,
+    isLoading: boolean,
 };
 
 
-export const useFetch = create<State>(() => ({
+export const useFetch = create<State>((set, get) => ({
+        projects: [],
+        isLoading: false,
 
 
-    postProject: (requestBody: Project) => {
-        axios
-            .post("/api/projects", requestBody)
-            .then(() => toast.success("Project successfully added"))
-            .catch(console.error)
+        fetchProjects: () => {
+            set({isLoading: true})
+            axios
+                .get("/api/projects")
+                .then((response) => response.data)
+                .then((data) => {
+                    set({projects: data})
+                })
+                .catch(console.error)
+                .then(() => set({isLoading: false}))
+        },
 
-    }
-}));
+        postProject: (requestBody: Project) => {
+            axios
+                .post("/api/projects", requestBody)
+                .then(get().fetchProjects)
+                .then(() => toast.success("Project successfully added"))
+                .catch((error) => {
+                    toast.error("Something went wrong");
+                    console.error(error);
+
+                })
+        },
+
+
+    }))
+;
+
+
+
+
