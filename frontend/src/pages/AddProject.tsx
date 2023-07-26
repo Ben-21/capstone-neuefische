@@ -5,6 +5,7 @@ import {TextField} from "@mui/material";
 import {Demand, Project} from "../models/models.tsx";
 
 
+
 export default function AddProject() {
 
     const postProject = useFetch(state => state.postProject);
@@ -20,6 +21,8 @@ export default function AddProject() {
             location: project.location.toString()
         };
         postProject(requestBody);
+
+
     }
 
 
