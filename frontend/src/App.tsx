@@ -6,6 +6,7 @@ import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useFetch} from "./hooks/useFetch.tsx";
 import {useEffect, useState} from "react";
+import ShowProject from "./pages/ShowProject.tsx";
 
 
 export default function App() {
@@ -32,6 +33,7 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/add-project" element={<AddProject/>}/>
+                <Route path="/details/:id" element={<ShowProject/>}/>
             </Routes>
 
             <StyledApp>
