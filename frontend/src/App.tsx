@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import {useFetch} from "./hooks/useFetch.tsx";
 import {useEffect, useState} from "react";
 import ShowProject from "./pages/ShowProject.tsx";
+import EditProject from "./pages/EditProject.tsx";
 
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/add-project" element={<AddProject/>}/>
                 <Route path="/details/:id" element={<ShowProject/>}/>
+                <Route path="/edit/:id" element={<EditProject/>}/>
             </Routes>
 
             <StyledApp>
@@ -43,8 +45,6 @@ export default function App() {
                 <Link to={"/add-project"}>
                     <button>Add Project</button>
                 </Link>
-
-
             </StyledApp>
         </>
 
