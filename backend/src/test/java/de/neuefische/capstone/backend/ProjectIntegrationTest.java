@@ -110,4 +110,5 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("$[0].location").value("Turkey"));
     }
 
+
 }
