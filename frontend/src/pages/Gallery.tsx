@@ -12,8 +12,8 @@ export default function Gallery() {
             <h1>Gallery</h1>
             <StyledGallery>
                 {projects.map((project) => (
-                    <ProjectCardWrapper>
-                        <ProjectCard project={project} key={project.id}/>
+                    <ProjectCardWrapper key={project.id}>
+                        <ProjectCard project={project} />
                     </ProjectCardWrapper>))}
             </StyledGallery>
         </>
