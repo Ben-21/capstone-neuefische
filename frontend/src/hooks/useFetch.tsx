@@ -8,6 +8,7 @@ type State = {
     projects: Project[],
     fetchProjects: () => void,
     postProject: (requestBody: ProjectWithoutId) => void,
+    getProjectById: (id: string) => Project | undefined
     isLoading: boolean,
 };
 
@@ -39,6 +40,19 @@ export const useFetch = create<State>((set, get) => ({
                     toast.error("Something went wrong");
                     console.error(error);
                 })
+        },
+
+        getProjectById: (id: string) => {
+            if (!id) {
+                throw new Error("Id is undefined")
+            }
+            const {projects} = get();
+            const project = projects.find((project) => project.id === id);
+
+            if (!project) {
+                throw new Error(`No project with id ${id} found`)
+            }
+            return project;
         },
 
     }))
