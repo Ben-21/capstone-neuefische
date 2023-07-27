@@ -18,6 +18,9 @@ public class ProjectService {
         this.idService = idService;
     }
 
+    public List<Project> getAllProjects() {
+        return projectRepo.findAll();
+    }
 
     public Project addProject(ProjectWithoutId projectWithoutId) {
         Project newProject = new Project(idService.createRandomId(),
@@ -31,9 +34,17 @@ public class ProjectService {
         return projectRepo.insert(newProject);
     }
 
+    public Project updateProject(String id, ProjectWithoutId projectWithoutId) {
+        Project updatedProject = new Project(id,
+                projectWithoutId.name(),
+                projectWithoutId.description(),
+                projectWithoutId.category(),
+                projectWithoutId.demands(),
+                projectWithoutId.progress(),
+                projectWithoutId.location());
 
-    public List<Project> getAllProjects() {
-        return projectRepo.findAll();
+        return projectRepo.save(updatedProject);
     }
+
 
 }
