@@ -125,6 +125,8 @@ class ProjectServiceTest {
         //When
         when(projectRepo.save(expectedProject))
                 .thenReturn(expectedProject);
+        when(projectRepo.existsById(id))
+                .thenReturn(true);
 
         Project actualProject = projectService.updateProject("01A", projectWithoutId);
 
