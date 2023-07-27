@@ -24,8 +24,5 @@ export default function ShowProject() {
 
         <ProjectCard project={project} key={project.id}/>
 
-
     )
-
-
 }
