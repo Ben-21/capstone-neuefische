@@ -6,6 +6,7 @@ import de.neuefische.capstone.backend.services.IdService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class ProjectService {
@@ -35,6 +36,8 @@ public class ProjectService {
     }
 
     public Project updateProject(String id, ProjectWithoutId projectWithoutId) {
+        if (!projectRepo.existsById(id)) throw new NoSuchElementException("No project with Id " + id + " found");
+
         Project updatedProject = new Project(id,
                 projectWithoutId.name(),
                 projectWithoutId.description(),
@@ -42,6 +45,7 @@ public class ProjectService {
                 projectWithoutId.demands(),
                 projectWithoutId.progress(),
                 projectWithoutId.location());
+
 
         return projectRepo.save(updatedProject);
     }
