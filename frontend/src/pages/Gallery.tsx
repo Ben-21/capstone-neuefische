@@ -12,9 +12,8 @@ export default function Gallery() {
             <h1>Gallery</h1>
             <StyledGallery>
                 {projects.map((project) => (
-                    <ProjectCardWrapper>
-                        <ProjectCard project={project} key={project.id}/>
-                    </ProjectCardWrapper>))}
+                    <ProjectCard project={project} key={project.id}/>
+                ))}
             </StyledGallery>
         </>
     )
@@ -27,8 +26,4 @@ const StyledGallery = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1.1em;
-`;
-
-const ProjectCardWrapper = styled.div`
-  min-width: 380px; /* Set the desired fixed width here */
 `;

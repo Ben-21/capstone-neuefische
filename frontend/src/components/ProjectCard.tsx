@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import {CardActionArea} from '@mui/material';
 import styled from "styled-components";
 import {Project} from "../models/models.tsx";
+import { useNavigate} from "react-router-dom";
 
 
 type Props = {
@@ -13,8 +14,10 @@ type Props = {
 
 
 export default function ProjectCard(props: Props) {
+    const navigate = useNavigate();
     return (
-        <StyledCard>
+
+        <StyledCard onClick={() => navigate(`/details/${props.project.id}`)}>
             <CardActionArea>
                 <CardMedia
                     component="img"
@@ -36,12 +39,13 @@ export default function ProjectCard(props: Props) {
                 </CardContent>
             </CardActionArea>
         </StyledCard>
+
     );
 }
 
 const StyledCard = styled(Card)`
   && {
-    max-width: 345px;
+    width: 345px;
     background-color: grey;
     margin-top: 16px;
   }
