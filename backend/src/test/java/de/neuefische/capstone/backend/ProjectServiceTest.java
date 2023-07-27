@@ -48,12 +48,12 @@ class ProjectServiceTest {
 
         Project projectWithId = new Project(
                 "01A",
-                "Earthquake Turky",
-                "Help for the people in Turky",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 listOfDemands,
                 50,
-                "Turky");
+                "Turkey");
 
 
         //When
@@ -65,16 +65,44 @@ class ProjectServiceTest {
 
         Project actualProject = projectService.addProject(new ProjectWithoutId(
                 "Earthquake Turky",
-                "Help for the people in Turky",
+                "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 listOfDemands,
                 50,
-                "Turky"));
+                "Turkey"));
 
 
         //Then
-//        verify(projectRepo).insert(projectWithId);
+        verify(projectRepo).insert(projectWithId);
         verify(idService).createRandomId();
         assertEquals(projectWithId, actualProject);
     }
+
+
+
+
+    @Test
+    void returnListOfProjects(){
+        //Given
+        List<Project> expectedProjectList = new ArrayList<>(List.of(new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                "Turkey")));
+
+        //When
+        when(projectRepo.findAll())
+                .thenReturn(expectedProjectList);
+
+        List<Project> actualProjectList = projectService.getAllProjects();
+
+        //Then
+        verify(projectRepo).findAll();
+        assertEquals(1, projectService.getAllProjects().size());
+        assertEquals(expectedProjectList, actualProjectList);
+    }
+
 }
