@@ -24,7 +24,7 @@ class ProjectServiceTest {
 
 
     @Test
-    void whenProjectAdded_ThenReturnId(){
+    void whenProjectAdded_ThenReturnId() {
         //Given
         String expectedId = "01A";
 
@@ -37,8 +37,6 @@ class ProjectServiceTest {
         verify(idService).createRandomId();
         assertEquals(expectedId, actualId);
     }
-
-
 
 
     @Test
@@ -79,10 +77,8 @@ class ProjectServiceTest {
     }
 
 
-
-
     @Test
-    void returnListOfProjects(){
+    void returnListOfProjects() {
         //Given
         List<Project> expectedProjectList = new ArrayList<>(List.of(new Project(
                 "01A",
@@ -105,4 +101,37 @@ class ProjectServiceTest {
         assertEquals(expectedProjectList, actualProjectList);
     }
 
+    @Test
+    void whenProjectUpdated_ThenReturnUpdatedProject() {
+        //Given
+        String id = "01A";
+        ProjectWithoutId projectWithoutId = new ProjectWithoutId(
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                "Turkey");
+
+        Project expectedProject = new Project(
+                "01A",
+                projectWithoutId.name(),
+                projectWithoutId.description(),
+                projectWithoutId.category(),
+                projectWithoutId.demands(),
+                projectWithoutId.progress(),
+                projectWithoutId.location());
+
+        //When
+        when(projectRepo.save(expectedProject))
+                .thenReturn(expectedProject);
+
+        Project actualProject = projectService.updateProject("01A",projectWithoutId);
+
+
+        //Then
+        verify(projectRepo).save(expectedProject);
+        assertEquals(expectedProject, actualProject);
+
+    }
 }
