@@ -27,5 +27,3 @@ const StyledGallery = styled.div`
   justify-content: center;
   gap: 1.1em;
 `;
-
-
