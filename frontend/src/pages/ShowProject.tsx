@@ -1,6 +1,6 @@
 import ProjectCard from "../components/ProjectCard.tsx";
 import {useFetch} from "../hooks/useFetch.tsx";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 
 export default function ShowProject() {
@@ -21,8 +21,12 @@ export default function ShowProject() {
 
 
     return (
-
-        <ProjectCard project={project} key={project.id}/>
+        <>
+            <ProjectCard project={project} key={project.id}/>
+            <Link to={`/edit/${project.id}`}>
+                <button>Edit</button>
+            </Link>
+        </>
 
     )
 }
