@@ -1,6 +1,7 @@
 import ProjectCard from "../components/ProjectCard.tsx";
 import {useFetch} from "../hooks/useFetch.tsx";
 import {Link, useParams} from "react-router-dom";
+import styled from "styled-components";
 
 
 export default function ShowProject() {
@@ -22,10 +23,21 @@ export default function ShowProject() {
 
     return (
         <>
-            <ProjectCard project={project} key={project.id}/>
-            <Link to={`/edit/${project.id}`}>
-                <button>Edit</button>
-            </Link>
+            <StyledApp>
+                <ProjectCard project={project} key={project.id}/>
+                <Link to={`/edit/${project.id}`}>
+                    <button>Edit</button>
+                </Link>
+            </StyledApp>
         </>
     )
 }
+
+const StyledApp = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1em;
+  padding-top: 2em;
+`;
