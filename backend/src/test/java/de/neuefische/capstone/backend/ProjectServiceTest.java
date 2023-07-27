@@ -126,12 +126,11 @@ class ProjectServiceTest {
         when(projectRepo.save(expectedProject))
                 .thenReturn(expectedProject);
 
-        Project actualProject = projectService.updateProject("01A",projectWithoutId);
+        Project actualProject = projectService.updateProject("01A", projectWithoutId);
 
 
         //Then
         verify(projectRepo).save(expectedProject);
         assertEquals(expectedProject, actualProject);
-
     }
 }

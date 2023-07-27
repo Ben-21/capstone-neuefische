@@ -130,25 +130,25 @@ class ProjectIntegrationTest {
 
 
         projectService.addProject(project);
-        List <Project> projects = projectService.getAllProjects();
+        List<Project> projects = projectService.getAllProjects();
         String id = projects.get(0).id();
 
         //When
         mockMvc.perform(
-                MockMvcRequestBuilders.put("/api/projects/" + id)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                                            {
-                                "name": "Earthquake Turkey",
-                                "description": "Help for the people in Turkey",
-                                "category": "PARTICIPATION",
-                                "demands": ["DONATIONINKIND"],
-                                "progress": 10,
-                                "location": "Turkey"
-                                                            }
-                               """
-                        )
-        )
+                        MockMvcRequestBuilders.put("/api/projects/" + id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                                                     {
+                                         "name": "Earthquake Turkey",
+                                         "description": "Help for the people in Turkey",
+                                         "category": "PARTICIPATION",
+                                         "demands": ["DONATIONINKIND"],
+                                         "progress": 10,
+                                         "location": "Turkey"
+                                                                     }
+                                        """
+                                )
+                )
 
                 //Then
                 .andExpect(status().isOk())
@@ -161,8 +161,5 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("progress").value(10))
                 .andExpect(jsonPath("location").value("Turkey")
                 );
-
     }
-
-
 }
