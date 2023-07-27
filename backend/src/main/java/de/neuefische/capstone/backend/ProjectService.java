@@ -5,6 +5,8 @@ import de.neuefische.capstone.backend.models.ProjectWithoutId;
 import de.neuefische.capstone.backend.services.IdService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProjectService {
 
@@ -27,6 +29,11 @@ public class ProjectService {
                 projectWithoutId.location());
 
         return projectRepo.insert(newProject);
+    }
+
+
+    public List<Project> getAllProjects() {
+        return projectRepo.findAll();
     }
 
 }
