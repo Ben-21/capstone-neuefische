@@ -64,7 +64,7 @@ class ProjectServiceTest {
 
 
         Project actualProject = projectService.addProject(new ProjectWithoutId(
-                "Earthquake Turky",
+                "Earthquake Turkey",
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 listOfDemands,
