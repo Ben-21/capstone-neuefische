@@ -27,6 +27,5 @@ export default function ShowProject() {
                 <button>Edit</button>
             </Link>
         </>
-
     )
 }

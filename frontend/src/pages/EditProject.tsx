@@ -20,8 +20,6 @@ export default function EditProject() {
     }, [fetchProjects]);
 
 
-
-
     if (!id) {
         throw new Error("Id is undefined")
     }
@@ -42,13 +40,10 @@ export default function EditProject() {
     });
 
 
-
-
-
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        if(project) {
+        if (project) {
             const requestBody: Project = {
                 id: project.id,
                 name: formData.name,
@@ -102,7 +97,6 @@ export default function EditProject() {
                        label="Location"
                        variant="outlined"/>
             <button type={"submit"}>ADD</button>
-
         </StyledForm>
     )
 }

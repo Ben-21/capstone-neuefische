@@ -47,9 +47,9 @@ export default function App() {
                 </Link>
             </StyledApp>
         </>
-
     )
 }
+
 const StyledApp = styled.div`
   display: flex;
   flex-direction: column;

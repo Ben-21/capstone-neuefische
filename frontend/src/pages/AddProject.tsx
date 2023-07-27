@@ -76,7 +76,6 @@ export default function AddProject() {
                        label="Location"
                        variant="outlined"/>
             <button type={"submit"}>ADD</button>
-
         </StyledForm>
     )
 }
