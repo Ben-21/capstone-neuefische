@@ -3,12 +3,12 @@ import React, {useEffect, useState} from "react";
 import {Demand, Project} from "../models/models.tsx";
 import {TextField} from "@mui/material";
 import styled from "styled-components";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 export default function EditProject() {
 
-
+    const navigate = useNavigate();
     const fetchProjects = useFetch(state => state.fetchProjects);
     const {id} = useParams();
     const getProjectById = useFetch(state => state.getProjectById);
@@ -65,6 +65,8 @@ export default function EditProject() {
                 progress: "",
                 location: "",
             })
+
+            navigate(`/details/${project.id}`)
         }
     }
 
@@ -79,7 +81,7 @@ export default function EditProject() {
 
     return (
         <StyledForm onSubmit={handleSubmit}>
-            <h1>Add Project</h1>
+            <h1>UPDATE Project</h1>
             <TextField id="project-name" name="name" value={formData.name} onChange={handleChange} label="Name"
                        variant="outlined"/>
             <TextField id="project-description" name="description" value={formData.description} onChange={handleChange}
@@ -96,7 +98,7 @@ export default function EditProject() {
             <TextField id="project-location" name="location" value={formData.location} onChange={handleChange}
                        label="Location"
                        variant="outlined"/>
-            <button type={"submit"}>ADD</button>
+            <button type={"submit"}>UPDATE</button>
         </StyledForm>
     )
 }
