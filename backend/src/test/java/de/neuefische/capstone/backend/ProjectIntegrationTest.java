@@ -23,15 +23,15 @@ class ProjectIntegrationTest {
 
 
     @Test
-    void WhenAddProject_ThenReturn_Project() throws Exception {
+    void whenAddProject_ThenReturnProject() throws Exception {
         //When
         mockMvc.perform(
                         MockMvcRequestBuilders.post("/api/projects")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("""
                                         {
-                                            "name": "Earthquake Turky",
-                                            "description": "Help for the people in Turky",
+                                            "name": "Earthquake Turkey",
+                                            "description": "Help for the people in Turkey",
                                             "category": "PARTICIPATION",
                                             "demands": ["DONATIONINKIND", "MONEYDONATION"],
                                             "progress": 20,
@@ -45,8 +45,8 @@ class ProjectIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("id").isNotEmpty())
-                .andExpect(jsonPath("name").value("Earthquake Turky"))
-                .andExpect(jsonPath("description").value("Help for the people in Turky"))
+                .andExpect(jsonPath("name").value("Earthquake Turkey"))
+                .andExpect(jsonPath("description").value("Help for the people in Turkey"))
                 .andExpect(jsonPath("category").value("PARTICIPATION"))
                 .andExpect(jsonPath("demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
                 .andExpect(jsonPath("progress").value(20))
@@ -56,7 +56,7 @@ class ProjectIntegrationTest {
 
 
     @Test
-    void WhenGetAllProjects_ThenReturn_AllProjects() throws Exception {
+    void whenGetAllProjects_ThenReturnEmptyList() throws Exception {
         //When
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/api/projects")
@@ -69,5 +69,46 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$", hasSize(0)));
     }
+
+
+    @Test
+    void whenGetAllProjects_ThenReturnAllProjects() throws Exception {
+        //When
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/projects")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                    "name": "Earthquake Turkey",
+                                    "description": "Help for the people in Turkey",
+                                    "category": "PARTICIPATION",
+                                    "demands": ["DONATIONINKIND", "MONEYDONATION"],
+                                    "progress": 20,
+                                    "location": "Turkey"
+                                }
+                                """
+                        )
+        );
+
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/projects")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+
+                //Then
+                .andExpect(status().isOk()) // Expect HTTP 200 OK
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$[0].id").exists()) // Assuming the id is auto-generated
+                .andExpect(jsonPath("$[0].name").value("Earthquake Turkey"))
+                .andExpect(jsonPath("$[0].description").value("Help for the people in Turkey"))
+                .andExpect(jsonPath("$[0].category").value("PARTICIPATION"))
+                .andExpect(jsonPath("$[0].demands").isArray())
+                .andExpect(jsonPath("$[0].demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
+                .andExpect(jsonPath("$[0].progress").value(20))
+                .andExpect(jsonPath("$[0].location").value("Turkey"));
+    }
+
 
 }
