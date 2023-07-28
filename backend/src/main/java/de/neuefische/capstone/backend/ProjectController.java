@@ -23,10 +23,12 @@ public class ProjectController {
         return projectService.addProject(projectWithoutId);
     }
 
+
     @GetMapping
     public List<Project> getAllProjects() {
         return projectService.getAllProjects();
     }
+
 
     @PutMapping("{id}")
     public ResponseEntity<Project> updateProject(@PathVariable String id, @RequestBody ProjectWithoutId projectWithoutId) {
@@ -37,6 +39,7 @@ public class ProjectController {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteProject(@PathVariable String id) {
@@ -49,5 +52,4 @@ public class ProjectController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }
