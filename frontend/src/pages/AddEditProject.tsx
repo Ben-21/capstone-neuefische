@@ -132,6 +132,7 @@ export default function AddEditProject() {
                        label="Location"
                        variant="outlined"/>
             <button type={"submit"}>SAVE</button>
+            <button type={"button"} onClick={() => navigate("/")}>CANCEL</button>
         </StyledForm>
     )
 }
