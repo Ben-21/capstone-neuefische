@@ -12,7 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import java.util.List;
+
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -133,8 +135,8 @@ class ProjectIntegrationTest {
 
 
         projectService.addProject(project);
-        List<Project> projects = projectService.getAllProjects();
-        String id = projects.get(0).id();
+        String id = projectService.getAllProjects().get(0).id();
+
 
         //When
         mockMvc.perform(
@@ -212,8 +214,7 @@ class ProjectIntegrationTest {
                         .content(projectJson)
         );
 
-        List<Project> projects = projectService.getAllProjects();
-        String id = projects.get(0).id();
+        String id = projectService.getAllProjects().get(0).id();
 
 
         //When

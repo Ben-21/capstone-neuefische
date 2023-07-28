@@ -24,7 +24,8 @@ public class ProjectService {
     }
 
     public Project addProject(ProjectWithoutId projectWithoutId) {
-        Project newProject = new Project(idService.createRandomId(),
+        Project newProject = new Project(
+                idService.createRandomId(),
                 projectWithoutId.name(),
                 projectWithoutId.description(),
                 projectWithoutId.category(),
@@ -38,7 +39,8 @@ public class ProjectService {
     public Project updateProject(String id, ProjectWithoutId projectWithoutId) {
         if (!projectRepo.existsById(id)) throw new NoSuchElementException("No project with Id " + id + " found");
 
-        Project updatedProject = new Project(id,
+        Project updatedProject = new Project(
+                id,
                 projectWithoutId.name(),
                 projectWithoutId.description(),
                 projectWithoutId.category(),
