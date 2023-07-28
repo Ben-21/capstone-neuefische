@@ -131,7 +131,7 @@ export default function AddEditProject() {
             <TextField id="project-location" name="location" value={formData.location} onChange={handleChange}
                        label="Location"
                        variant="outlined"/>
-            <button type={"submit"}>UPDATE</button>
+            <button type={"submit"}>SAVE</button>
         </StyledForm>
     )
 }
