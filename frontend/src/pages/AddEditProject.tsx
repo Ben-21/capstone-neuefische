@@ -14,7 +14,7 @@ export default function AddEditProject() {
     const getProjectById = useFetch(state => state.getProjectById);
     const putProject = useFetch(state => state.putProject);
     const postProject = useFetch(state => state.postProject);
-    let project: Project | undefined
+    const [project, setProject] = useState<Project | undefined>(undefined);
     const [formData, setFormData] = useState({
         name: "",
         description: "",
@@ -28,26 +28,23 @@ export default function AddEditProject() {
         fetchProjects();
     }, [fetchProjects]);
 
-
-    if (id) {
-        project = getProjectById(id);
-    }
-
-
-
-    if (project) {
-        setFormData({
-            name: project.name.toString(),
-            description: project.description.toString(),
-            category: project.category.toString(),
-            demands: project.demands.toString(),
-            progress: project.progress.toString(),
-            location: project.location.toString()
-        })
-    }
+    useEffect(() => {
+        if (id) {
+            setProject(getProjectById(id));
+        }
 
 
-
+        if (project) {
+            setFormData({
+                name: project.name.toString(),
+                description: project.description.toString(),
+                category: project.category.toString(),
+                demands: project.demands.toString(),
+                progress: project.progress.toString(),
+                location: project.location.toString()
+            })
+        }
+    }, [id, project, getProjectById])
 
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -64,7 +61,7 @@ export default function AddEditProject() {
             };
 
 
-            postProject(requestBody);
+             postProject(requestBody);
 
             setFormData({
                 name: "",
@@ -77,6 +74,7 @@ export default function AddEditProject() {
 
 
         }
+
         if (project) {
             const requestBody: Project = {
                 id: project.id,
@@ -88,7 +86,9 @@ export default function AddEditProject() {
                 location: formData.location,
             };
 
-            putProject(requestBody);
+
+             putProject(requestBody);
+
 
             setFormData({
                 name: "",
