@@ -4,11 +4,15 @@ import {Link, useParams} from "react-router-dom";
 import styled from "styled-components";
 
 
+
 export default function ShowProject() {
 
     const {id} = useParams();
     const getProjectById = useFetch(state => state.getProjectById);
+    const isLoading = useFetch(state => state.isLoading);
 
+
+    if (isLoading) return <p>Loading...</p>
 
     if (!id) {
         throw new Error("Id is undefined")
