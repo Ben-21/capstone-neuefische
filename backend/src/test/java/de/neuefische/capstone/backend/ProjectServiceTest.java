@@ -159,6 +159,39 @@ class ProjectServiceTest {
         //Then
         assertThrows(NoSuchElementException.class, () -> projectService.updateProject(id, projectWithoutId));
         verify(projectRepo).existsById(id);
-
     }
+
+    @Test
+    void whenProjectDeleted_verifyRepoCalls() {
+        //Given
+        String id = "01A";
+
+
+        //When
+        when(projectRepo.existsById(id))
+                .thenReturn(true);
+        projectService.deleteProject(id);
+
+
+        //Then
+        verify(projectRepo).existsById(id);
+        verify(projectRepo).deleteById(id);
+    }
+
+    @Test
+    void whenNoneExistingProjectDeleted_thenThrowException() {
+        //Given
+        String id = "01A";
+
+        //When
+        when(projectRepo.existsById(id))
+                .thenReturn(false);
+
+
+        //Then
+        assertThrows(NoSuchElementException.class, () -> projectService.deleteProject(id));
+        verify(projectRepo).existsById(id);
+        verify(projectRepo, never()).deleteById(id);
+    }
+
 }

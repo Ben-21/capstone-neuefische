@@ -1,8 +1,8 @@
 package de.neuefische.capstone.backend;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.capstone.backend.models.Category;
 import de.neuefische.capstone.backend.models.Demand;
-import de.neuefische.capstone.backend.models.Project;
 import de.neuefische.capstone.backend.models.ProjectWithoutId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,12 @@ class ProjectIntegrationTest {
 
     @Autowired
     MockMvc mockMvc;
+
     @Autowired
     ProjectService projectService;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
 
     @Test
@@ -130,8 +134,8 @@ class ProjectIntegrationTest {
 
 
         projectService.addProject(project);
-        List<Project> projects = projectService.getAllProjects();
-        String id = projects.get(0).id();
+        String id = projectService.getAllProjects().get(0).id();
+
 
         //When
         mockMvc.perform(
@@ -161,5 +165,86 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("progress").value(10))
                 .andExpect(jsonPath("location").value("Turkey")
                 );
+    }
+
+
+    @Test
+    void whenUpdateProjectWithWrongId_thenReturnNotFound() throws Exception {
+        //Given
+        String invalidId = "invalidId";
+        ProjectWithoutId project = new ProjectWithoutId(
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                "Turkey");
+
+        String projectJson = objectMapper.writeValueAsString(project);
+
+        //When
+        mockMvc.perform(
+                        MockMvcRequestBuilders.put("/api/projects/" + invalidId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(projectJson)
+                )
+
+                //Then
+                .andExpect(status().isNotFound());
+    }
+
+
+    @Test
+    void whenProjectedDeleted_thenReturnEmptyList() throws Exception {
+        //Given
+        ProjectWithoutId project = new ProjectWithoutId(
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                "Turkey");
+
+        String projectJson = objectMapper.writeValueAsString(project);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/projects")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(projectJson)
+        );
+
+        String id = projectService.getAllProjects().get(0).id();
+
+
+        //When
+        mockMvc.perform(
+                        MockMvcRequestBuilders.delete("/api/projects/" + id)
+                )
+
+                //Then
+                .andExpect(status().isOk());
+
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/projects")
+                )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+
+    @Test
+    void whenDeleteProjectWithWrongId_thenReturnNotFound() throws Exception {
+        //Given
+        String invalidId = "invalidId";
+
+        //When
+        mockMvc.perform(
+                        MockMvcRequestBuilders.delete("/api/projects/" + invalidId)
+                )
+
+                //Then
+                .andExpect(status().isNotFound());
     }
 }
