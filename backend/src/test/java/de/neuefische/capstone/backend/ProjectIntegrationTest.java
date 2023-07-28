@@ -12,7 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 import java.util.List;
+
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -166,6 +168,7 @@ class ProjectIntegrationTest {
                 );
     }
 
+
     @Test
     void whenUpdateProjectWithWrongId_thenReturnNotFound() throws Exception {
         //Given
@@ -192,13 +195,6 @@ class ProjectIntegrationTest {
     }
 
 
-
-
-
-
-
-
-
     @Test
     void whenProjectedDeleted_thenReturnEmptyList() throws Exception {
         //Given
@@ -213,9 +209,9 @@ class ProjectIntegrationTest {
         String projectJson = objectMapper.writeValueAsString(project);
 
         mockMvc.perform(
-        MockMvcRequestBuilders.post("/api/projects")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(projectJson)
+                MockMvcRequestBuilders.post("/api/projects")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(projectJson)
         );
 
         List<Project> projects = projectService.getAllProjects();
@@ -224,20 +220,33 @@ class ProjectIntegrationTest {
 
         //When
         mockMvc.perform(
-        MockMvcRequestBuilders.delete("/api/projects/" + id)
-        )
+                        MockMvcRequestBuilders.delete("/api/projects/" + id)
+                )
 
-        //Then
-        .andExpect(status().isOk());
+                //Then
+                .andExpect(status().isOk());
 
         mockMvc.perform(
-        MockMvcRequestBuilders.get("/api/projects")
-        )
+                        MockMvcRequestBuilders.get("/api/projects")
+                )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$", hasSize(0)));
+    }
 
 
+    @Test
+    void whenDeleteProjectWithWrongId_thenReturnNotFound() throws Exception {
+        //Given
+        String invalidId = "invalidId";
+
+        //When
+        mockMvc.perform(
+                        MockMvcRequestBuilders.delete("/api/projects/" + invalidId)
+                )
+
+                //Then
+                .andExpect(status().isNotFound());
     }
 }
