@@ -3,7 +3,6 @@ package de.neuefische.capstone.backend;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.capstone.backend.models.Category;
 import de.neuefische.capstone.backend.models.Demand;
-import de.neuefische.capstone.backend.models.Project;
 import de.neuefische.capstone.backend.models.ProjectWithoutId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
