@@ -198,6 +198,7 @@ class ProjectIntegrationTest {
 
 
 
+
     @Test
     void whenProjectedDeleted_thenReturnEmptyList() throws Exception {
         //Given

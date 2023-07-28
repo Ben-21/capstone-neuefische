@@ -36,8 +36,6 @@ public class ProjectController {
             return ResponseEntity.ok(updatedProject);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
         }
     }
 
