@@ -9,6 +9,7 @@ type State = {
     fetchProjects: () => void,
     postProject: (requestBody: ProjectWithoutId) => void,
     getProjectById: (id: string) => Project | undefined
+    putProject: (requestBody: Project) => void,
     isLoading: boolean,
 };
 
@@ -55,5 +56,17 @@ export const useFetch = create<State>((set, get) => ({
             return project;
         },
 
+        putProject: (requestBody: Project) => {
+            const {fetchProjects} = get();
+            const {id, ...projectWithoutId} = requestBody;
+            axios
+                .put(`/api/projects/${id}`, projectWithoutId)
+                .then(fetchProjects)
+                .then(() => toast.success("Project successfully updated"))
+                .catch((error) => {
+                    toast.error("Something went wrong");
+                    console.error(error);
+                })
+        }
     }))
 ;

@@ -21,10 +21,14 @@ public class ProjectController {
         return projectService.addProject(projectWithoutId);
     }
 
-
     @GetMapping
     public List<Project> getAllProjects() {
         return projectService.getAllProjects();
+    }
+
+    @PutMapping("{id}")
+    public Project updateProject(@PathVariable String id, @RequestBody ProjectWithoutId projectWithoutId) {
+        return projectService.updateProject(id, projectWithoutId);
     }
 
 

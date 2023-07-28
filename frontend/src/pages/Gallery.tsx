@@ -9,7 +9,7 @@ export default function Gallery() {
 
     return (
         <>
-            <h1>Gallery</h1>
+
             <StyledGallery>
                 {projects.map((project) => (
                     <ProjectCard project={project} key={project.id}/>

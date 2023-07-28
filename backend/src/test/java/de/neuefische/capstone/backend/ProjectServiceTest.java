@@ -10,9 +10,11 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 
@@ -24,7 +26,7 @@ class ProjectServiceTest {
 
 
     @Test
-    void whenProjectAdded_ThenReturnId(){
+    void whenProjectAdded_thenReturnId() {
         //Given
         String expectedId = "01A";
 
@@ -39,10 +41,8 @@ class ProjectServiceTest {
     }
 
 
-
-
     @Test
-    void whenProjectAdded_ThenReturnAddedProject() {
+    void whenProjectAdded_thenReturnAddedProject() {
         //Given
         List<Demand> listOfDemands = new ArrayList<>(List.of(Demand.DONATIONINKIND));
 
@@ -79,10 +79,8 @@ class ProjectServiceTest {
     }
 
 
-
-
     @Test
-    void returnListOfProjects(){
+    void returnListOfProjects() {
         //Given
         List<Project> expectedProjectList = new ArrayList<>(List.of(new Project(
                 "01A",
@@ -105,4 +103,62 @@ class ProjectServiceTest {
         assertEquals(expectedProjectList, actualProjectList);
     }
 
+    @Test
+    void whenProjectUpdated_thenReturnUpdatedProject() {
+        //Given
+        String id = "01A";
+        ProjectWithoutId projectWithoutId = new ProjectWithoutId(
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                "Turkey");
+
+        Project expectedProject = new Project(
+                "01A",
+                projectWithoutId.name(),
+                projectWithoutId.description(),
+                projectWithoutId.category(),
+                projectWithoutId.demands(),
+                projectWithoutId.progress(),
+                projectWithoutId.location());
+
+        //When
+        when(projectRepo.save(expectedProject))
+                .thenReturn(expectedProject);
+        when(projectRepo.existsById(id))
+                .thenReturn(true);
+
+        Project actualProject = projectService.updateProject("01A", projectWithoutId);
+
+
+        //Then
+        verify(projectRepo).save(expectedProject);
+        assertEquals(expectedProject, actualProject);
+    }
+
+    @Test
+    void whenNoId_thenThrowException() {
+        //Given
+        String id = "01A";
+        ProjectWithoutId projectWithoutId = new ProjectWithoutId(
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                "Turkey");
+
+
+        //When
+        when(projectRepo.existsById("01A"))
+                .thenReturn(false);
+
+
+        //Then
+        assertThrows(NoSuchElementException.class, () -> projectService.updateProject(id, projectWithoutId));
+        verify(projectRepo).existsById(id);
+
+    }
 }
