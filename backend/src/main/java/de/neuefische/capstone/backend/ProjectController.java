@@ -39,7 +39,6 @@ public class ProjectController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }
-
     }
 
     @DeleteMapping("{id}")
@@ -47,7 +46,7 @@ public class ProjectController {
 
         try {
             projectService.deleteProject(id);
-            return ResponseEntity.ok("Project deleted succesfully");
+            return ResponseEntity.ok("Project deleted successfully");
 
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();

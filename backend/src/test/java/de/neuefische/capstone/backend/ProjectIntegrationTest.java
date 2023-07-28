@@ -167,6 +167,38 @@ class ProjectIntegrationTest {
     }
 
     @Test
+    void whenUpdateProjectWithWrongId_thenReturnNotFound() throws Exception {
+        //Given
+        String invalidId = "invalidId";
+        ProjectWithoutId project = new ProjectWithoutId(
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                "Turkey");
+
+        String projectJson = objectMapper.writeValueAsString(project);
+
+        //When
+        mockMvc.perform(
+                        MockMvcRequestBuilders.put("/api/projects/" + invalidId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(projectJson)
+                )
+
+                //Then
+                .andExpect(status().isNotFound());
+    }
+
+
+
+
+
+
+
+
+    @Test
     void whenProjectedDeleted_thenReturnEmptyList() throws Exception {
         //Given
         ProjectWithoutId project = new ProjectWithoutId(
