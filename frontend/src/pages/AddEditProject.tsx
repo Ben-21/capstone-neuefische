@@ -14,6 +14,7 @@ export default function AddEditProject() {
     const getProjectById = useFetch(state => state.getProjectById);
     const putProject = useFetch(state => state.putProject);
     const postProject = useFetch(state => state.postProject);
+    const deleteProject = useFetch(state => state.deleteProject);
     const [project, setProject] = useState<Project | undefined>(undefined);
     const [formData, setFormData] = useState({
         name: "",
@@ -103,6 +104,19 @@ export default function AddEditProject() {
         }
     }
 
+
+    function handleDelete(event: React.MouseEvent<HTMLButtonElement>) {
+        event.preventDefault();
+        if(project){
+            deleteProject(project.id);
+
+            navigate("/");
+        }
+
+    }
+
+
+
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const {name, value} = event.target;
         setFormData((prevFormData) => ({
@@ -133,6 +147,7 @@ export default function AddEditProject() {
                        variant="outlined"/>
             <button type={"submit"}>SAVE</button>
             <button type={"button"} onClick={() => navigate("/")}>CANCEL</button>
+            <button type={"button"} onClick={handleDelete}>DELETE</button>
         </StyledForm>
     )
 }

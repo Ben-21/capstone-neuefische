@@ -10,6 +10,7 @@ type State = {
     postProject: (requestBody: ProjectWithoutId) => void,
     getProjectById: (id: string) => Project | undefined
     putProject: (requestBody: Project) => void,
+    deleteProject: (id: string) => void,
     isLoading: boolean,
 };
 
@@ -63,6 +64,18 @@ export const useFetch = create<State>((set, get) => ({
                 .put(`/api/projects/${id}`, projectWithoutId)
                 .then(fetchProjects)
                 .then(() => toast.success("Project successfully updated"))
+                .catch((error) => {
+                    toast.error("Something went wrong");
+                    console.error(error);
+                })
+        },
+
+        deleteProject: (id: string) => {
+            const {fetchProjects} = get();
+            axios
+                .delete(`/api/projects/${id}`)
+                .then(fetchProjects)
+                .then(() => toast.success("Project successfully deleted"))
                 .catch((error) => {
                     toast.error("Something went wrong");
                     console.error(error);
