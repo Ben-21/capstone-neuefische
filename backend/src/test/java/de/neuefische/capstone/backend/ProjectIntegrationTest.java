@@ -1,5 +1,7 @@
 package de.neuefische.capstone.backend;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.capstone.backend.models.Category;
 import de.neuefische.capstone.backend.models.Demand;
 import de.neuefische.capstone.backend.models.Project;
@@ -11,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
@@ -24,8 +27,12 @@ class ProjectIntegrationTest {
 
     @Autowired
     MockMvc mockMvc;
+
     @Autowired
     ProjectService projectService;
+
+    @Autowired
+    ObjectMapper objectMapper;
 
 
     @Test
@@ -161,5 +168,47 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("progress").value(10))
                 .andExpect(jsonPath("location").value("Turkey")
                 );
+    }
+
+    @Test
+    void whenProjectedDeleted_thenReturnEmptyList() throws Exception {
+        //Given
+        ProjectWithoutId project = new ProjectWithoutId(
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                "Turkey");
+
+        String projectJson = objectMapper.writeValueAsString(project);
+
+        mockMvc.perform(
+        MockMvcRequestBuilders.post("/api/projects")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(projectJson)
+        );
+
+        List<Project> projects = projectService.getAllProjects();
+        String id = projects.get(0).id();
+
+
+        //When
+        mockMvc.perform(
+        MockMvcRequestBuilders.delete("/api/projects/" + id)
+        )
+
+        //Then
+        .andExpect(status().isOk());
+
+        mockMvc.perform(
+        MockMvcRequestBuilders.get("/api/projects")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(0)));
+
+
     }
 }

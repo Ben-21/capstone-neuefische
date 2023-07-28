@@ -51,4 +51,9 @@ public class ProjectService {
     }
 
 
+    public void deleteProject(String id) {
+        if (!projectRepo.existsById(id)) throw new NoSuchElementException("No project with Id " + id + " found");
+        projectRepo.deleteById(id);
+    }
+
 }
