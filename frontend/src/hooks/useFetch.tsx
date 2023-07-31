@@ -60,9 +60,9 @@ export const useFetch = create<State>((set, get) => ({
         putProject: (requestBody: Project) => {
 
             const {fetchProjects} = get();
-            const {id, ...project} = requestBody;
+            const {id, ...projectNoId} = requestBody;
             axios
-                .put(`/api/projects/${id}`, project)
+                .put(`/api/projects/${id}`, projectNoId)
                 .then(fetchProjects)
                 .then(() => toast.success("Project successfully updated"))
                 .catch((error) => {
