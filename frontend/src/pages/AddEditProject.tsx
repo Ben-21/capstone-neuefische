@@ -1,8 +1,8 @@
 import {useFetch} from "../hooks/useFetch.tsx";
 import React, {useEffect, useState} from "react";
 import {Demand, Project, ProjectNoIdNoProgress} from "../models/models.tsx";
-import {TextField} from "@mui/material";
-import styled from "styled-components";
+import {TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
+import styled from "@emotion/styled";
 import {useNavigate, useParams} from "react-router-dom";
 import Checkbox from '@mui/material/Checkbox';
 
@@ -20,7 +20,6 @@ export default function AddEditProject() {
     const [formData, setFormData] = useState({
         name: "",
         description: "",
-        category: "",
         location: ""
     });
     const [checkboxes, setCheckboxes] = useState({
@@ -29,6 +28,7 @@ export default function AddEditProject() {
         foodDonation: false,
         drugDonation: false
     });
+    const [category, setCategory] = useState<"DONATION" | "PARTICIPATION">("DONATION");
 
     useEffect(() => {
         fetchProjects();
@@ -44,7 +44,6 @@ export default function AddEditProject() {
             setFormData({
                 name: project.name.toString(),
                 description: project.description.toString(),
-                category: project.category.toString(),
                 location: project.location.toString()
             })
 
@@ -54,6 +53,8 @@ export default function AddEditProject() {
                 foodDonation: project.demands.includes("FOODDONATION"),
                 drugDonation: project.demands.includes("DRUGDONATION")
             })
+
+            setCategory(project.category)
         }
     }, [id, project, getProjectById])
 
@@ -83,7 +84,7 @@ export default function AddEditProject() {
             const requestBody: ProjectNoIdNoProgress = {
                 name: formData.name,
                 description: formData.description,
-                category: formData.category as "DONATION" | "PARTICIPATION",
+                category: category,
                 demands: checkDemands(),
                 location: formData.location,
             };
@@ -94,7 +95,6 @@ export default function AddEditProject() {
             setFormData({
                 name: "",
                 description: "",
-                category: "",
                 location: "",
             })
 
@@ -105,7 +105,7 @@ export default function AddEditProject() {
                 drugDonation: false
             })
 
-
+            setCategory("DONATION");
         }
 
         if (project) {
@@ -113,7 +113,7 @@ export default function AddEditProject() {
                 id: project.id,
                 name: formData.name,
                 description: formData.description,
-                category: formData.category as "DONATION" | "PARTICIPATION",
+                category: category,
                 demands: checkDemands(),
                 progress: project.progress,
                 location: formData.location,
@@ -126,7 +126,6 @@ export default function AddEditProject() {
             setFormData({
                 name: "",
                 description: "",
-                category: "",
                 location: "",
             })
 
@@ -136,6 +135,8 @@ export default function AddEditProject() {
                 foodDonation: false,
                 drugDonation: false
             })
+
+            setCategory("DONATION");
 
             navigate(`/details/${project.id}`)
         }
@@ -169,53 +170,60 @@ export default function AddEditProject() {
         });
     };
 
+    function handleCategoryChange(_: React.MouseEvent<HTMLElement>, newCategory: "DONATION" | "PARTICIPATION") {
+        setCategory(newCategory)
+    }
+
 
     return (
         <StyledForm onSubmit={handleSubmit}>
-            <h1>UPDATE Project</h1>
-            <TextField id="project-name" name="name" value={formData.name} onChange={handleChange} label="Name"
-                       variant="outlined"/>
-            <TextField id="project-description" name="description" value={formData.description} onChange={handleChange}
-                       label="Description"
-                       variant="outlined"/>
-            <TextField id="project-category" name="category" value={formData.category} onChange={handleChange}
-                       label="Category"
-                       variant="outlined"/>
+            <h1>ADD / UPDATE Project</h1>
+            <StyledTextField id="project-name" name="name" value={formData.name} onChange={handleChange} label="Name"
+                             variant="outlined"/>
+            <StyledTextField id="project-description" name="description" value={formData.description}
+                             onChange={handleChange}
+                             label="Description"
+                             variant="outlined"/>
+            <StyledTextField id="project-location" name="location" value={formData.location} onChange={handleChange}
+                             label="Location"
+                             variant="outlined"/>
 
-            <div>
-                <label>
+            <StyledToggleGroup id="category" color="primary" value={category} exclusive
+                               onChange={handleCategoryChange}
+                               aria-label="Platform">
+                <StyledToggleButton value="DONATION">Donation</StyledToggleButton>
+                <StyledToggleButton value="PARTICIPATION">Participation</StyledToggleButton>
+            </StyledToggleGroup>
+            <StyledCheckboxGroup>
+                <StyledCheckboxLabel>
                     <Checkbox
                         name={"moneyDonation"}
                         checked={checkboxes.moneyDonation} onChange={handleCheckboxChange}
                         inputProps={{'aria-label': 'controlled'}}
                     />Money Donation
-                </label>
-                <label>
+                </StyledCheckboxLabel>
+                <StyledCheckboxLabel>
                     <Checkbox
                         name={"donationInKind"}
                         checked={checkboxes.donationInKind} onChange={handleCheckboxChange}
                         inputProps={{'aria-label': 'controlled'}}
                     />Donation in Kind
-                </label>
-                <label>
+                </StyledCheckboxLabel>
+                <StyledCheckboxLabel>
                     <Checkbox
                         name={"foodDonation"}
                         checked={checkboxes.foodDonation} onChange={handleCheckboxChange}
                         inputProps={{'aria-label': 'controlled'}}
                     />Food Donation
-                </label>
-                <label>
+                </StyledCheckboxLabel>
+                <StyledCheckboxLabel>
                     <Checkbox
                         name={"drugDonation"}
                         checked={checkboxes.drugDonation} onChange={handleCheckboxChange}
                         inputProps={{'aria-label': 'controlled'}}
                     />Drug Donation
-                </label>
-            </div>
-
-            <TextField id="project-location" name="location" value={formData.location} onChange={handleChange}
-                       label="Location"
-                       variant="outlined"/>
+                </StyledCheckboxLabel>
+            </StyledCheckboxGroup>
             <button type={"submit"}>SAVE</button>
             <button type={"button"} onClick={() => navigate("/")}>CANCEL</button>
             <button type={"button"} onClick={handleDelete}>DELETE</button>
@@ -230,4 +238,37 @@ const StyledForm = styled.form`
   align-items: center;
   justify-content: center;
   gap: 1.1em;
+`;
+
+const StyledToggleGroup = styled(ToggleButtonGroup)`
+  font-family: "Roboto Light", sans-serif;
+  display: flex;
+  justify-content: center;
+  margin: 16px;
+  width: 95%;
+`;
+
+
+const StyledToggleButton = styled(ToggleButton)`
+  font-family: "Roboto Light", sans-serif;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+const StyledTextField = styled(TextField)`
+  width: 95%;
+  font-family: "Roboto Light", sans-serif;
+`;
+
+const StyledCheckboxGroup = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+  width: 95%;
+`;
+
+const StyledCheckboxLabel = styled.label`
+  font-family: "Roboto Light", sans-serif;
 `;
