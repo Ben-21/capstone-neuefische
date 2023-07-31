@@ -1,7 +1,7 @@
 package de.neuefische.capstone.backend;
 
 import de.neuefische.capstone.backend.models.Project;
-import de.neuefische.capstone.backend.models.ProjectWithoutId;
+import de.neuefische.capstone.backend.models.ProjectNoIdNoProgress;
 import de.neuefische.capstone.backend.services.IdService;
 import org.springframework.stereotype.Service;
 
@@ -23,20 +23,20 @@ public class ProjectService {
         return projectRepo.findAll();
     }
 
-    public Project addProject(ProjectWithoutId projectWithoutId) {
+    public Project addProject(ProjectNoIdNoProgress projectWithoutId) {
         Project newProject = new Project(
                 idService.createRandomId(),
                 projectWithoutId.name(),
                 projectWithoutId.description(),
                 projectWithoutId.category(),
                 projectWithoutId.demands(),
-                projectWithoutId.progress(),
+                0,
                 projectWithoutId.location());
 
         return projectRepo.insert(newProject);
     }
 
-    public Project updateProject(String id, ProjectWithoutId projectWithoutId) {
+    public Project updateProject(String id, ProjectNoIdNoProgress projectWithoutId) {
         if (!projectRepo.existsById(id)) throw new NoSuchElementException("No project with Id " + id + " found");
 
         Project updatedProject = new Project(

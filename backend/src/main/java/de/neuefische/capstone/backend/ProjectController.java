@@ -1,7 +1,7 @@
 package de.neuefische.capstone.backend;
 
 import de.neuefische.capstone.backend.models.Project;
-import de.neuefische.capstone.backend.models.ProjectWithoutId;
+import de.neuefische.capstone.backend.models.ProjectNoIdNoProgress;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class ProjectController {
 
 
     @PostMapping
-    public Project addProject(@RequestBody ProjectWithoutId projectWithoutId) {
+    public Project addProject(@RequestBody ProjectNoIdNoProgress projectWithoutId) {
         return projectService.addProject(projectWithoutId);
     }
 
@@ -30,7 +30,7 @@ public class ProjectController {
 
 
     @PutMapping("{id}")
-    public ResponseEntity<Project> updateProject(@PathVariable String id, @RequestBody ProjectWithoutId projectWithoutId) {
+    public ResponseEntity<Project> updateProject(@PathVariable String id, @RequestBody ProjectNoIdNoProgress projectWithoutId) {
         try {
             Project updatedProject = projectService.updateProject(id, projectWithoutId);
             return ResponseEntity.ok(updatedProject);

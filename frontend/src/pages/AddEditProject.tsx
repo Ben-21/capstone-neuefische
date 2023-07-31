@@ -1,6 +1,6 @@
 import {useFetch} from "../hooks/useFetch.tsx";
 import React, {useEffect, useState} from "react";
-import {Demand, Project, ProjectWithoutId} from "../models/models.tsx";
+import {Demand, Project, ProjectNoIdNoProgress} from "../models/models.tsx";
 import {TextField} from "@mui/material";
 import styled from "styled-components";
 import {useNavigate, useParams} from "react-router-dom";
@@ -21,7 +21,6 @@ export default function AddEditProject() {
         description: "",
         category: "",
         demands: "",
-        progress: "",
         location: ""
     });
 
@@ -41,7 +40,6 @@ export default function AddEditProject() {
                 description: project.description.toString(),
                 category: project.category.toString(),
                 demands: project.demands.toString(),
-                progress: project.progress.toString(),
                 location: project.location.toString()
             })
         }
@@ -52,24 +50,22 @@ export default function AddEditProject() {
         event.preventDefault();
 
         if (!project) {
-            const requestBody: ProjectWithoutId = {
+            const requestBody: ProjectNoIdNoProgress = {
                 name: formData.name,
                 description: formData.description,
                 category: formData.category as "DONATION" | "PARTICIPATION",
                 demands: [formData.demands as Demand],
-                progress: parseInt(formData.progress),
                 location: formData.location,
             };
 
 
-             postProject(requestBody);
+            postProject(requestBody);
 
             setFormData({
                 name: "",
                 description: "",
                 category: "",
                 demands: "",
-                progress: "",
                 location: "",
             })
 
@@ -83,12 +79,12 @@ export default function AddEditProject() {
                 description: formData.description,
                 category: formData.category as "DONATION" | "PARTICIPATION",
                 demands: [formData.demands as Demand],
-                progress: parseInt(formData.progress),
+                progress: project.progress,
                 location: formData.location,
             };
 
 
-             putProject(requestBody);
+            putProject(requestBody);
 
 
             setFormData({
@@ -96,7 +92,6 @@ export default function AddEditProject() {
                 description: "",
                 category: "",
                 demands: "",
-                progress: "",
                 location: "",
             })
 
@@ -107,14 +102,13 @@ export default function AddEditProject() {
 
     function handleDelete(event: React.MouseEvent<HTMLButtonElement>) {
         event.preventDefault();
-        if(project){
+        if (project) {
             deleteProject(project.id);
 
             navigate("/");
         }
 
     }
-
 
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -139,9 +133,6 @@ export default function AddEditProject() {
                        variant="outlined"/>
             <TextField id="project-demands" name="demands" value={formData.demands} onChange={handleChange}
                        label="Demands" variant="outlined"/>
-            <TextField id="project-progress" name="progress" value={formData.progress} onChange={handleChange}
-                       label="Progress"
-                       variant="outlined"/>
             <TextField id="project-location" name="location" value={formData.location} onChange={handleChange}
                        label="Location"
                        variant="outlined"/>
