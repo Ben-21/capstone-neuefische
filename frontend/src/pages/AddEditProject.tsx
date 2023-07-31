@@ -30,6 +30,8 @@ export default function AddEditProject() {
     });
     const [category, setCategory] = useState<"DONATION" | "PARTICIPATION">("DONATION");
 
+
+
     useEffect(() => {
         fetchProjects();
     }, [fetchProjects]);
@@ -46,14 +48,12 @@ export default function AddEditProject() {
                 description: project.description.toString(),
                 location: project.location.toString()
             })
-
             setCheckboxes({
                 moneyDonation: project.demands.includes("MONEYDONATION"),
                 donationInKind: project.demands.includes("DONATIONINKIND"),
                 foodDonation: project.demands.includes("FOODDONATION"),
                 drugDonation: project.demands.includes("DRUGDONATION")
             })
-
             setCategory(project.category)
         }
     }, [id, project, getProjectById])
@@ -73,8 +73,22 @@ export default function AddEditProject() {
         if (checkboxes.drugDonation) {
             selectedDemands.push("DRUGDONATION");
         }
-
         return selectedDemands;
+    }
+
+    function initialiseAllFields() {
+        setFormData({
+            name: "",
+            description: "",
+            location: "",
+        })
+        setCheckboxes({
+            moneyDonation: false,
+            donationInKind: false,
+            foodDonation: false,
+            drugDonation: false
+        })
+        setCategory("DONATION");
     }
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -88,24 +102,8 @@ export default function AddEditProject() {
                 demands: checkDemands(),
                 location: formData.location,
             };
-
-
             postProject(requestBody);
-
-            setFormData({
-                name: "",
-                description: "",
-                location: "",
-            })
-
-            setCheckboxes({
-                moneyDonation: false,
-                donationInKind: false,
-                foodDonation: false,
-                drugDonation: false
-            })
-
-            setCategory("DONATION");
+            initialiseAllFields();
         }
 
         if (project) {
@@ -118,26 +116,8 @@ export default function AddEditProject() {
                 progress: project.progress,
                 location: formData.location,
             };
-
-
             putProject(requestBody);
-
-
-            setFormData({
-                name: "",
-                description: "",
-                location: "",
-            })
-
-            setCheckboxes({
-                moneyDonation: false,
-                donationInKind: false,
-                foodDonation: false,
-                drugDonation: false
-            })
-
-            setCategory("DONATION");
-
+            initialiseAllFields();
             navigate(`/details/${project.id}`)
         }
     }
