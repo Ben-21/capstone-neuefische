@@ -3,6 +3,7 @@ package de.neuefische.capstone.backend;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.capstone.backend.models.Category;
 import de.neuefische.capstone.backend.models.Demand;
+import de.neuefische.capstone.backend.models.ProjectNoId;
 import de.neuefische.capstone.backend.models.ProjectNoIdNoProgress;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,6 @@ class ProjectIntegrationTest {
                                             "description": "Help for the people in Turkey",
                                             "category": "PARTICIPATION",
                                             "demands": ["DONATIONINKIND", "MONEYDONATION"],
-                                            "progress": 20,
                                             "location": "Turkey"
                                         }
                                         """
@@ -59,7 +59,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("description").value("Help for the people in Turkey"))
                 .andExpect(jsonPath("category").value("PARTICIPATION"))
                 .andExpect(jsonPath("demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
-                .andExpect(jsonPath("progress").value(20))
+                .andExpect(jsonPath("progress").value(0))
                 .andExpect(jsonPath("location").value("Turkey")
                 );
     }
@@ -94,7 +94,6 @@ class ProjectIntegrationTest {
                                     "description": "Help for the people in Turkey",
                                     "category": "PARTICIPATION",
                                     "demands": ["DONATIONINKIND", "MONEYDONATION"],
-                                    "progress": 20,
                                     "location": "Turkey"
                                 }
                                 """
@@ -116,7 +115,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("$[0].category").value("PARTICIPATION"))
                 .andExpect(jsonPath("$[0].demands").isArray())
                 .andExpect(jsonPath("$[0].demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
-                .andExpect(jsonPath("$[0].progress").value(20))
+                .andExpect(jsonPath("$[0].progress").value(0))
                 .andExpect(jsonPath("$[0].location").value("Turkey"));
     }
 
@@ -124,16 +123,15 @@ class ProjectIntegrationTest {
     @Test
     void whenUpdateProject_thenReturnProject() throws Exception {
         //Given
-        ProjectNoIdNoProgress project = new ProjectNoIdNoProgress(
+        ProjectNoIdNoProgress projectNoIdNoProgress = new ProjectNoIdNoProgress(
                 "Earthquake Turkey",
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
-                50,
                 "Turkey");
 
 
-        projectService.addProject(project);
+        projectService.addProject(projectNoIdNoProgress);
         String id = projectService.getAllProjects().get(0).id();
 
 
@@ -172,12 +170,12 @@ class ProjectIntegrationTest {
     void whenUpdateProjectWithWrongId_thenReturnNotFound() throws Exception {
         //Given
         String invalidId = "invalidId";
-        ProjectNoIdNoProgress project = new ProjectNoIdNoProgress(
+        ProjectNoId project = new ProjectNoId(
                 "Earthquake Turkey",
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
-                50,
+                10,
                 "Turkey");
 
         String projectJson = objectMapper.writeValueAsString(project);
@@ -202,7 +200,6 @@ class ProjectIntegrationTest {
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
-                50,
                 "Turkey");
 
         String projectJson = objectMapper.writeValueAsString(project);
