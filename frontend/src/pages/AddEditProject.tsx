@@ -212,6 +212,7 @@ export default function AddEditProject() {
                     />Drug Donation
                 </label>
             </div>
+
             <TextField id="project-location" name="location" value={formData.location} onChange={handleChange}
                        label="Location"
                        variant="outlined"/>
