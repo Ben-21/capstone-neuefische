@@ -4,6 +4,7 @@ import {Demand, Project, ProjectNoIdNoProgress} from "../models/models.tsx";
 import {TextField} from "@mui/material";
 import styled from "styled-components";
 import {useNavigate, useParams} from "react-router-dom";
+import Checkbox from '@mui/material/Checkbox';
 
 
 export default function AddEditProject() {
@@ -20,8 +21,13 @@ export default function AddEditProject() {
         name: "",
         description: "",
         category: "",
-        demands: "",
         location: ""
+    });
+    const [checkboxes, setCheckboxes] = useState({
+        moneyDonation: false,
+        donationInKind: false,
+        foodDonation: false,
+        drugDonation: false
     });
 
     useEffect(() => {
@@ -39,12 +45,36 @@ export default function AddEditProject() {
                 name: project.name.toString(),
                 description: project.description.toString(),
                 category: project.category.toString(),
-                demands: project.demands.toString(),
                 location: project.location.toString()
+            })
+
+            setCheckboxes({
+                moneyDonation: project.demands.includes("MONEYDONATION"),
+                donationInKind: project.demands.includes("DONATIONINKIND"),
+                foodDonation: project.demands.includes("FOODDONATION"),
+                drugDonation: project.demands.includes("DRUGDONATION")
             })
         }
     }, [id, project, getProjectById])
 
+
+    function checkDemands() {
+        const selectedDemands: Demand[] = [];
+        if (checkboxes.moneyDonation) {
+            selectedDemands.push("MONEYDONATION");
+        }
+        if (checkboxes.donationInKind) {
+            selectedDemands.push("DONATIONINKIND");
+        }
+        if (checkboxes.foodDonation) {
+            selectedDemands.push("FOODDONATION");
+        }
+        if (checkboxes.drugDonation) {
+            selectedDemands.push("DRUGDONATION");
+        }
+
+        return selectedDemands;
+    }
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -54,7 +84,7 @@ export default function AddEditProject() {
                 name: formData.name,
                 description: formData.description,
                 category: formData.category as "DONATION" | "PARTICIPATION",
-                demands: [formData.demands as Demand],
+                demands: checkDemands(),
                 location: formData.location,
             };
 
@@ -65,8 +95,14 @@ export default function AddEditProject() {
                 name: "",
                 description: "",
                 category: "",
-                demands: "",
                 location: "",
+            })
+
+            setCheckboxes({
+                moneyDonation: false,
+                donationInKind: false,
+                foodDonation: false,
+                drugDonation: false
             })
 
 
@@ -78,7 +114,7 @@ export default function AddEditProject() {
                 name: formData.name,
                 description: formData.description,
                 category: formData.category as "DONATION" | "PARTICIPATION",
-                demands: [formData.demands as Demand],
+                demands: checkDemands(),
                 progress: project.progress,
                 location: formData.location,
             };
@@ -91,8 +127,14 @@ export default function AddEditProject() {
                 name: "",
                 description: "",
                 category: "",
-                demands: "",
                 location: "",
+            })
+
+            setCheckboxes({
+                moneyDonation: false,
+                donationInKind: false,
+                foodDonation: false,
+                drugDonation: false
             })
 
             navigate(`/details/${project.id}`)
@@ -119,6 +161,14 @@ export default function AddEditProject() {
         }));
     }
 
+    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, checked} = event.target;
+        setCheckboxes({
+            ...checkboxes,
+            [name]: checked,
+        });
+    };
+
 
     return (
         <StyledForm onSubmit={handleSubmit}>
@@ -131,8 +181,37 @@ export default function AddEditProject() {
             <TextField id="project-category" name="category" value={formData.category} onChange={handleChange}
                        label="Category"
                        variant="outlined"/>
-            <TextField id="project-demands" name="demands" value={formData.demands} onChange={handleChange}
-                       label="Demands" variant="outlined"/>
+
+            <div>
+                <label>
+                    <Checkbox
+                        name={"moneyDonation"}
+                        checked={checkboxes.moneyDonation} onChange={handleCheckboxChange}
+                        inputProps={{'aria-label': 'controlled'}}
+                    />Money Donation
+                </label>
+                <label>
+                    <Checkbox
+                        name={"donationInKind"}
+                        checked={checkboxes.donationInKind} onChange={handleCheckboxChange}
+                        inputProps={{'aria-label': 'controlled'}}
+                    />Donation in Kind
+                </label>
+                <label>
+                    <Checkbox
+                        name={"foodDonation"}
+                        checked={checkboxes.foodDonation} onChange={handleCheckboxChange}
+                        inputProps={{'aria-label': 'controlled'}}
+                    />Food Donation
+                </label>
+                <label>
+                    <Checkbox
+                        name={"drugDonation"}
+                        checked={checkboxes.drugDonation} onChange={handleCheckboxChange}
+                        inputProps={{'aria-label': 'controlled'}}
+                    />Drug Donation
+                </label>
+            </div>
             <TextField id="project-location" name="location" value={formData.location} onChange={handleChange}
                        label="Location"
                        variant="outlined"/>
