@@ -1,6 +1,6 @@
 import ProjectCard from "../components/ProjectCard.tsx";
 import {useFetch} from "../hooks/useFetch.tsx";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 
 export default function Gallery() {

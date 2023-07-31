@@ -1,7 +1,7 @@
 import ProjectCard from "../components/ProjectCard.tsx";
 import {useFetch} from "../hooks/useFetch.tsx";
 import {Link, useParams} from "react-router-dom";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 
 
