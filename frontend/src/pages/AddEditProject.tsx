@@ -31,7 +31,6 @@ export default function AddEditProject() {
     const [category, setCategory] = useState<"DONATION" | "PARTICIPATION">("DONATION");
 
 
-
     useEffect(() => {
         fetchProjects();
     }, [fetchProjects]);
@@ -156,61 +155,71 @@ export default function AddEditProject() {
 
 
     return (
-        <StyledForm onSubmit={handleSubmit}>
-            <h1>ADD / UPDATE Project</h1>
-            <StyledTextField id="project-name" name="name" value={formData.name} onChange={handleChange} label="Name"
-                             variant="outlined"/>
-            <StyledTextField id="project-description" name="description" value={formData.description}
-                             onChange={handleChange}
-                             label="Description"
-                             variant="outlined"/>
-            <StyledTextField id="project-location" name="location" value={formData.location} onChange={handleChange}
-                             label="Location"
-                             variant="outlined"/>
+        <StyledBody>
+            <StyledForm onSubmit={handleSubmit}>
+                <h1>ADD / UPDATE Project</h1>
+                <StyledTextField id="project-name" name="name" value={formData.name} onChange={handleChange}
+                                 label="Name"
+                                 variant="outlined"/>
+                <StyledTextField id="project-description" name="description" value={formData.description}
+                                 onChange={handleChange}
+                                 label="Description"
+                                 variant="outlined"/>
+                <StyledTextField id="project-location" name="location" value={formData.location} onChange={handleChange}
+                                 label="Location"
+                                 variant="outlined"/>
 
-            <StyledToggleGroup id="category" color="primary" value={category} exclusive
-                               onChange={handleCategoryChange}
-                               aria-label="Platform">
-                <StyledToggleButton value="DONATION">Donation</StyledToggleButton>
-                <StyledToggleButton value="PARTICIPATION">Participation</StyledToggleButton>
-            </StyledToggleGroup>
-            <StyledCheckboxGroup>
-                <StyledCheckboxLabel>
-                    <Checkbox
-                        name={"moneyDonation"}
-                        checked={checkboxes.moneyDonation} onChange={handleCheckboxChange}
-                        inputProps={{'aria-label': 'controlled'}}
-                    />Money Donation
-                </StyledCheckboxLabel>
-                <StyledCheckboxLabel>
-                    <Checkbox
-                        name={"donationInKind"}
-                        checked={checkboxes.donationInKind} onChange={handleCheckboxChange}
-                        inputProps={{'aria-label': 'controlled'}}
-                    />Donation in Kind
-                </StyledCheckboxLabel>
-                <StyledCheckboxLabel>
-                    <Checkbox
-                        name={"foodDonation"}
-                        checked={checkboxes.foodDonation} onChange={handleCheckboxChange}
-                        inputProps={{'aria-label': 'controlled'}}
-                    />Food Donation
-                </StyledCheckboxLabel>
-                <StyledCheckboxLabel>
-                    <Checkbox
-                        name={"drugDonation"}
-                        checked={checkboxes.drugDonation} onChange={handleCheckboxChange}
-                        inputProps={{'aria-label': 'controlled'}}
-                    />Drug Donation
-                </StyledCheckboxLabel>
-            </StyledCheckboxGroup>
-            <button type={"submit"}>SAVE</button>
-            <button type={"button"} onClick={() => navigate("/")}>CANCEL</button>
-            <button type={"button"} onClick={handleDelete}>DELETE</button>
-        </StyledForm>
+                <StyledToggleGroup id="category" color="primary" value={category} exclusive
+                                   onChange={handleCategoryChange}
+                                   aria-label="Platform">
+                    <StyledToggleButton value="DONATION">Donation</StyledToggleButton>
+                    <StyledToggleButton value="PARTICIPATION">Participation</StyledToggleButton>
+                </StyledToggleGroup>
+                <StyledCheckboxGroup>
+                    <StyledCheckboxLabel>
+                        <Checkbox
+                            name={"moneyDonation"}
+                            checked={checkboxes.moneyDonation} onChange={handleCheckboxChange}
+                            inputProps={{'aria-label': 'controlled'}}
+                        />Money Donation
+                    </StyledCheckboxLabel>
+                    <StyledCheckboxLabel>
+                        <Checkbox
+                            name={"donationInKind"}
+                            checked={checkboxes.donationInKind} onChange={handleCheckboxChange}
+                            inputProps={{'aria-label': 'controlled'}}
+                        />Donation in Kind
+                    </StyledCheckboxLabel>
+                    <StyledCheckboxLabel>
+                        <Checkbox
+                            name={"foodDonation"}
+                            checked={checkboxes.foodDonation} onChange={handleCheckboxChange}
+                            inputProps={{'aria-label': 'controlled'}}
+                        />Food Donation
+                    </StyledCheckboxLabel>
+                    <StyledCheckboxLabel>
+                        <Checkbox
+                            name={"drugDonation"}
+                            checked={checkboxes.drugDonation} onChange={handleCheckboxChange}
+                            inputProps={{'aria-label': 'controlled'}}
+                        />Drug Donation
+                    </StyledCheckboxLabel>
+                </StyledCheckboxGroup>
+                <button type={"submit"}>SAVE</button>
+                <button type={"button"} onClick={() => navigate("/")}>CANCEL</button>
+                <button type={"button"} onClick={handleDelete}>DELETE</button>
+            </StyledForm>
+        </StyledBody>
     )
 }
 
+const StyledBody = styled.body`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 20px;
+  margin-bottom: 100px;
+`;
 
 const StyledForm = styled.form`
   display: flex;
@@ -225,7 +234,7 @@ const StyledToggleGroup = styled(ToggleButtonGroup)`
   display: flex;
   justify-content: center;
   margin: 16px;
-  width: 95%;
+  width: 100%;
 `;
 
 
@@ -237,18 +246,18 @@ const StyledToggleButton = styled(ToggleButton)`
 `;
 
 const StyledTextField = styled(TextField)`
-  width: 95%;
+  width: 100%;
   font-family: "Roboto Light", sans-serif;
 `;
 
 const StyledCheckboxGroup = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
   margin-top: 10px;
-  width: 95%;
+  width: 100%;
 `;
 
 const StyledCheckboxLabel = styled.label`
   font-family: "Roboto Light", sans-serif;
 `;
+
