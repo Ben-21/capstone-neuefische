@@ -19,7 +19,7 @@ const StyledH1 = styled.h1`
   justify-content: center;
 `;
 
-const StyledBody = styled.body`
+const StyledBody = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

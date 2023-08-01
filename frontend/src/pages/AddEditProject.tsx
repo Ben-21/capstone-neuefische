@@ -122,7 +122,7 @@ export default function AddEditProject() {
     }
 
 
-     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const {name, value} = event.target;
         setFormData((prevFormData) => ({
             ...prevFormData,
@@ -202,14 +202,15 @@ export default function AddEditProject() {
                         />Drug Donation
                     </StyledCheckboxLabel>
                 </StyledCheckboxGroup>
-                <StyledButton type={"submit"} variant="outlined" endIcon={<SaveIcon />}>SAVE</StyledButton>
-                <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined" endIcon={<SaveIcon />}>CANCEL</StyledButton>
+                <StyledButton type={"submit"} variant="outlined" endIcon={<SaveIcon/>}>SAVE</StyledButton>
+                <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined"
+                              endIcon={<SaveIcon/>}>CANCEL</StyledButton>
             </StyledForm>
         </StyledBody>
     )
 }
 
-const StyledBody = styled.body`
+const StyledBody = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -238,7 +239,7 @@ const StyledToggleButton = styled(ToggleButton)`
   display: flex;
   justify-content: center;
   width: 100%;
-    height: 56px;
+  height: 56px;
 `;
 
 const StyledTextField = styled(TextField)`
@@ -261,4 +262,3 @@ const StyledButton = styled(Button)`
   width: 100%;
   height: 56px;
 `;
-
