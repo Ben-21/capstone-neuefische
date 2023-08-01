@@ -1,9 +1,6 @@
 package de.neuefische.capstone.backend;
 
-import de.neuefische.capstone.backend.models.Category;
-import de.neuefische.capstone.backend.models.Demand;
-import de.neuefische.capstone.backend.models.Project;
-import de.neuefische.capstone.backend.models.ProjectWithoutId;
+import de.neuefische.capstone.backend.models.*;
 import de.neuefische.capstone.backend.services.IdService;
 import org.junit.jupiter.api.Test;
 
@@ -52,7 +49,7 @@ class ProjectServiceTest {
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 listOfDemands,
-                50,
+                0,
                 "Turkey");
 
 
@@ -63,12 +60,11 @@ class ProjectServiceTest {
                 .thenReturn(projectWithId);
 
 
-        Project actualProject = projectService.addProject(new ProjectWithoutId(
+        Project actualProject = projectService.addProject(new ProjectNoIdNoProgress(
                 "Earthquake Turkey",
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 listOfDemands,
-                50,
                 "Turkey"));
 
 
@@ -107,7 +103,7 @@ class ProjectServiceTest {
     void whenProjectUpdated_thenReturnUpdatedProject() {
         //Given
         String id = "01A";
-        ProjectWithoutId projectWithoutId = new ProjectWithoutId(
+        ProjectNoId projectWithoutId = new ProjectNoId(
                 "Earthquake Turkey",
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
@@ -142,7 +138,7 @@ class ProjectServiceTest {
     void whenNoId_thenThrowException() {
         //Given
         String id = "01A";
-        ProjectWithoutId projectWithoutId = new ProjectWithoutId(
+        ProjectNoId projectWithoutId = new ProjectNoId(
                 "Earthquake Turkey",
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,

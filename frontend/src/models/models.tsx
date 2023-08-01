@@ -8,7 +8,15 @@ export type Project = {
     location: string;
 }
 
-export type ProjectWithoutId = {
+export type ProjectNoIdNoProgress = {
+    name: string;
+    description: string;
+    category: "DONATION" | "PARTICIPATION";
+    demands: Demand[];
+    location: string;
+}
+
+export type ProjectNoId = {
     name: string;
     description: string;
     category: "DONATION" | "PARTICIPATION";

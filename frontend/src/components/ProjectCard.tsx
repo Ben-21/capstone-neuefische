@@ -3,7 +3,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import {CardActionArea} from '@mui/material';
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import {Project} from "../models/models.tsx";
 import { useNavigate} from "react-router-dom";
 
@@ -44,9 +44,7 @@ export default function ProjectCard(props: Props) {
 }
 
 const StyledCard = styled(Card)`
-  && {
-    width: 345px;
-    background-color: grey;
-    margin-top: 16px;
-  }
+  width: 345px;
+  background-color: grey;
+  margin-top: 16px;
 `;

@@ -2,7 +2,7 @@ package de.neuefische.capstone.backend.models;
 
 import java.util.List;
 
-public record ProjectWithoutId(
+public record ProjectNoId(
         String name,
         String description,
         Category category,

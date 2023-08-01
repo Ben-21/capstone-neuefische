@@ -1,11 +1,18 @@
 import Gallery from "./Gallery.tsx";
+import styled from "@emotion/styled";
 
 
 export default function Home() {
     return (
         <div>
-            <h1>Be Human</h1>
+            <StyledH1>Be Human</StyledH1>
             <Gallery/>
         </div>
     )
 }
+
+
+const StyledH1 = styled.h1`
+  display: flex;
+  justify-content: center;
+`;
