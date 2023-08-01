@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import HomeButton from "./HomeButton.tsx";
+import DeleteButton from "./DeleteButton.tsx";
 
 
 export default function NavigationBar() {
@@ -14,6 +15,8 @@ export default function NavigationBar() {
     useEffect(() => {
         if ((location.pathname.split("/")[1]) === "details") {
             setPage("details")
+        } else if ((location.pathname.split("/")[1]) === "edit") {
+            setPage("edit")
         } else {
             setPage(location.pathname)
         }
@@ -26,6 +29,7 @@ export default function NavigationBar() {
                 <HomeButton/>
                 {page === "/" && <AddButton/>}
                 {page === "details" && <EditButton projectId={id}/>}
+                {page === "edit" && <DeleteButton projectId={id}/>}
             </StyledNavigationBar>
         </StyledNavigationWrapper>
     )
