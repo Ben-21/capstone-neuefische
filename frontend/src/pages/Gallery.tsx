@@ -9,7 +9,6 @@ export default function Gallery() {
 
     return (
         <>
-
             <StyledGallery>
                 {projects.map((project) => (
                     <ProjectCard project={project} key={project.id}/>
@@ -18,7 +17,6 @@ export default function Gallery() {
         </>
     )
 }
-
 
 const StyledGallery = styled.div`
   display: flex;

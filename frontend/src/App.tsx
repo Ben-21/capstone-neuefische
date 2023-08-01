@@ -1,12 +1,12 @@
-import {Link, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Home from "./pages/Home.tsx";
-import styled from "@emotion/styled";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useFetch} from "./hooks/useFetch.tsx";
 import {useEffect, useState} from "react";
 import ShowProject from "./pages/ShowProject.tsx";
 import AddEditProject from "./pages/AddEditProject.tsx";
+import NavigationBar from "./components/NavigationBar.tsx";
 
 
 export default function App() {
@@ -27,7 +27,6 @@ export default function App() {
     if (initialLoad) return null;
 
     return (
-
         <>
             <ToastContainer/>
             <Routes>
@@ -36,24 +35,7 @@ export default function App() {
                 <Route path="/details/:id" element={<ShowProject/>}/>
                 <Route path="/edit/:id" element={<AddEditProject/>}/>
             </Routes>
-
-            <StyledApp>
-                <Link to={"/"}>
-                    <button>Home</button>
-                </Link>
-                <Link to={"/add-project"}>
-                    <button>Add Project</button>
-                </Link>
-            </StyledApp>
+            <NavigationBar/>
         </>
     )
 }
-
-const StyledApp = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1em;
-  padding-top: 2em;
-`;
