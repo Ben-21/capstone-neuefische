@@ -1,10 +1,11 @@
 import {useFetch} from "../hooks/useFetch.tsx";
 import React, {useEffect, useState} from "react";
 import {Demand, Project, ProjectNoIdNoProgress} from "../models/models.tsx";
-import {TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
+import {Button, TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import styled from "@emotion/styled";
 import {useNavigate, useParams} from "react-router-dom";
 import Checkbox from '@mui/material/Checkbox';
+import SaveIcon from '@mui/icons-material/Save';
 
 
 export default function AddEditProject() {
@@ -15,7 +16,6 @@ export default function AddEditProject() {
     const getProjectById = useFetch(state => state.getProjectById);
     const putProject = useFetch(state => state.putProject);
     const postProject = useFetch(state => state.postProject);
-    const deleteProject = useFetch(state => state.deleteProject);
     const [project, setProject] = useState<Project | undefined>(undefined);
     const [formData, setFormData] = useState({
         name: "",
@@ -122,18 +122,7 @@ export default function AddEditProject() {
     }
 
 
-    function handleDelete(event: React.MouseEvent<HTMLButtonElement>) {
-        event.preventDefault();
-        if (project) {
-            deleteProject(project.id);
-
-            navigate("/");
-        }
-
-    }
-
-
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const {name, value} = event.target;
         setFormData((prevFormData) => ({
             ...prevFormData,
@@ -151,6 +140,14 @@ export default function AddEditProject() {
 
     function handleCategoryChange(_: React.MouseEvent<HTMLElement>, newCategory: "DONATION" | "PARTICIPATION") {
         setCategory(newCategory)
+    }
+
+    function handleCancelButton() {
+        if (project) {
+            navigate(`/details/${project.id}`)
+        } else {
+            navigate("/")
+        }
     }
 
 
@@ -205,9 +202,8 @@ export default function AddEditProject() {
                         />Drug Donation
                     </StyledCheckboxLabel>
                 </StyledCheckboxGroup>
-                <button type={"submit"}>SAVE</button>
-                <button type={"button"} onClick={() => navigate("/")}>CANCEL</button>
-                <button type={"button"} onClick={handleDelete}>DELETE</button>
+                <StyledButton type={"submit"} variant="outlined" endIcon={<SaveIcon />}>SAVE</StyledButton>
+                <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined" endIcon={<SaveIcon />}>CANCEL</StyledButton>
             </StyledForm>
         </StyledBody>
     )
@@ -233,7 +229,6 @@ const StyledToggleGroup = styled(ToggleButtonGroup)`
   font-family: "Roboto Light", sans-serif;
   display: flex;
   justify-content: center;
-  margin: 16px;
   width: 100%;
 `;
 
@@ -243,6 +238,7 @@ const StyledToggleButton = styled(ToggleButton)`
   display: flex;
   justify-content: center;
   width: 100%;
+    height: 56px;
 `;
 
 const StyledTextField = styled(TextField)`
@@ -259,5 +255,10 @@ const StyledCheckboxGroup = styled.div`
 
 const StyledCheckboxLabel = styled.label`
   font-family: "Roboto Light", sans-serif;
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
+  height: 56px;
 `;
 
