@@ -15,6 +15,7 @@ import {
 import styled from "@emotion/styled";
 import {useNavigate, useParams} from "react-router-dom";
 import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
 export default function AddEditProject() {
@@ -161,6 +162,7 @@ export default function AddEditProject() {
         } else {
             navigate("/")
         }
+        window.scrollTo(0, 0);
     }
 
 
@@ -247,7 +249,7 @@ export default function AddEditProject() {
                 </StyledChipFormControl>
                 <StyledButton type={"submit"} variant="outlined" endIcon={<SaveIcon/>}>SAVE</StyledButton>
                 <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined"
-                              endIcon={<SaveIcon/>}>CANCEL</StyledButton>
+                              endIcon={<CancelIcon/>}>CANCEL</StyledButton>
             </StyledForm>
         </StyledBody>
     )
@@ -278,7 +280,7 @@ const StyledToggleGroup = styled(ToggleButtonGroup)`
 
 
 const StyledToggleButton = styled(ToggleButton)`
-  font-family: "Roboto Light", sans-serif;
+  font-family: "Roboto", sans-serif;
   display: flex;
   justify-content: center;
   width: 100%;

@@ -38,12 +38,13 @@ export default function NavigationBar() {
 const StyledNavigationBar = styled.div`
   display: inline-flex;
   border-radius: 5px 5px 0 0;
-  background-color: #888888;
   height: 45px;
 `;
 
 const StyledNavigationWrapper = styled.div`
-  background-color: #fff;
+  border-radius: 10px 10px 0px 0px;
+  background: var(--blue, #163E56);
+  box-shadow: 0px -4px 4px 0px rgba(0, 0, 0, 0.25);
   width: 100%;
   bottom: 0;
   left: 0;
@@ -51,5 +52,5 @@ const StyledNavigationWrapper = styled.div`
   height: 60px;
   display: flex;
   justify-content: center;
-  align-items: end;
+  align-items: center;
 `;
