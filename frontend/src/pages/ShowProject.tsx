@@ -39,5 +39,5 @@ const StyledApp = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1.1em;
-  padding-top: 2em;
+  margin-top: 101px;
 `;
