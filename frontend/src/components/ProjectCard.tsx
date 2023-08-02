@@ -3,9 +3,10 @@ import CardMedia from '@mui/material/CardMedia';
 import {CardActionArea} from '@mui/material';
 import styled from "@emotion/styled";
 import {Demand, Project} from "../models/models.tsx";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import seenotrettung from "../assets/seenotrettung.jpg"
 import {useEffect, useState} from "react";
+import {useFetch} from "../hooks/useFetch.tsx";
 
 
 type Props = {
@@ -16,7 +17,9 @@ type Props = {
 export default function ProjectCard(props: Props) {
     const navigate = useNavigate();
     const [demandsUserFriendly, setDemandsUserFriendly] = useState<string[]>([]);
-
+    const checkPage = useFetch(state => state.checkPage);
+    const location = useLocation();
+    const [page, setPage] = useState("");
 
     function mapDemandsToUserFriendly(demands: Demand[]) {
         const finalDemands: string[] = [];
@@ -44,6 +47,11 @@ export default function ProjectCard(props: Props) {
     }, [props.project]);
 
 
+    useEffect(() => {
+        setPage(checkPage(location.pathname));
+    }, [location, checkPage]);
+
+
     return (
         <StyledCard onClick={() => navigate(`/details/${props.project.id}`)}>
             <CardActionArea>
@@ -53,23 +61,32 @@ export default function ProjectCard(props: Props) {
                     image={seenotrettung}
                     alt="seenotrettung"
                 />
-
-                <StyledH2>
+                <StyledH1>
                     {props.project.name}
+                </StyledH1>
+                {page === "details" &&
+                    <>
+                        <StyledDescription>
+                            {props.project.description}
+                        </StyledDescription>
+                        <StyledH2>
+                            Demands:
+                        </StyledH2>
+                        <StyledDemandsWrapper>
+                            {demandsUserFriendly.map((demand, index) => <StyledDemands
+                                key={index}>{demand}</StyledDemands>)}
+                        </StyledDemandsWrapper>
+                    </>}
+                <StyledH2>
+                    Location:
                 </StyledH2>
                 <StyledDescription>
-                    {props.project.description}
+                    {props.project.location}
                 </StyledDescription>
-                <StyledH2>
-                    Demands
-                </StyledH2>
-                <StyledDemandsWrapper>
-                    {demandsUserFriendly.map((demand, index) => <StyledDemands key={index}>{demand}</StyledDemands>)}
-                </StyledDemandsWrapper>
-
             </CardActionArea>
         </StyledCard>
-    );
+    )
+        ;
 }
 
 const StyledCard = styled(Card)`
@@ -79,18 +96,25 @@ const StyledCard = styled(Card)`
   padding: 0;
   border-radius: 5px;
 `;
+const StyledH1 = styled.h1`
+  padding-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 6px;
+`;
 
 const StyledH2 = styled.h2`
-  padding: 10px;
+  padding-top: 20px;
+  padding-left: 10px;
+
   margin: 0;
   font-family: "Robot", sans-serif;
   font-weight: 400;
 `;
 
-
-
 const StyledDescription = styled.div`
-  padding: 10px;
+  padding-top: 0;
+  padding-left: 10px;
+  padding-bottom: 10px;
   margin: 0;
   font-family: "Robot", sans-serif;
   font-weight: 300;
