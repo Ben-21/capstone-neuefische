@@ -185,7 +185,7 @@ export default function AddEditProject() {
                     <StyledToggleButton value="PARTICIPATION">Participation</StyledToggleButton>
                 </StyledToggleGroup>
                 <StyledChipFormControl>
-                    <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+                    <InputLabel id="demo-multiple-chip-label">Demands</InputLabel>
                     <Select
                         labelId="demo-multiple-chip-label"
                         id="demo-multiple-chip"
