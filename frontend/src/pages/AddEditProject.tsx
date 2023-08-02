@@ -59,29 +59,35 @@ export default function AddEditProject() {
                 description: project.description.toString(),
                 location: project.location.toString()
             })
-            project.demands.map(demand => {
-                switch (demand) {
-                    case "MONEYDONATION":
-                        setSelectedDemands(prevState => [...prevState, "Money Donation"])
-                        break;
-                    case "DONATIONINKIND":
-                        setSelectedDemands(prevState => [...prevState, "Donation in Kind"])
-                        break;
-                    case "FOODDONATION":
-                        setSelectedDemands(prevState => [...prevState, "Food Donation"])
-                        break;
-                    case "DRUGDONATION":
-                        setSelectedDemands(prevState => [...prevState, "Drug Donation"])
-                        break;
-                }
-            });
+            setSelectedDemands(mapDemandsToUserFriendly(project.demands));
 
             setCategory(project.category)
         }
     }, [id, project, getProjectById])
 
+function mapDemandsToUserFriendly(demands: Demand[]) {
+    const finalDemands: string[] = [];
+        demands.map(demand => {
+        switch (demand) {
+        case "MONEYDONATION":
+            finalDemands.push("Money Donation")
+            break;
+        case "DONATIONINKIND":
+           finalDemands.push("Donation in Kind")
+            break;
+        case "FOODDONATION":
+            finalDemands.push("Food Donation")
+            break;
+        case "DRUGDONATION":
+            finalDemands.push("Drug Donation")
+            break;
+    }
+});
+    return finalDemands;
+}
 
-    function checkDemands() {
+
+    function mapDemandsToEnum() {
         const finalDemands: Demand[] = [];
         selectedDemands.map(demand => {
             switch (demand) {
@@ -120,7 +126,7 @@ export default function AddEditProject() {
                 name: formData.name,
                 description: formData.description,
                 category: category,
-                demands: checkDemands(),
+                demands: mapDemandsToEnum(),
                 location: formData.location,
             };
             postProject(requestBody);
@@ -133,7 +139,7 @@ export default function AddEditProject() {
                 name: formData.name,
                 description: formData.description,
                 category: category,
-                demands: checkDemands(),
+                demands: mapDemandsToEnum(),
                 progress: project.progress,
                 location: formData.location,
             };
