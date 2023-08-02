@@ -1,10 +1,19 @@
 import {useFetch} from "../hooks/useFetch.tsx";
 import React, {useEffect, useState} from "react";
 import {Demand, Project, ProjectNoIdNoProgress} from "../models/models.tsx";
-import {Button, TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
+import {
+    Box,
+    Button, Chip,
+    FormControl,
+    InputLabel, MenuItem,
+    OutlinedInput,
+    Select, SelectChangeEvent,
+    TextField, Theme,
+    ToggleButton,
+    ToggleButtonGroup, useTheme
+} from "@mui/material";
 import styled from "@emotion/styled";
 import {useNavigate, useParams} from "react-router-dom";
-import Checkbox from '@mui/material/Checkbox';
 import SaveIcon from '@mui/icons-material/Save';
 
 
@@ -22,13 +31,15 @@ export default function AddEditProject() {
         description: "",
         location: ""
     });
-    const [checkboxes, setCheckboxes] = useState({
-        moneyDonation: false,
-        donationInKind: false,
-        foodDonation: false,
-        drugDonation: false
-    });
     const [category, setCategory] = useState<"DONATION" | "PARTICIPATION">("DONATION");
+    const chipTheme = useTheme();
+    const [selectedDemands, setSelectedDemands] = useState<string[]>([]);
+    const possibleDemands = [
+        "Money Donation",
+        "Donation in Kind",
+        "Food Donation",
+        "Drug Donation"
+    ];
 
 
     useEffect(() => {
@@ -47,32 +58,47 @@ export default function AddEditProject() {
                 description: project.description.toString(),
                 location: project.location.toString()
             })
-            setCheckboxes({
-                moneyDonation: project.demands.includes("MONEYDONATION"),
-                donationInKind: project.demands.includes("DONATIONINKIND"),
-                foodDonation: project.demands.includes("FOODDONATION"),
-                drugDonation: project.demands.includes("DRUGDONATION")
-            })
+            project.demands.map(demand => {
+                switch (demand) {
+                    case "MONEYDONATION":
+                        setSelectedDemands(prevState => [...prevState, "Money Donation"])
+                        break;
+                    case "DONATIONINKIND":
+                        setSelectedDemands(prevState => [...prevState, "Donation in Kind"])
+                        break;
+                    case "FOODDONATION":
+                        setSelectedDemands(prevState => [...prevState, "Food Donation"])
+                        break;
+                    case "DRUGDONATION":
+                        setSelectedDemands(prevState => [...prevState, "Drug Donation"])
+                        break;
+                }
+            });
+
             setCategory(project.category)
         }
     }, [id, project, getProjectById])
 
 
     function checkDemands() {
-        const selectedDemands: Demand[] = [];
-        if (checkboxes.moneyDonation) {
-            selectedDemands.push("MONEYDONATION");
-        }
-        if (checkboxes.donationInKind) {
-            selectedDemands.push("DONATIONINKIND");
-        }
-        if (checkboxes.foodDonation) {
-            selectedDemands.push("FOODDONATION");
-        }
-        if (checkboxes.drugDonation) {
-            selectedDemands.push("DRUGDONATION");
-        }
-        return selectedDemands;
+        const finalDemands: Demand[] = [];
+        selectedDemands.map(demand => {
+            switch (demand) {
+                case "Money Donation":
+                    finalDemands.push("MONEYDONATION")
+                    break;
+                case "Donation in Kind":
+                    finalDemands.push("DONATIONINKIND")
+                    break;
+                case "Food Donation":
+                    finalDemands.push("FOODDONATION")
+                    break;
+                case "Drug Donation":
+                    finalDemands.push("DRUGDONATION")
+                    break;
+            }
+        })
+        return finalDemands;
     }
 
     function initialiseAllFields() {
@@ -81,12 +107,7 @@ export default function AddEditProject() {
             description: "",
             location: "",
         })
-        setCheckboxes({
-            moneyDonation: false,
-            donationInKind: false,
-            foodDonation: false,
-            drugDonation: false
-        })
+        setSelectedDemands([]);
         setCategory("DONATION");
     }
 
@@ -130,14 +151,6 @@ export default function AddEditProject() {
         }));
     }
 
-    const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, checked} = event.target;
-        setCheckboxes({
-            ...checkboxes,
-            [name]: checked,
-        });
-    };
-
     function handleCategoryChange(_: React.MouseEvent<HTMLElement>, newCategory: "DONATION" | "PARTICIPATION") {
         setCategory(newCategory)
     }
@@ -149,6 +162,37 @@ export default function AddEditProject() {
             navigate("/")
         }
     }
+
+
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+        PaperProps: {
+            style: {
+                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                width: 250,
+            },
+        },
+    };
+
+    function getStyles(name: string, personName: readonly string[], theme: Theme) {
+        return {
+            fontWeight:
+                personName.indexOf(name) === -1
+                    ? theme.typography.fontWeightRegular
+                    : theme.typography.fontWeightMedium,
+        };
+    }
+
+    const handleChipChange = (event: SelectChangeEvent<typeof selectedDemands>) => {
+        const {
+            target: {value},
+        } = event;
+        setSelectedDemands(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };
 
 
     return (
@@ -172,36 +216,35 @@ export default function AddEditProject() {
                     <StyledToggleButton value="DONATION">Donation</StyledToggleButton>
                     <StyledToggleButton value="PARTICIPATION">Participation</StyledToggleButton>
                 </StyledToggleGroup>
-                <StyledCheckboxGroup>
-                    <StyledCheckboxLabel>
-                        <Checkbox
-                            name={"moneyDonation"}
-                            checked={checkboxes.moneyDonation} onChange={handleCheckboxChange}
-                            inputProps={{'aria-label': 'controlled'}}
-                        />Money Donation
-                    </StyledCheckboxLabel>
-                    <StyledCheckboxLabel>
-                        <Checkbox
-                            name={"donationInKind"}
-                            checked={checkboxes.donationInKind} onChange={handleCheckboxChange}
-                            inputProps={{'aria-label': 'controlled'}}
-                        />Donation in Kind
-                    </StyledCheckboxLabel>
-                    <StyledCheckboxLabel>
-                        <Checkbox
-                            name={"foodDonation"}
-                            checked={checkboxes.foodDonation} onChange={handleCheckboxChange}
-                            inputProps={{'aria-label': 'controlled'}}
-                        />Food Donation
-                    </StyledCheckboxLabel>
-                    <StyledCheckboxLabel>
-                        <Checkbox
-                            name={"drugDonation"}
-                            checked={checkboxes.drugDonation} onChange={handleCheckboxChange}
-                            inputProps={{'aria-label': 'controlled'}}
-                        />Drug Donation
-                    </StyledCheckboxLabel>
-                </StyledCheckboxGroup>
+                <StyledChipFormControl>
+                    <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+                    <Select
+                        labelId="demo-multiple-chip-label"
+                        id="demo-multiple-chip"
+                        multiple
+                        value={selectedDemands}
+                        onChange={handleChipChange}
+                        input={<OutlinedInput id="select-multiple-chip" label="Chip"/>}
+                        renderValue={(selected) => (
+                            <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
+                                {selected.map((value) => (
+                                    <Chip key={value} label={value}/>
+                                ))}
+                            </Box>
+                        )}
+                        MenuProps={MenuProps}
+                    >
+                        {possibleDemands.map((name) => (
+                            <MenuItem
+                                key={name}
+                                value={name}
+                                style={getStyles(name, selectedDemands, chipTheme)}
+                            >
+                                {name}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </StyledChipFormControl>
                 <StyledButton type={"submit"} variant="outlined" endIcon={<SaveIcon/>}>SAVE</StyledButton>
                 <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined"
                               endIcon={<SaveIcon/>}>CANCEL</StyledButton>
@@ -247,18 +290,11 @@ const StyledTextField = styled(TextField)`
   font-family: "Roboto Light", sans-serif;
 `;
 
-const StyledCheckboxGroup = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  margin-top: 10px;
-  width: 100%;
-`;
-
-const StyledCheckboxLabel = styled.label`
-  font-family: "Roboto Light", sans-serif;
-`;
-
 const StyledButton = styled(Button)`
   width: 100%;
   height: 56px;
+`;
+
+const StyledChipFormControl = styled(FormControl)`
+  width: 100%;
 `;
