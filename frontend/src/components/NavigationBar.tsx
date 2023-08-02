@@ -5,22 +5,20 @@ import {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import HomeButton from "./HomeButton.tsx";
 import DeleteButton from "./DeleteButton.tsx";
+import {useFetch} from "../hooks/useFetch.tsx";
 
 
 export default function NavigationBar() {
     const location = useLocation();
     const id = location.pathname.split("/")[2]
     const [page, setPage] = useState("");
+    const checkPage = useFetch(state => state.checkPage);
+
+
 
     useEffect(() => {
-        if ((location.pathname.split("/")[1]) === "details") {
-            setPage("details")
-        } else if ((location.pathname.split("/")[1]) === "edit") {
-            setPage("edit")
-        } else {
-            setPage(location.pathname)
-        }
-    }, [location]);
+        setPage(checkPage(location.pathname))
+    }, [location, checkPage]);
 
 
     return (

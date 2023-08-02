@@ -12,12 +12,15 @@ type State = {
     putProject: (requestBody: Project) => void,
     deleteProject: (id: string) => void,
     isLoading: boolean,
+    checkPage: (page: string) => string,
+    page: string,
 };
 
 
 export const useFetch = create<State>((set, get) => ({
         projects: [],
         isLoading: true,
+        page: "",
 
 
         fetchProjects: () => {
@@ -81,6 +84,17 @@ export const useFetch = create<State>((set, get) => ({
                     toast.error("Something went wrong");
                     console.error(error);
                 })
+        },
+
+        checkPage: (path) => {
+            if ((path.split("/")[1]) === "details") {
+                set({page: "details"})
+            } else if ((path.split("/")[1]) === "edit") {
+                set({page: "edit"})
+            } else {
+                set({page: path})
+            }
+            return get().page
         }
     }))
 ;
