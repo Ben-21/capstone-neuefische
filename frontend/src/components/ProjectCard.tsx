@@ -2,7 +2,7 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import {CardActionArea} from '@mui/material';
 import styled from "@emotion/styled";
-import {Demand, Project} from "../models/models.tsx";
+import {Project} from "../models/models.tsx";
 import {useLocation, useNavigate} from "react-router-dom";
 import seenotrettung from "../assets/seenotrettung.jpg"
 import {useEffect, useState} from "react";
@@ -20,31 +20,13 @@ export default function ProjectCard(props: Props) {
     const checkPage = useFetch(state => state.checkPage);
     const location = useLocation();
     const [page, setPage] = useState("");
+    const mapDemandsToUserFriendly = useFetch(state => state.mapDemandsToUserFriendly);
 
-    function mapDemandsToUserFriendly(demands: Demand[]) {
-        const finalDemands: string[] = [];
-        demands.map(demand => {
-            switch (demand) {
-                case "MONEYDONATION":
-                    finalDemands.push("Money Donation")
-                    break;
-                case "DONATIONINKIND":
-                    finalDemands.push("Donation in Kind")
-                    break;
-                case "FOODDONATION":
-                    finalDemands.push("Food Donation")
-                    break;
-                case "DRUGDONATION":
-                    finalDemands.push("Drug Donation")
-                    break;
-            }
-        });
-        return finalDemands;
-    }
+
 
     useEffect(() => {
         setDemandsUserFriendly(mapDemandsToUserFriendly(props.project.demands));
-    }, [props.project]);
+    }, [props.project, mapDemandsToUserFriendly]);
 
 
     useEffect(() => {

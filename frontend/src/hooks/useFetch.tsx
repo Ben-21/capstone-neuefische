@@ -1,4 +1,4 @@
-import {Project, ProjectNoIdNoProgress} from "../models/models.tsx";
+import {Demand, Project, ProjectNoIdNoProgress} from "../models/models.tsx";
 import {create} from "zustand";
 import axios from "axios";
 import {toast} from 'react-toastify';
@@ -14,6 +14,9 @@ type State = {
     isLoading: boolean,
     checkPage: (page: string) => string,
     page: string,
+    mapDemandsToUserFriendly: (demands: Demand[]) => string[],
+    mapDemandsToEnum: (string: string[]) => Demand[],
+
 };
 
 
@@ -95,6 +98,48 @@ export const useFetch = create<State>((set, get) => ({
                 set({page: path})
             }
             return get().page
+        },
+
+        mapDemandsToUserFriendly: (demands: Demand[]) => {
+            const finalDemands: string[] = [];
+            demands.map(demand => {
+                switch (demand) {
+                    case "MONEYDONATION":
+                        finalDemands.push("Money Donation")
+                        break;
+                    case "DONATIONINKIND":
+                        finalDemands.push("Donation in Kind")
+                        break;
+                    case "FOODDONATION":
+                        finalDemands.push("Food Donation")
+                        break;
+                    case "DRUGDONATION":
+                        finalDemands.push("Drug Donation")
+                        break;
+                }
+            });
+            return finalDemands;
+        },
+
+        mapDemandsToEnum: (string: string[]) => {
+            const finalDemands: Demand[] = [];
+            string.map(demand => {
+                switch (demand) {
+                    case "Money Donation":
+                        finalDemands.push("MONEYDONATION")
+                        break;
+                    case "Donation in Kind":
+                        finalDemands.push("DONATIONINKIND")
+                        break;
+                    case "Food Donation":
+                        finalDemands.push("FOODDONATION")
+                        break;
+                    case "Drug Donation":
+                        finalDemands.push("DRUGDONATION")
+                        break;
+                }
+            });
+            return finalDemands;
         }
     }))
 ;

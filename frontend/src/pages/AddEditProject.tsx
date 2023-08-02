@@ -1,6 +1,6 @@
 import {useFetch} from "../hooks/useFetch.tsx";
 import React, {useEffect, useState} from "react";
-import {Demand, Project, ProjectNoIdNoProgress} from "../models/models.tsx";
+import {Project, ProjectNoIdNoProgress} from "../models/models.tsx";
 import {
     Box,
     Button, Chip,
@@ -41,6 +41,8 @@ export default function AddEditProject() {
         "Food Donation",
         "Drug Donation"
     ];
+    const mapDemandsToUserFriendly = useFetch(state => state.mapDemandsToUserFriendly);
+    const mapDemandsToEnum = useFetch(state => state.mapDemandsToEnum);
 
 
     useEffect(() => {
@@ -63,50 +65,8 @@ export default function AddEditProject() {
 
             setCategory(project.category)
         }
-    }, [id, project, getProjectById])
+    }, [id, project, getProjectById, mapDemandsToUserFriendly])
 
-function mapDemandsToUserFriendly(demands: Demand[]) {
-    const finalDemands: string[] = [];
-        demands.map(demand => {
-        switch (demand) {
-        case "MONEYDONATION":
-            finalDemands.push("Money Donation")
-            break;
-        case "DONATIONINKIND":
-           finalDemands.push("Donation in Kind")
-            break;
-        case "FOODDONATION":
-            finalDemands.push("Food Donation")
-            break;
-        case "DRUGDONATION":
-            finalDemands.push("Drug Donation")
-            break;
-    }
-});
-    return finalDemands;
-}
-
-
-    function mapDemandsToEnum() {
-        const finalDemands: Demand[] = [];
-        selectedDemands.map(demand => {
-            switch (demand) {
-                case "Money Donation":
-                    finalDemands.push("MONEYDONATION")
-                    break;
-                case "Donation in Kind":
-                    finalDemands.push("DONATIONINKIND")
-                    break;
-                case "Food Donation":
-                    finalDemands.push("FOODDONATION")
-                    break;
-                case "Drug Donation":
-                    finalDemands.push("DRUGDONATION")
-                    break;
-            }
-        })
-        return finalDemands;
-    }
 
     function initialiseAllFields() {
         setFormData({
@@ -126,7 +86,7 @@ function mapDemandsToUserFriendly(demands: Demand[]) {
                 name: formData.name,
                 description: formData.description,
                 category: category,
-                demands: mapDemandsToEnum(),
+                demands: mapDemandsToEnum(selectedDemands),
                 location: formData.location,
             };
             postProject(requestBody);
@@ -139,7 +99,7 @@ function mapDemandsToUserFriendly(demands: Demand[]) {
                 name: formData.name,
                 description: formData.description,
                 category: category,
-                demands: mapDemandsToEnum(),
+                demands: mapDemandsToEnum(selectedDemands),
                 progress: project.progress,
                 location: formData.location,
             };
