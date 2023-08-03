@@ -166,7 +166,6 @@ export default function AddEditProject() {
     return (
         <StyledBody>
             <StyledForm onSubmit={handleSubmit}>
-                <h1>ADD / UPDATE Project</h1>
                 <StyledTextField id="project-name" name="name" value={formData.name} onChange={handleChange}
                                  label="Name"
                                  variant="outlined"/>
@@ -227,6 +226,7 @@ const StyledBody = styled.div`
   justify-content: flex-start;
   gap: 20px;
   margin-bottom: 100px;
+  margin-top: 101px;
 `;
 
 const StyledForm = styled.form`
@@ -242,6 +242,7 @@ const StyledToggleGroup = styled(ToggleButtonGroup)`
   display: flex;
   justify-content: center;
   width: 100%;
+  background-color: #EBE7D8;
 `;
 
 
@@ -251,18 +252,29 @@ const StyledToggleButton = styled(ToggleButton)`
   justify-content: center;
   width: 100%;
   height: 56px;
+
+  &.Mui-selected {
+    color: #163E56;
+  }
 `;
 
 const StyledTextField = styled(TextField)`
   width: 100%;
   font-family: "Roboto Light", sans-serif;
+  background-color: #EBE7D8;
+  border-radius: 4px;
 `;
 
 const StyledButton = styled(Button)`
   width: 100%;
   height: 56px;
+  background-color: #EBE7D8;
+  color: #163E56;
+  border-color: #163E56;
 `;
 
 const StyledChipFormControl = styled(FormControl)`
   width: 100%;
+  background-color: #EBE7D8;
+  border-radius: 4px;
 `;
