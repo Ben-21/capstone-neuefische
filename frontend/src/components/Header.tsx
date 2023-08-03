@@ -85,9 +85,9 @@ const StyledSubHeader = styled.div`
   top: 60px;
   transform: translateX(-50%);
   left: 50%;
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 0 0 10px 10px;
   background: #FFB34F;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   `;
 
 const StyledSvgHandsLeft = styled.svg`
