@@ -1,4 +1,4 @@
-import {Project, ProjectNoIdNoProgress} from "../models/models.tsx";
+import {Demand, Project, ProjectNoIdNoProgress} from "../models/models.tsx";
 import {create} from "zustand";
 import axios from "axios";
 import {toast} from 'react-toastify';
@@ -12,12 +12,18 @@ type State = {
     putProject: (requestBody: Project) => void,
     deleteProject: (id: string) => void,
     isLoading: boolean,
+    checkPage: (page: string) => string,
+    page: string,
+    mapDemandsToUserFriendly: (demands: Demand[]) => string[],
+    mapDemandsToEnum: (string: string[]) => Demand[],
+
 };
 
 
 export const useFetch = create<State>((set, get) => ({
         projects: [],
         isLoading: true,
+        page: "",
 
 
         fetchProjects: () => {
@@ -81,6 +87,61 @@ export const useFetch = create<State>((set, get) => ({
                     toast.error("Something went wrong");
                     console.error(error);
                 })
+        },
+
+        checkPage: (path) => {
+            if ((path.split("/")[1]) === "details") {
+                set({page: "details"})
+            } else if ((path.split("/")[1]) === "edit") {
+                set({page: "edit"})
+            } else if ((path.split("/")[1]) === "add") {
+                set({page: "add"})
+            } else {
+                set({page: path})
+            }
+            return get().page
+        },
+
+        mapDemandsToUserFriendly: (demands: Demand[]) => {
+            const finalDemands: string[] = [];
+            demands.forEach(demand => {
+                switch (demand) {
+                    case "MONEYDONATION":
+                        finalDemands.push("Money Donation")
+                        break;
+                    case "DONATIONINKIND":
+                        finalDemands.push("Donation in Kind")
+                        break;
+                    case "FOODDONATION":
+                        finalDemands.push("Food Donation")
+                        break;
+                    case "DRUGDONATION":
+                        finalDemands.push("Drug Donation")
+                        break;
+                }
+            });
+            return finalDemands;
+        },
+
+        mapDemandsToEnum: (string: string[]) => {
+            const finalDemands: Demand[] = [];
+            string.forEach(demand => {
+                switch (demand) {
+                    case "Money Donation":
+                        finalDemands.push("MONEYDONATION")
+                        break;
+                    case "Donation in Kind":
+                        finalDemands.push("DONATIONINKIND")
+                        break;
+                    case "Food Donation":
+                        finalDemands.push("FOODDONATION")
+                        break;
+                    case "Drug Donation":
+                        finalDemands.push("DRUGDONATION")
+                        break;
+                }
+            });
+            return finalDemands;
         }
     }))
 ;

@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import ShowProject from "./pages/ShowProject.tsx";
 import AddEditProject from "./pages/AddEditProject.tsx";
 import NavigationBar from "./components/NavigationBar.tsx";
+import Header from "./components/Header.tsx";
 
 
 export default function App() {
@@ -28,13 +29,15 @@ export default function App() {
 
     return (
         <>
+            <Header/>
             <ToastContainer/>
             <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/add-project" element={<AddEditProject/>}/>
+                <Route path="/add" element={<AddEditProject/>}/>
                 <Route path="/details/:id" element={<ShowProject/>}/>
                 <Route path="/edit/:id" element={<AddEditProject/>}/>
             </Routes>
+
             <NavigationBar/>
         </>
     )

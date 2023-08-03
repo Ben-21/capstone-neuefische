@@ -9,7 +9,7 @@ export default function AddButton() {
 
 
     function handleClick() {
-        navigate("/add-project")
+        navigate("/add")
     }
 
 

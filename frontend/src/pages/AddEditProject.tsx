@@ -1,6 +1,6 @@
 import {useFetch} from "../hooks/useFetch.tsx";
 import React, {useEffect, useState} from "react";
-import {Demand, Project, ProjectNoIdNoProgress} from "../models/models.tsx";
+import {Project, ProjectNoIdNoProgress} from "../models/models.tsx";
 import {
     Box,
     Button, Chip,
@@ -15,6 +15,7 @@ import {
 import styled from "@emotion/styled";
 import {useNavigate, useParams} from "react-router-dom";
 import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
 export default function AddEditProject() {
@@ -40,6 +41,8 @@ export default function AddEditProject() {
         "Food Donation",
         "Drug Donation"
     ];
+    const mapDemandsToUserFriendly = useFetch(state => state.mapDemandsToUserFriendly);
+    const mapDemandsToEnum = useFetch(state => state.mapDemandsToEnum);
 
 
     useEffect(() => {
@@ -58,48 +61,12 @@ export default function AddEditProject() {
                 description: project.description.toString(),
                 location: project.location.toString()
             })
-            project.demands.map(demand => {
-                switch (demand) {
-                    case "MONEYDONATION":
-                        setSelectedDemands(prevState => [...prevState, "Money Donation"])
-                        break;
-                    case "DONATIONINKIND":
-                        setSelectedDemands(prevState => [...prevState, "Donation in Kind"])
-                        break;
-                    case "FOODDONATION":
-                        setSelectedDemands(prevState => [...prevState, "Food Donation"])
-                        break;
-                    case "DRUGDONATION":
-                        setSelectedDemands(prevState => [...prevState, "Drug Donation"])
-                        break;
-                }
-            });
+            setSelectedDemands(mapDemandsToUserFriendly(project.demands));
 
             setCategory(project.category)
         }
-    }, [id, project, getProjectById])
+    }, [id, project, getProjectById, mapDemandsToUserFriendly])
 
-
-    function checkDemands() {
-        const finalDemands: Demand[] = [];
-        selectedDemands.map(demand => {
-            switch (demand) {
-                case "Money Donation":
-                    finalDemands.push("MONEYDONATION")
-                    break;
-                case "Donation in Kind":
-                    finalDemands.push("DONATIONINKIND")
-                    break;
-                case "Food Donation":
-                    finalDemands.push("FOODDONATION")
-                    break;
-                case "Drug Donation":
-                    finalDemands.push("DRUGDONATION")
-                    break;
-            }
-        })
-        return finalDemands;
-    }
 
     function initialiseAllFields() {
         setFormData({
@@ -119,7 +86,7 @@ export default function AddEditProject() {
                 name: formData.name,
                 description: formData.description,
                 category: category,
-                demands: checkDemands(),
+                demands: mapDemandsToEnum(selectedDemands),
                 location: formData.location,
             };
             postProject(requestBody);
@@ -132,7 +99,7 @@ export default function AddEditProject() {
                 name: formData.name,
                 description: formData.description,
                 category: category,
-                demands: checkDemands(),
+                demands: mapDemandsToEnum(selectedDemands),
                 progress: project.progress,
                 location: formData.location,
             };
@@ -161,6 +128,7 @@ export default function AddEditProject() {
         } else {
             navigate("/")
         }
+        window.scrollTo(0, 0);
     }
 
 
@@ -198,14 +166,14 @@ export default function AddEditProject() {
     return (
         <StyledBody>
             <StyledForm onSubmit={handleSubmit}>
-                <h1>ADD / UPDATE Project</h1>
                 <StyledTextField id="project-name" name="name" value={formData.name} onChange={handleChange}
                                  label="Name"
                                  variant="outlined"/>
                 <StyledTextField id="project-description" name="description" value={formData.description}
                                  onChange={handleChange}
                                  label="Description"
-                                 variant="outlined"/>
+                                 variant="outlined"
+                                 multiline rows={4}/>
                 <StyledTextField id="project-location" name="location" value={formData.location} onChange={handleChange}
                                  label="Location"
                                  variant="outlined"/>
@@ -217,7 +185,7 @@ export default function AddEditProject() {
                     <StyledToggleButton value="PARTICIPATION">Participation</StyledToggleButton>
                 </StyledToggleGroup>
                 <StyledChipFormControl>
-                    <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
+                    <InputLabel id="demo-multiple-chip-label">Demands</InputLabel>
                     <Select
                         labelId="demo-multiple-chip-label"
                         id="demo-multiple-chip"
@@ -247,7 +215,7 @@ export default function AddEditProject() {
                 </StyledChipFormControl>
                 <StyledButton type={"submit"} variant="outlined" endIcon={<SaveIcon/>}>SAVE</StyledButton>
                 <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined"
-                              endIcon={<SaveIcon/>}>CANCEL</StyledButton>
+                              endIcon={<CancelIcon/>}>CANCEL</StyledButton>
             </StyledForm>
         </StyledBody>
     )
@@ -259,6 +227,7 @@ const StyledBody = styled.div`
   justify-content: flex-start;
   gap: 20px;
   margin-bottom: 100px;
+  margin-top: 101px;
 `;
 
 const StyledForm = styled.form`
@@ -276,25 +245,32 @@ const StyledToggleGroup = styled(ToggleButtonGroup)`
   width: 100%;
 `;
 
-
 const StyledToggleButton = styled(ToggleButton)`
-  font-family: "Roboto Light", sans-serif;
+  font-family: "Roboto", sans-serif;
   display: flex;
   justify-content: center;
   width: 100%;
   height: 56px;
+
+  &.Mui-selected {
+    color: #163E56;
+  }
 `;
 
 const StyledTextField = styled(TextField)`
   width: 100%;
   font-family: "Roboto Light", sans-serif;
+  border-radius: 4px;
 `;
 
 const StyledButton = styled(Button)`
   width: 100%;
   height: 56px;
+  color: #163E56;
+  border-color: #163E56;
 `;
 
 const StyledChipFormControl = styled(FormControl)`
   width: 100%;
+  border-radius: 4px;
 `;

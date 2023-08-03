@@ -6,7 +6,6 @@ export default function Home() {
     return (
         <StyledBody>
             <Main>
-                <StyledH1>Be Human</StyledH1>
                 <Gallery/>
             </Main>
         </StyledBody>
@@ -14,10 +13,7 @@ export default function Home() {
 }
 
 
-const StyledH1 = styled.h1`
-  display: flex;
-  justify-content: center;
-`;
+
 
 const StyledBody = styled.div`
   display: flex;
@@ -25,6 +21,7 @@ const StyledBody = styled.div`
   justify-content: flex-start;
   gap: 20px;
   margin-bottom: 100px;
+  margin-top: 101px;
 `;
 
 const Main = styled.main`
