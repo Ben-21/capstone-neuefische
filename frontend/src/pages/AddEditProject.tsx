@@ -173,7 +173,7 @@ export default function AddEditProject() {
                                  onChange={handleChange}
                                  label="Description"
                                  variant="outlined"
-                multiline rows={4}/>
+                                 multiline rows={4}/>
                 <StyledTextField id="project-location" name="location" value={formData.location} onChange={handleChange}
                                  label="Location"
                                  variant="outlined"/>
@@ -244,7 +244,6 @@ const StyledToggleGroup = styled(ToggleButtonGroup)`
   justify-content: center;
   width: 100%;
 `;
-
 
 const StyledToggleButton = styled(ToggleButton)`
   font-family: "Roboto", sans-serif;

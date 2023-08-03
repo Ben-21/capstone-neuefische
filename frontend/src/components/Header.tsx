@@ -88,7 +88,7 @@ const StyledSubHeader = styled.div`
   border-radius: 0 0 10px 10px;
   background: #FFB34F;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-  `;
+`;
 
 const StyledSvgHandsLeft = styled.svg`
   position: absolute;
