@@ -94,9 +94,7 @@ const StyledH2 = styled.h2`
 `;
 
 const StyledDescription = styled.div`
-  padding-top: 0;
-  padding-left: 10px;
-  padding-bottom: 10px;
+  padding: 0 10px 10px 10px;
   margin: 0;
   font-family: "Robot", sans-serif;
   font-weight: 300;
