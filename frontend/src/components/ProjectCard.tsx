@@ -55,8 +55,8 @@ export default function ProjectCard(props: Props) {
                             Demands:
                         </StyledH2>
                         <StyledDemandsWrapper>
-                            {demandsUserFriendly.map((demand, key) => <StyledDemands
-                                key={key}>{demand}</StyledDemands>)}
+                            {demandsUserFriendly.map((demand) => <StyledDemands
+                                key={demand}>{demand}</StyledDemands>)}
                         </StyledDemandsWrapper>
                     </>}
                 <StyledH2>
