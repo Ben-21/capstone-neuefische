@@ -94,6 +94,8 @@ export const useFetch = create<State>((set, get) => ({
                 set({page: "details"})
             } else if ((path.split("/")[1]) === "edit") {
                 set({page: "edit"})
+            } else if ((path.split("/")[1]) === "add") {
+                set({page: "add"})
             } else {
                 set({page: path})
             }

@@ -33,7 +33,7 @@ export default function App() {
             <ToastContainer/>
             <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/add-project" element={<AddEditProject/>}/>
+                <Route path="/add" element={<AddEditProject/>}/>
                 <Route path="/details/:id" element={<ShowProject/>}/>
                 <Route path="/edit/:id" element={<AddEditProject/>}/>
             </Routes>
