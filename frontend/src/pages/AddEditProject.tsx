@@ -172,7 +172,8 @@ export default function AddEditProject() {
                 <StyledTextField id="project-description" name="description" value={formData.description}
                                  onChange={handleChange}
                                  label="Description"
-                                 variant="outlined"/>
+                                 variant="outlined"
+                multiline rows={4}/>
                 <StyledTextField id="project-location" name="location" value={formData.location} onChange={handleChange}
                                  label="Location"
                                  variant="outlined"/>
