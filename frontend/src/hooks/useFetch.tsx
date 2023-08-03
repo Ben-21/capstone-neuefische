@@ -104,7 +104,7 @@ export const useFetch = create<State>((set, get) => ({
 
         mapDemandsToUserFriendly: (demands: Demand[]) => {
             const finalDemands: string[] = [];
-            demands.map(demand => {
+            demands.forEach(demand => {
                 switch (demand) {
                     case "MONEYDONATION":
                         finalDemands.push("Money Donation")
@@ -125,7 +125,7 @@ export const useFetch = create<State>((set, get) => ({
 
         mapDemandsToEnum: (string: string[]) => {
             const finalDemands: Demand[] = [];
-            string.map(demand => {
+            string.forEach(demand => {
                 switch (demand) {
                     case "Money Donation":
                         finalDemands.push("MONEYDONATION")
