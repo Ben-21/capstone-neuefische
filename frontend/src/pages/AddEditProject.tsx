@@ -242,7 +242,6 @@ const StyledToggleGroup = styled(ToggleButtonGroup)`
   display: flex;
   justify-content: center;
   width: 100%;
-  background-color: #EBE7D8;
 `;
 
 
@@ -261,20 +260,17 @@ const StyledToggleButton = styled(ToggleButton)`
 const StyledTextField = styled(TextField)`
   width: 100%;
   font-family: "Roboto Light", sans-serif;
-  background-color: #EBE7D8;
   border-radius: 4px;
 `;
 
 const StyledButton = styled(Button)`
   width: 100%;
   height: 56px;
-  background-color: #EBE7D8;
   color: #163E56;
   border-color: #163E56;
 `;
 
 const StyledChipFormControl = styled(FormControl)`
   width: 100%;
-  background-color: #EBE7D8;
   border-radius: 4px;
 `;
