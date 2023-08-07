@@ -1,6 +1,6 @@
 import {useFetch} from "../hooks/useFetch.tsx";
 import React, {useEffect, useState} from "react";
-import {Project, ProjectNoIdNoProgress} from "../models/models.tsx";
+import {Project, ProjectCreation} from "../models/models.tsx";
 import {
     Box,
     Button, Chip,
@@ -30,7 +30,8 @@ export default function AddEditProject() {
     const [formData, setFormData] = useState({
         name: "",
         description: "",
-        location: ""
+        location: "",
+        goal: "",
     });
     const [category, setCategory] = useState<"DONATION" | "PARTICIPATION">("DONATION");
     const chipTheme = useTheme();
@@ -59,7 +60,8 @@ export default function AddEditProject() {
             setFormData({
                 name: project.name.toString(),
                 description: project.description.toString(),
-                location: project.location.toString()
+                location: project.location.toString(),
+                goal: project.goal.toString(),
             })
             setSelectedDemands(mapDemandsToUserFriendly(project.demands));
 
@@ -73,6 +75,7 @@ export default function AddEditProject() {
             name: "",
             description: "",
             location: "",
+            goal: "",
         })
         setSelectedDemands([]);
         setCategory("DONATION");
@@ -82,12 +85,13 @@ export default function AddEditProject() {
         event.preventDefault();
 
         if (!project) {
-            const requestBody: ProjectNoIdNoProgress = {
+            const requestBody: ProjectCreation = {
                 name: formData.name,
                 description: formData.description,
                 category: category,
                 demands: mapDemandsToEnum(selectedDemands),
                 location: formData.location,
+                goal: formData.goal,
             };
             postProject(requestBody);
             initialiseAllFields();
@@ -101,7 +105,10 @@ export default function AddEditProject() {
                 category: category,
                 demands: mapDemandsToEnum(selectedDemands),
                 progress: project.progress,
+                goal: formData.goal,
                 location: formData.location,
+                donations: project.donations,
+                volunteers: project.volunteers,
             };
             putProject(requestBody);
             initialiseAllFields();
@@ -166,15 +173,16 @@ export default function AddEditProject() {
     return (
         <StyledBody>
             <StyledForm onSubmit={handleSubmit}>
-                <StyledTextField id="project-name" name="name" value={formData.name} onChange={handleChange}
+                <StyledTextField required id="project-name" name="name" value={formData.name} onChange={handleChange}
                                  label="Name"
                                  variant="outlined"/>
-                <StyledTextField id="project-description" name="description" value={formData.description}
+                <StyledTextField required id="project-description" name="description" value={formData.description}
                                  onChange={handleChange}
                                  label="Description"
                                  variant="outlined"
                                  multiline rows={4}/>
-                <StyledTextField id="project-location" name="location" value={formData.location} onChange={handleChange}
+                <StyledTextField required id="project-location" name="location" value={formData.location}
+                                 onChange={handleChange}
                                  label="Location"
                                  variant="outlined"/>
 
@@ -184,6 +192,9 @@ export default function AddEditProject() {
                     <StyledToggleButton value="DONATION">Donation</StyledToggleButton>
                     <StyledToggleButton value="PARTICIPATION">Participation</StyledToggleButton>
                 </StyledToggleGroup>
+                <StyledTextField required id="project-goal" name="goal" value={formData.goal} onChange={handleChange}
+                                 label="Goal"
+                                 variant="outlined"/>
                 <StyledChipFormControl>
                     <InputLabel id="demo-multiple-chip-label">Demands</InputLabel>
                     <Select

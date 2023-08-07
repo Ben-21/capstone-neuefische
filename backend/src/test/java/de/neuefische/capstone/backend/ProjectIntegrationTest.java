@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.capstone.backend.models.Category;
 import de.neuefische.capstone.backend.models.Demand;
 import de.neuefische.capstone.backend.models.ProjectNoId;
-import de.neuefische.capstone.backend.models.ProjectNoIdNoProgress;
+import de.neuefische.capstone.backend.models.ProjectCreation;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -45,7 +46,8 @@ class ProjectIntegrationTest {
                                             "description": "Help for the people in Turkey",
                                             "category": "PARTICIPATION",
                                             "demands": ["DONATIONINKIND", "MONEYDONATION"],
-                                            "location": "Turkey"
+                                            "location": "Turkey",
+                                            "goal": 1000
                                         }
                                         """
                                 )
@@ -60,8 +62,8 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("category").value("PARTICIPATION"))
                 .andExpect(jsonPath("demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
                 .andExpect(jsonPath("progress").value(0))
-                .andExpect(jsonPath("location").value("Turkey")
-                );
+                .andExpect(jsonPath("location").value("Turkey"))
+                .andExpect(jsonPath("goal").value(1000));
     }
 
 
@@ -123,12 +125,13 @@ class ProjectIntegrationTest {
     @Test
     void whenUpdateProject_thenReturnProject() throws Exception {
         //Given
-        ProjectNoIdNoProgress projectNoIdNoProgress = new ProjectNoIdNoProgress(
+        ProjectCreation projectNoIdNoProgress = new ProjectCreation(
                 "Earthquake Turkey",
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
-                "Turkey");
+                "Turkey",
+                0);
 
 
         projectService.addProject(projectNoIdNoProgress);
@@ -176,7 +179,10 @@ class ProjectIntegrationTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 10,
-                "Turkey");
+                1000,
+                "Turkey",
+                new ArrayList<>(),
+                new ArrayList<>());
 
         String projectJson = objectMapper.writeValueAsString(project);
 
@@ -195,12 +201,13 @@ class ProjectIntegrationTest {
     @Test
     void whenProjectedDeleted_thenReturnEmptyList() throws Exception {
         //Given
-        ProjectNoIdNoProgress project = new ProjectNoIdNoProgress(
+        ProjectCreation project = new ProjectCreation(
                 "Earthquake Turkey",
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
-                "Turkey");
+                "Turkey",
+                1000);
 
         String projectJson = objectMapper.writeValueAsString(project);
 

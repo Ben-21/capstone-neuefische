@@ -1,4 +1,4 @@
-import {Demand, Project, ProjectNoIdNoProgress} from "../models/models.tsx";
+import {Demand, Project, ProjectCreation} from "../models/models.tsx";
 import {create} from "zustand";
 import axios from "axios";
 import {toast} from 'react-toastify';
@@ -7,7 +7,7 @@ import {toast} from 'react-toastify';
 type State = {
     projects: Project[],
     fetchProjects: () => void,
-    postProject: (requestBody: ProjectNoIdNoProgress) => void,
+    postProject: (requestBody: ProjectCreation) => void,
     getProjectById: (id: string) => Project | undefined
     putProject: (requestBody: Project) => void,
     deleteProject: (id: string) => void,
@@ -38,7 +38,7 @@ export const useFetch = create<State>((set, get) => ({
                 .then(() => set({isLoading: false}))
         },
 
-        postProject: (requestBody: ProjectNoIdNoProgress) => {
+        postProject: (requestBody: ProjectCreation) => {
             const {fetchProjects} = get();
             axios
                 .post("/api/projects", requestBody)

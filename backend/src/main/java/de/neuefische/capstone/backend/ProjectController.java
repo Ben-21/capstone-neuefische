@@ -1,11 +1,12 @@
 package de.neuefische.capstone.backend;
 
 import de.neuefische.capstone.backend.models.Project;
-import de.neuefische.capstone.backend.models.ProjectNoIdNoProgress;
+import de.neuefische.capstone.backend.models.ProjectCreation;
 import de.neuefische.capstone.backend.models.ProjectNoId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -19,8 +20,8 @@ public class ProjectController {
 
 
     @PostMapping
-    public Project addProject(@RequestBody ProjectNoIdNoProgress projectWithoutId) {
-        return projectService.addProject(projectWithoutId);
+    public Project addProject(@RequestBody ProjectCreation projectCreation) {
+        return projectService.addProject(projectCreation);
     }
 
 

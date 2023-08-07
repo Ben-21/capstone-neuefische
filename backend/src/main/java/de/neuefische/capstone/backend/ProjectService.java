@@ -1,11 +1,10 @@
 package de.neuefische.capstone.backend;
 
-import de.neuefische.capstone.backend.models.Project;
-import de.neuefische.capstone.backend.models.ProjectNoId;
-import de.neuefische.capstone.backend.models.ProjectNoIdNoProgress;
+import de.neuefische.capstone.backend.models.*;
 import de.neuefische.capstone.backend.services.IdService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -24,15 +23,20 @@ public class ProjectService {
         return projectRepo.findAll();
     }
 
-    public Project addProject(ProjectNoIdNoProgress projectWithoutId) {
+    public Project addProject(ProjectCreation projectCreation) {
         Project newProject = new Project(
                 idService.createRandomId(),
-                projectWithoutId.name(),
-                projectWithoutId.description(),
-                projectWithoutId.category(),
-                projectWithoutId.demands(),
+                projectCreation.name(),
+                projectCreation.description(),
+                projectCreation.category(),
+                projectCreation.demands(),
                 0,
-                projectWithoutId.location());
+                projectCreation.goal(),
+                projectCreation.location(),
+                new ArrayList<>(),
+                new ArrayList<>()
+        );
+
 
         return projectRepo.insert(newProject);
     }
@@ -47,7 +51,10 @@ public class ProjectService {
                 projectNoId.category(),
                 projectNoId.demands(),
                 projectNoId.progress(),
-                projectNoId.location());
+                projectNoId.goal(),
+                projectNoId.location(),
+                projectNoId.donations(),
+                projectNoId.volunteers());
 
 
         return projectRepo.save(updatedProject);

@@ -50,7 +50,10 @@ class ProjectServiceTest {
                 Category.PARTICIPATION,
                 listOfDemands,
                 0,
-                "Turkey");
+                0,
+                "Turkey",
+                new ArrayList<>(),
+                new ArrayList<>());
 
 
         //When
@@ -60,12 +63,13 @@ class ProjectServiceTest {
                 .thenReturn(projectWithId);
 
 
-        Project actualProject = projectService.addProject(new ProjectNoIdNoProgress(
+        Project actualProject = projectService.addProject(new ProjectCreation(
                 "Earthquake Turkey",
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 listOfDemands,
-                "Turkey"));
+                "Turkey",
+                0));
 
 
         //Then
@@ -85,7 +89,10 @@ class ProjectServiceTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 50,
-                "Turkey")));
+                0,
+                "Turkey",
+                new ArrayList<>(),
+                new ArrayList<>())));
 
         //When
         when(projectRepo.findAll())
@@ -109,7 +116,10 @@ class ProjectServiceTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 50,
-                "Turkey");
+                0,
+                "Turkey",
+                new ArrayList<>(),
+                new ArrayList<>());
 
         Project expectedProject = new Project(
                 "01A",
@@ -118,7 +128,10 @@ class ProjectServiceTest {
                 projectWithoutId.category(),
                 projectWithoutId.demands(),
                 projectWithoutId.progress(),
-                projectWithoutId.location());
+                projectWithoutId.goal(),
+                projectWithoutId.location(),
+                projectWithoutId.donations(),
+                projectWithoutId.volunteers());
 
         //When
         when(projectRepo.save(expectedProject))
@@ -144,7 +157,10 @@ class ProjectServiceTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 50,
-                "Turkey");
+                0,
+                "Turkey",
+                new ArrayList<>(),
+                new ArrayList<>());
 
 
         //When
