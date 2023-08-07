@@ -3,13 +3,9 @@ package de.neuefische.capstone.backend;
 import de.neuefische.capstone.backend.models.*;
 import de.neuefische.capstone.backend.services.IdService;
 import org.junit.jupiter.api.Test;
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -205,5 +201,4 @@ class ProjectServiceTest {
         verify(projectRepo).existsById(id);
         verify(projectRepo, never()).deleteById(id);
     }
-
 }
