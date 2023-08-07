@@ -1,5 +1,6 @@
 package de.neuefische.capstone.backend;
 
+import de.neuefische.capstone.backend.models.DonationCreation;
 import de.neuefische.capstone.backend.models.Project;
 import de.neuefische.capstone.backend.models.ProjectCreation;
 import de.neuefische.capstone.backend.models.ProjectNoId;
@@ -24,12 +25,10 @@ public class ProjectController {
         return projectService.addProject(projectCreation);
     }
 
-
     @GetMapping
     public List<Project> getAllProjects() {
         return projectService.getAllProjects();
     }
-
 
     @PutMapping("{id}")
     public ResponseEntity<Project> updateProject(@PathVariable String id, @RequestBody ProjectNoId projectNoId) {
@@ -40,7 +39,6 @@ public class ProjectController {
             return ResponseEntity.notFound().build();
         }
     }
-
 
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteProject(@PathVariable String id) {
@@ -53,4 +51,10 @@ public class ProjectController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/donate/{id}")
+    public Project addDonation(@PathVariable String id, @RequestBody DonationCreation donationCreation) {
+        return projectService.addDonation(id, donationCreation);
+    }
+
 }
