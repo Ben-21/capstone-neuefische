@@ -1,4 +1,4 @@
-import {Demand, Project, ProjectCreation} from "../models/models.tsx";
+import {Demand, DonationCreation, Project, ProjectCreation} from "../models/models.tsx";
 import {create} from "zustand";
 import axios from "axios";
 import {toast} from 'react-toastify';
@@ -16,7 +16,7 @@ type State = {
     page: string,
     mapDemandsToUserFriendly: (demands: Demand[]) => string[],
     mapDemandsToEnum: (string: string[]) => Demand[],
-    postDonation: (projectId: string, amount: string) => void,
+    postDonation: (projectId: string, donationCreation: DonationCreation) => void,
 
 };
 
@@ -147,10 +147,9 @@ export const useFetch = create<State>((set, get) => ({
             return finalDemands;
         },
 
-        postDonation: (projectId: string, amount) => {
+        postDonation: (projectId: string, requestBody: DonationCreation) => {
             const {fetchProjects} = get();
-
-            axios.post(`/api/projects/donations/${projectId}`, amount)
+            axios.post(`/api/projects/donate/${projectId}`, requestBody)
                 .then(fetchProjects)
                 .then(() => toast.success("Donation successfully added"))
                 .catch((error) => {
