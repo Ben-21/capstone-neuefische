@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -45,7 +46,8 @@ class ProjectIntegrationTest {
                                             "description": "Help for the people in Turkey",
                                             "category": "PARTICIPATION",
                                             "demands": ["DONATIONINKIND", "MONEYDONATION"],
-                                            "location": "Turkey"
+                                            "location": "Turkey",
+                                            "goal": 1000
                                         }
                                         """
                                 )
@@ -60,8 +62,8 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("category").value("PARTICIPATION"))
                 .andExpect(jsonPath("demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
                 .andExpect(jsonPath("progress").value(0))
-                .andExpect(jsonPath("location").value("Turkey")
-                );
+                .andExpect(jsonPath("location").value("Turkey"))
+                .andExpect(jsonPath("goal").value(1000));
     }
 
 
@@ -128,7 +130,8 @@ class ProjectIntegrationTest {
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
-                "Turkey");
+                "Turkey",
+                0);
 
 
         projectService.addProject(projectNoIdNoProgress);
@@ -176,7 +179,10 @@ class ProjectIntegrationTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 10,
-                "Turkey");
+                1000,
+                "Turkey",
+                new ArrayList<>(),
+                new ArrayList<>());
 
         String projectJson = objectMapper.writeValueAsString(project);
 
@@ -200,7 +206,8 @@ class ProjectIntegrationTest {
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
-                "Turkey");
+                "Turkey",
+                1000);
 
         String projectJson = objectMapper.writeValueAsString(project);
 
