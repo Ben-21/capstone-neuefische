@@ -19,8 +19,8 @@ public class ProjectController {
 
 
     @PostMapping
-    public Project addProject(@RequestBody ProjectCreation projectWithoutId) {
-        return projectService.addProject(projectWithoutId);
+    public Project addProject(@RequestBody ProjectCreation projectCreation) {
+        return projectService.addProject(projectCreation);
     }
 
 
