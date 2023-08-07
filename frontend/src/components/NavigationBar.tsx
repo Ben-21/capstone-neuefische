@@ -6,6 +6,7 @@ import {useLocation} from "react-router-dom";
 import HomeButton from "./HomeButton.tsx";
 import DeleteButton from "./DeleteButton.tsx";
 import {useFetch} from "../hooks/useFetch.tsx";
+import DonationButton from "./DonationButton.tsx";
 
 
 export default function NavigationBar() {
@@ -28,6 +29,7 @@ export default function NavigationBar() {
                 {page === "/" && <AddButton/>}
                 {page === "details" && <EditButton projectId={id}/>}
                 {page === "edit" && <DeleteButton projectId={id}/>}
+                {page === "details" && <DonationButton projectId={id}/>}
             </StyledNavigationBar>
         </StyledNavigationWrapper>
     )
