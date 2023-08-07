@@ -3,7 +3,6 @@ package de.neuefische.capstone.backend;
 import de.neuefische.capstone.backend.models.*;
 import de.neuefische.capstone.backend.services.IdService;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,8 +35,6 @@ public class ProjectService {
                 new ArrayList<>(),
                 new ArrayList<>()
         );
-
-
         return projectRepo.insert(newProject);
     }
 
@@ -60,10 +57,23 @@ public class ProjectService {
         return projectRepo.save(updatedProject);
     }
 
-
     public void deleteProject(String id) {
         if (!projectRepo.existsById(id)) throw new NoSuchElementException("No project with Id " + id + " found");
         projectRepo.deleteById(id);
+    }
+
+    public Project addDonation(String projectId, DonationCreation donationCreation) {
+        Donation newDonation = new Donation(
+                idService.createRandomId(),
+                donationCreation.projectId(),
+                donationCreation.projectName(),
+                donationCreation.donorName(),
+                donationCreation.amount()
+        );
+
+        Project project = projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException("No project with Id " + projectId + " found"));
+        project.donations().add(newDonation);
+        return projectRepo.save(project);
     }
 
 }
