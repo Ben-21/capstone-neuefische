@@ -11,12 +11,12 @@ public record Project(
         String id,
         String name,
         String description,
-       Category category,
+        Category category,
         List<Demand> demands,
         int progress,
         int goal,
         String location,
         List<Donation> donations,
         List<Volunteer> volunteers
-        ) {
+) {
 }
