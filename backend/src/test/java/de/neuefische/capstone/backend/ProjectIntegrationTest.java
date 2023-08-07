@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.capstone.backend.models.Category;
 import de.neuefische.capstone.backend.models.Demand;
 import de.neuefische.capstone.backend.models.ProjectNoId;
-import de.neuefische.capstone.backend.models.ProjectNoIdNoProgress;
+import de.neuefische.capstone.backend.models.ProjectCreation;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -123,7 +123,7 @@ class ProjectIntegrationTest {
     @Test
     void whenUpdateProject_thenReturnProject() throws Exception {
         //Given
-        ProjectNoIdNoProgress projectNoIdNoProgress = new ProjectNoIdNoProgress(
+        ProjectCreation projectNoIdNoProgress = new ProjectCreation(
                 "Earthquake Turkey",
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
@@ -195,7 +195,7 @@ class ProjectIntegrationTest {
     @Test
     void whenProjectedDeleted_thenReturnEmptyList() throws Exception {
         //Given
-        ProjectNoIdNoProgress project = new ProjectNoIdNoProgress(
+        ProjectCreation project = new ProjectCreation(
                 "Earthquake Turkey",
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,

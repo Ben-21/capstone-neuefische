@@ -60,7 +60,7 @@ class ProjectServiceTest {
                 .thenReturn(projectWithId);
 
 
-        Project actualProject = projectService.addProject(new ProjectNoIdNoProgress(
+        Project actualProject = projectService.addProject(new ProjectCreation(
                 "Earthquake Turkey",
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,

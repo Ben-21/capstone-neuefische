@@ -2,7 +2,7 @@ package de.neuefische.capstone.backend.models;
 
 import java.util.List;
 
-public record ProjectNoIdNoProgress(
+public record ProjectCreation(
         String name,
         String description,
         Category category,

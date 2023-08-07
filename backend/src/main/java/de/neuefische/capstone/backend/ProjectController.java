@@ -1,7 +1,7 @@
 package de.neuefische.capstone.backend;
 
 import de.neuefische.capstone.backend.models.Project;
-import de.neuefische.capstone.backend.models.ProjectNoIdNoProgress;
+import de.neuefische.capstone.backend.models.ProjectCreation;
 import de.neuefische.capstone.backend.models.ProjectNoId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class ProjectController {
 
 
     @PostMapping
-    public Project addProject(@RequestBody ProjectNoIdNoProgress projectWithoutId) {
+    public Project addProject(@RequestBody ProjectCreation projectWithoutId) {
         return projectService.addProject(projectWithoutId);
     }
 
