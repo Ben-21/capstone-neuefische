@@ -3,9 +3,13 @@ package de.neuefische.capstone.backend;
 import de.neuefische.capstone.backend.models.*;
 import de.neuefische.capstone.backend.services.IdService;
 import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -200,5 +204,68 @@ class ProjectServiceTest {
         assertThrows(NoSuchElementException.class, () -> projectService.deleteProject(id));
         verify(projectRepo).existsById(id);
         verify(projectRepo, never()).deleteById(id);
+    }
+
+    @Test
+    void whenDonationAdded_thenReturnProject() {
+        //Given
+        String projectId = "01A";
+
+        DonationCreation donationCreation = new DonationCreation(
+                "01A",
+                "ProjectName",
+                "Anonymous",
+                new BigDecimal(100));
+
+        Donation donation = new Donation(
+                "dono-02A",
+                "01A",
+                "ProjectName",
+                "Anonymous",
+                new BigDecimal(100));
+
+        Project newProject = new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                0,
+                "Turkey",
+                new ArrayList<>(),
+                new ArrayList<>());
+
+        Project projectToSave = new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                0,
+                "Turkey",
+                List.of(donation),
+                new ArrayList<>());
+
+
+        //When
+        when(projectRepo.findById(projectId))
+                .thenReturn(Optional.of(newProject));
+
+        when(projectRepo.save(projectToSave))
+                .thenReturn(projectToSave);
+
+        when(idService.createRandomId())
+                .thenReturn("dono-02A");
+
+        Project actualProject = projectService.addDonation(projectId, donationCreation);
+
+
+        //Then
+        verify(projectRepo).findById(projectId);
+        verify(projectRepo).save(projectToSave);
+        verify(idService).createRandomId();
+        assertEquals(projectToSave, actualProject);
     }
 }

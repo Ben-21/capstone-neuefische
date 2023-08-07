@@ -1,10 +1,7 @@
 package de.neuefische.capstone.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.neuefische.capstone.backend.models.Category;
-import de.neuefische.capstone.backend.models.Demand;
-import de.neuefische.capstone.backend.models.ProjectNoId;
-import de.neuefische.capstone.backend.models.ProjectCreation;
+import de.neuefische.capstone.backend.models.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,11 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -250,5 +247,62 @@ class ProjectIntegrationTest {
 
                 //Then
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void whenAddDonation_thenReturnProjectWithDonation() throws Exception {
+        //Given
+        ProjectCreation projectCreation = new ProjectCreation(
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                "Turkey",
+                1000);
+
+        String projectJson = objectMapper.writeValueAsString(projectCreation);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/projects")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(projectJson)
+        );
+
+        String projectId = projectService.getAllProjects().get(0).id();
+
+        DonationCreation donationCreation = new DonationCreation(
+                projectId,
+                "Earthquake Turkey",
+                "Anonymous",
+                new BigDecimal(100)
+        );
+
+        String donationJson = objectMapper.writeValueAsString(donationCreation);
+
+
+        //When
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/projects/donate/" + projectId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(donationJson)
+                )
+
+                //Then
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("id").value(projectId))
+                .andExpect(jsonPath("name").value("Earthquake Turkey"))
+                .andExpect(jsonPath("description").value("Help for the people in Turkey"))
+                .andExpect(jsonPath("category").value("PARTICIPATION"))
+                .andExpect(jsonPath("demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
+                .andExpect(jsonPath("progress").value(0))
+                .andExpect(jsonPath("location").value("Turkey"))
+                .andExpect(jsonPath("goal").value(1000))
+                .andExpect(jsonPath("donations", hasSize(1)))
+                .andExpect(jsonPath("donations[0].id").exists())
+                .andExpect(jsonPath("donations[0].projectId").value(projectId))
+                .andExpect(jsonPath("donations[0].projectName").value("Earthquake Turkey"))
+                .andExpect(jsonPath("donations[0].donorName").value("Anonymous"))
+                .andExpect(jsonPath("donations[0].amount").value(100));
     }
 }
