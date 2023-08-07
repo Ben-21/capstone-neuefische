@@ -31,10 +31,10 @@ public class ProjectService {
                 projectCreation.category(),
                 projectCreation.demands(),
                 0,
-                0,
+                projectCreation.goal(),
                 projectCreation.location(),
-                new ArrayList<Donation>(),
-                new ArrayList<Volunteer>()
+                new ArrayList<>(),
+                new ArrayList<>()
         );
 
 
