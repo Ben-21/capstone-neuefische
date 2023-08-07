@@ -1,6 +1,6 @@
 import {useFetch} from "../hooks/useFetch.tsx";
 import React, {useEffect, useState} from "react";
-import {Project, ProjectNoIdNoProgress} from "../models/models.tsx";
+import {Project, ProjectCreation} from "../models/models.tsx";
 import {
     Box,
     Button, Chip,
@@ -82,7 +82,7 @@ export default function AddEditProject() {
         event.preventDefault();
 
         if (!project) {
-            const requestBody: ProjectNoIdNoProgress = {
+            const requestBody: ProjectCreation = {
                 name: formData.name,
                 description: formData.description,
                 category: category,

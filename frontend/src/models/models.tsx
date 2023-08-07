@@ -5,10 +5,13 @@ export type Project = {
     category: "DONATION" | "PARTICIPATION";
     demands: Demand[];
     progress: number;
+    goal: number;
     location: string;
+    donations: Donation[];
+    volunteers: Volunteer[];
 }
 
-export type ProjectNoIdNoProgress = {
+export type ProjectCreation = {
     name: string;
     description: string;
     category: "DONATION" | "PARTICIPATION";
@@ -22,7 +25,12 @@ export type ProjectNoId = {
     category: "DONATION" | "PARTICIPATION";
     demands: Demand[];
     progress: number;
+    goal: number;
     location: string;
+    donations: Donation[];
+    volunteers: Volunteer[];
 }
 
 export type Demand = "MONEYDONATION" | "DONATIONINKIND" | "FOODDONATION" | "DRUGDONATION";
+export type Donation = [{id: string, projectId: string, projectName: string, DonorName: string, amount: number}];
+export type Volunteer = [{id: string, projectId: string, projectName: string, VolunteerName: string}];
