@@ -6,7 +6,7 @@ public record Donation(
         String id,
         String projectId,
         String projectName,
-        String DonorName,
+        String donorName,
         BigDecimal amount
 ) {
 }
