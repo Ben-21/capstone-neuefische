@@ -6,24 +6,34 @@ import {useNavigate, useParams} from "react-router-dom";
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {toast} from "react-toastify";
+import {Project} from "../models/models.tsx";
+import ProjectCard from "../components/ProjectCard.tsx";
 
 
 export default function AddDonation() {
 
+    const fetchProjects = useFetch(state => state.fetchProjects);
+    const getProjectById = useFetch(state => state.getProjectById);
+    const [project, setProject] = useState<Project | undefined>(undefined);
     const {id} = useParams();
-    const [projectId, setProjectId] = useState<string>("")
     const [donation, setDonation] = useState<string>("");
     const navigate = useNavigate();
     const postDonation = useFetch(state => state.postDonation);
 
+
     useEffect(() => {
-        if (!id) {
-            toast.error("No project id found");
-            navigate("/");
+        fetchProjects();
+    }, [fetchProjects]);
+
+    useEffect(() => {
+        if (id) {
+            setProject(getProjectById(id));
         } else {
-            setProjectId(id);
+            toast.error("Something went wrong");
+            navigate("/");
         }
-    }, [id, navigate]);
+
+    }, [id, navigate, getProjectById]);
 
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -32,22 +42,32 @@ export default function AddDonation() {
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-
-        postDonation(projectId, donation);
-        navigate(`/details/${projectId}`);
+        if (project) {
+            postDonation(project.id, donation);
+            navigate(`/details/${project.id}`);
+        }
     }
 
     function handleCancelButton() {
-        navigate(`/details/${projectId}`)
-        window.scrollTo(0, 0);
+
+        if (project) {
+            navigate(`/details/${project.id}`)
+            window.scrollTo(0, 0);
+        } else {
+            toast.error("Something went wrong");
+            navigate("/");
+        }
     }
+
 
 
     return (
 
 
         <StyledBody>
+            {project && <ProjectCard project={project}/>}
             <StyledForm onSubmit={handleSubmit}>
+
                 <StyledTextField required id="project-donation" name="donation" value={donation} onChange={handleChange}
                                  label="Donation"
                                  variant="outlined"/>
@@ -78,7 +98,8 @@ const StyledForm = styled.form`
   gap: 1.1em;
   background-color: #EBE7D8;
   border-radius: 5px;
-  padding: 10px;
+  padding: 20px 10px 10px 10px;
+  margin-top: -30px;
 `;
 
 const StyledTextField = styled(TextField)`
@@ -93,3 +114,4 @@ const StyledButton = styled(Button)`
   color: #163E56;
   border-color: #163E56;
 `;
+

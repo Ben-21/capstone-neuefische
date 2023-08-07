@@ -72,7 +72,8 @@ export default function ProjectCard(props: Props) {
 }
 
 const StyledCard = styled(Card)`
-  width: 345px;
+  //width: 345px;
+  width: 100%;
   background-color: #EBE7D8;
   margin: 0;
   padding: 0;
