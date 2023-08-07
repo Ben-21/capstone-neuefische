@@ -6,7 +6,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {toast} from "react-toastify";
-import {Project} from "../models/models.tsx";
+import {DonationCreation, Project} from "../models/models.tsx";
 import ProjectCard from "../components/ProjectCard.tsx";
 
 
@@ -16,7 +16,7 @@ export default function AddDonation() {
     const getProjectById = useFetch(state => state.getProjectById);
     const [project, setProject] = useState<Project | undefined>(undefined);
     const {id} = useParams();
-    const [donation, setDonation] = useState<string>("");
+    const [amount, setAmount] = useState<string>("");
     const navigate = useNavigate();
     const postDonation = useFetch(state => state.postDonation);
 
@@ -33,16 +33,23 @@ export default function AddDonation() {
             navigate("/");
         }
 
+
     }, [id, navigate, getProjectById]);
 
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-        setDonation(event.target.value);
+        setAmount(event.target.value);
     }
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         if (project) {
+            const donation: DonationCreation = {
+                projectId: project.id,
+                projectName: project.name,
+                donorName: "Anonymous",
+                amount: amount
+            }
             postDonation(project.id, donation);
             navigate(`/details/${project.id}`);
         }
@@ -60,7 +67,6 @@ export default function AddDonation() {
     }
 
 
-
     return (
 
 
@@ -68,7 +74,7 @@ export default function AddDonation() {
             {project && <ProjectCard project={project}/>}
             <StyledForm onSubmit={handleSubmit}>
 
-                <StyledTextField required id="project-donation" name="donation" value={donation} onChange={handleChange}
+                <StyledTextField required id="project-donation" name="donation" value={amount} onChange={handleChange}
                                  label="Donation"
                                  variant="outlined"/>
 
