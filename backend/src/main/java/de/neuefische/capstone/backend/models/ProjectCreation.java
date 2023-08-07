@@ -7,6 +7,7 @@ public record ProjectCreation(
         String description,
         Category category,
         List<Demand> demands,
-        String location
+        String location,
+        int goal
 ) {
 }

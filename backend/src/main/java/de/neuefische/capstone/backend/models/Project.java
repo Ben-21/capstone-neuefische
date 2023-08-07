@@ -14,6 +14,9 @@ public record Project(
        Category category,
         List<Demand> demands,
         int progress,
-        String location
+        int goal,
+        String location,
+        List<Donation> donations,
+        List<Volunteer> volunteers
         ) {
 }
