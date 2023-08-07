@@ -5,7 +5,7 @@ export type Project = {
     category: "DONATION" | "PARTICIPATION";
     demands: Demand[];
     progress: number;
-    goal: number;
+    goal: string;
     location: string;
     donations: Donation[];
     volunteers: Volunteer[];
@@ -17,6 +17,7 @@ export type ProjectCreation = {
     category: "DONATION" | "PARTICIPATION";
     demands: Demand[];
     location: string;
+    goal: string;
 }
 
 export type ProjectNoId = {
@@ -25,7 +26,7 @@ export type ProjectNoId = {
     category: "DONATION" | "PARTICIPATION";
     demands: Demand[];
     progress: number;
-    goal: number;
+    goal: string;
     location: string;
     donations: Donation[];
     volunteers: Volunteer[];
