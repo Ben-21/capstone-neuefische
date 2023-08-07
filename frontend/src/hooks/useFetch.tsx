@@ -16,6 +16,7 @@ type State = {
     page: string,
     mapDemandsToUserFriendly: (demands: Demand[]) => string[],
     mapDemandsToEnum: (string: string[]) => Demand[],
+    postDonation: (projectId: string, amount: string) => void,
 
 };
 
@@ -96,6 +97,8 @@ export const useFetch = create<State>((set, get) => ({
                 set({page: "edit"})
             } else if ((path.split("/")[1]) === "add") {
                 set({page: "add"})
+            } else if ((path.split("/")[1]) === "donate") {
+                set({page: "donate"})
             } else {
                 set({page: path})
             }
@@ -142,6 +145,18 @@ export const useFetch = create<State>((set, get) => ({
                 }
             });
             return finalDemands;
+        },
+
+        postDonation: (projectId: string, amount) => {
+            const {fetchProjects} = get();
+
+            axios.post(`/api/projects/donations/${projectId}`, amount)
+                .then(fetchProjects)
+                .then(() => toast.success("Donation successfully added"))
+                .catch((error) => {
+                    toast.error("Something went wrong");
+                    console.error(error);
+                })
         }
     }))
 ;

@@ -8,6 +8,7 @@ import ShowProject from "./pages/ShowProject.tsx";
 import AddEditProject from "./pages/AddEditProject.tsx";
 import NavigationBar from "./components/NavigationBar.tsx";
 import Header from "./components/Header.tsx";
+import AddDonation from "./pages/AddDonation.tsx";
 
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
                 <Route path="/add" element={<AddEditProject/>}/>
                 <Route path="/details/:id" element={<ShowProject/>}/>
                 <Route path="/edit/:id" element={<AddEditProject/>}/>
+                <Route path="/donate/:id" element={<AddDonation/>}/>
             </Routes>
 
             <NavigationBar/>
