@@ -236,6 +236,9 @@ const StyledForm = styled.form`
   align-items: center;
   justify-content: center;
   gap: 1.1em;
+  background-color: #EBE7D8;
+  border-radius: 5px;
+  padding: 5px;
 `;
 
 const StyledToggleGroup = styled(ToggleButtonGroup)`

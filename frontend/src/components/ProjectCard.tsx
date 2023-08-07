@@ -112,7 +112,7 @@ const StyledDemands = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  border: 1px solid black;
+  border: none;
   width: 96px;
   height: 44px;
   border-radius: 10px;
