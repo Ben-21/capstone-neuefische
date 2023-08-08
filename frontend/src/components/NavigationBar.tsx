@@ -7,6 +7,8 @@ import HomeButton from "./HomeButton.tsx";
 import DeleteButton from "./DeleteButton.tsx";
 import {useFetch} from "../hooks/useFetch.tsx";
 import DonationButton from "./DonationButton.tsx";
+import VolunteerButton from "./VolunteerButton.tsx";
+import {Project} from "../models/models.tsx";
 
 
 export default function NavigationBar() {
@@ -14,12 +16,34 @@ export default function NavigationBar() {
     const id = location.pathname.split("/")[2]
     const [page, setPage] = useState("");
     const checkPage = useFetch(state => state.checkPage);
+    const findProjectById = useFetch(state => state.getProjectById);
+    const [project, setProject] = useState<Project | undefined>(undefined);
+    const [volunteerVisible, setVolunteerVisible] = useState(false);
+    const fetchProjects = useFetch(state => state.fetchProjects);
 
-
+    useEffect(() => {
+        fetchProjects();
+    }, [fetchProjects]);
 
     useEffect(() => {
         setPage(checkPage(location.pathname))
     }, [location, checkPage]);
+
+
+    useEffect(() => {
+        if (id) {
+            setProject(findProjectById(id));
+            console.log("project set")
+        }
+    }, [id, findProjectById, location]);
+
+    useEffect(() => {
+        if (project && project.category === "PARTICIPATION") {
+            setVolunteerVisible(true);
+        } else {
+            setVolunteerVisible(false);
+        }
+    }, [project, project?.category]);
 
 
     return (
@@ -30,6 +54,7 @@ export default function NavigationBar() {
                 {page === "details" && <EditButton projectId={id}/>}
                 {page === "edit" && <DeleteButton projectId={id}/>}
                 {page === "details" && <DonationButton projectId={id}/>}
+                {page === "details" && volunteerVisible && <VolunteerButton projectId={id}/>}
             </StyledNavigationBar>
         </StyledNavigationWrapper>
     )

@@ -50,7 +50,7 @@ export default function AddDonationOrVolunteer() {
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        if (project && page === "donation") {
+        if (project && page === "donate") {
             const donation: DonationCreation = {
                 projectId: project.id,
                 projectName: project.name,

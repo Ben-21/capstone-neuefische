@@ -7,6 +7,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import seenotrettung from "../assets/seenotrettung.jpg"
 import {useEffect, useState} from "react";
 import {useFetch} from "../hooks/useFetch.tsx";
+import ProgressBar from "./ProgressBar.tsx";
 
 
 type Props = {
@@ -21,7 +22,6 @@ export default function ProjectCard(props: Props) {
     const location = useLocation();
     const [page, setPage] = useState("");
     const mapDemandsToUserFriendly = useFetch(state => state.mapDemandsToUserFriendly);
-
 
 
     useEffect(() => {
@@ -51,6 +51,24 @@ export default function ProjectCard(props: Props) {
                         <StyledDescription>
                             {props.project.description}
                         </StyledDescription>
+                        <StyledDonationWrapper>
+                            <StyledDonation>
+                                {props.project.donations.map(donation => parseFloat(donation.amount)).reduce((a, b) => a + b, 0)} EUR
+                            </StyledDonation>
+                            <StyledSubDonation>
+                                of {props.project.goal} EUR collected
+                            </StyledSubDonation>
+                            <ProgressBar project={props.project}/>
+                        </StyledDonationWrapper>
+                        {props.project.category === "PARTICIPATION" &&
+                            <StyledVolunteerWrapper>
+                                <StyledDonation>
+                                    {props.project.volunteers.length} Volunteers
+                                </StyledDonation>
+                                <StyledSubDonation>
+                                    of {props.project.goal} needed
+                                </StyledSubDonation>
+                            </StyledVolunteerWrapper>}
                         <StyledH2>
                             Demands:
                         </StyledH2>
@@ -59,6 +77,7 @@ export default function ProjectCard(props: Props) {
                                 key={demand}>{demand}</StyledDemands>)}
                         </StyledDemandsWrapper>
                     </>}
+                {props.project.category}
                 <StyledH2>
                     Location:
                 </StyledH2>
@@ -88,10 +107,35 @@ const StyledH1 = styled.h1`
 const StyledH2 = styled.h2`
   padding-top: 20px;
   padding-left: 10px;
-
   margin: 0;
   font-family: "Robot", sans-serif;
   font-weight: 400;
+`;
+
+const StyledDonation = styled.h2`
+  padding-top: 10px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  font-family: "Robot", sans-serif;
+  font-weight: 600;
+`;
+
+const StyledSubDonation = styled.div`
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  font-family: "Robot", sans-serif;
+  font-weight: 400;
+`;
+
+const StyledDonationWrapper = styled.div`
+
+`;
+
+const StyledVolunteerWrapper = styled.div`
+
 `;
 
 const StyledDescription = styled.div`
