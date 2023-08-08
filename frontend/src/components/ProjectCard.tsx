@@ -51,24 +51,25 @@ export default function ProjectCard(props: Props) {
                         <StyledDescription>
                             {props.project.description}
                         </StyledDescription>
-                        <StyledDonationWrapper>
-                            <StyledDonation>
-                                {props.project.donations.map(donation => parseFloat(donation.amount)).reduce((a, b) => a + b, 0)} EUR
-                            </StyledDonation>
-                            <StyledSubDonation>
-                                of {props.project.goal} EUR collected
-                            </StyledSubDonation>
-                            <ProgressBar project={props.project}/>
-                        </StyledDonationWrapper>
+
+                        <StyledDonationVolunteer>
+                            {props.project.donations.map(donation => parseFloat(donation.amount)).reduce((a, b) => a + b, 0)} EUR
+                        </StyledDonationVolunteer>
+                        <StyledSubDonationVolunteer>
+                            of {props.project.goal} EUR collected
+                        </StyledSubDonationVolunteer>
+                        {props.project.category === "DONATION" && <ProgressBar project={props.project}/>}
+
                         {props.project.category === "PARTICIPATION" &&
-                            <StyledVolunteerWrapper>
-                                <StyledDonation>
+                            <>
+                                <StyledDonationVolunteer>
                                     {props.project.volunteers.length} Volunteers
-                                </StyledDonation>
-                                <StyledSubDonation>
+                                </StyledDonationVolunteer>
+                                <StyledSubDonationVolunteer>
                                     of {props.project.goal} needed
-                                </StyledSubDonation>
-                            </StyledVolunteerWrapper>}
+                                </StyledSubDonationVolunteer>
+                                {props.project.category === "PARTICIPATION" && <ProgressBar project={props.project}/>}
+                            </>}
                         <StyledH2>
                             Demands:
                         </StyledH2>
@@ -77,7 +78,6 @@ export default function ProjectCard(props: Props) {
                                 key={demand}>{demand}</StyledDemands>)}
                         </StyledDemandsWrapper>
                     </>}
-                {props.project.category}
                 <StyledH2>
                     Location:
                 </StyledH2>
@@ -91,10 +91,9 @@ export default function ProjectCard(props: Props) {
 }
 
 const StyledCard = styled(Card)`
-  //width: 345px;
   width: 100%;
   background-color: #EBE7D8;
-  margin: 0;
+  margin: 0 0 100px 0;
   padding: 0;
   border-radius: 5px;
 `;
@@ -112,7 +111,7 @@ const StyledH2 = styled.h2`
   font-weight: 400;
 `;
 
-const StyledDonation = styled.h2`
+const StyledDonationVolunteer = styled.h2`
   padding-top: 10px;
   margin: 0;
   display: flex;
@@ -121,21 +120,13 @@ const StyledDonation = styled.h2`
   font-weight: 600;
 `;
 
-const StyledSubDonation = styled.div`
+const StyledSubDonationVolunteer = styled.div`
   padding: 0;
   margin: 0;
   display: flex;
   justify-content: center;
   font-family: "Robot", sans-serif;
   font-weight: 400;
-`;
-
-const StyledDonationWrapper = styled.div`
-
-`;
-
-const StyledVolunteerWrapper = styled.div`
-
 `;
 
 const StyledDescription = styled.div`
@@ -167,3 +158,4 @@ const StyledDemands = styled.div`
   font-size: 1em;
   margin: 10px;
 `;
+
