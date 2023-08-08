@@ -252,7 +252,7 @@ class ProjectIntegrationTest {
     @Test
     void whenAddDonation_thenReturnProjectWithDonation() throws Exception {
         //Given
-        ProjectCreation projectCreation = new ProjectCreation(
+        ProjectCreation projectToAddDonation = new ProjectCreation(
                 "Earthquake Turkey",
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
@@ -260,24 +260,24 @@ class ProjectIntegrationTest {
                 "Turkey",
                 1000);
 
-        String projectJson = objectMapper.writeValueAsString(projectCreation);
+        String projectToAddDonationJson = objectMapper.writeValueAsString(projectToAddDonation);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/projects")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(projectJson)
+                        .content(projectToAddDonationJson)
         );
 
         String projectId = projectService.getAllProjects().get(0).id();
 
-        DonationCreation donationCreation = new DonationCreation(
+        DonationCreation donation = new DonationCreation(
                 projectId,
                 "Earthquake Turkey",
                 "Anonymous",
                 new BigDecimal(100)
         );
 
-        String donationJson = objectMapper.writeValueAsString(donationCreation);
+        String donationJson = objectMapper.writeValueAsString(donation);
 
 
         //When

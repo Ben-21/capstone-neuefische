@@ -211,20 +211,20 @@ class ProjectServiceTest {
         //Given
         String projectId = "01A";
 
-        DonationCreation donationCreation = new DonationCreation(
+        DonationCreation donationToAdd = new DonationCreation(
                 "01A",
                 "ProjectName",
                 "Anonymous",
                 new BigDecimal(100));
 
-        Donation donation = new Donation(
+        Donation finalDonation = new Donation(
                 "dono-02A",
                 "01A",
                 "ProjectName",
                 "Anonymous",
                 new BigDecimal(100));
 
-        Project newProject = new Project(
+        Project repoProject = new Project(
                 "01A",
                 "Earthquake Turkey",
                 "Help for the people in Turkey",
@@ -245,13 +245,13 @@ class ProjectServiceTest {
                 50,
                 0,
                 "Turkey",
-                List.of(donation),
+                List.of(finalDonation),
                 new ArrayList<>());
 
 
         //When
         when(projectRepo.findById(projectId))
-                .thenReturn(Optional.of(newProject));
+                .thenReturn(Optional.of(repoProject));
 
         when(projectRepo.save(projectToSave))
                 .thenReturn(projectToSave);
@@ -259,7 +259,7 @@ class ProjectServiceTest {
         when(idService.createRandomId())
                 .thenReturn("dono-02A");
 
-        Project actualProject = projectService.addDonation(projectId, donationCreation);
+        Project actualProject = projectService.addDonation(projectId, donationToAdd);
 
 
         //Then
