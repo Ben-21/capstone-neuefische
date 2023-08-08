@@ -2,15 +2,16 @@ import {useFetch} from "../hooks/useFetch.tsx";
 import React, {useEffect, useState} from "react";
 import {Button, TextField} from "@mui/material";
 import styled from "@emotion/styled";
-import {useNavigate, useParams} from "react-router-dom";
-import SaveIcon from '@mui/icons-material/Save';
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import CancelIcon from '@mui/icons-material/Cancel';
 import {toast} from "react-toastify";
-import {DonationCreation, Project} from "../models/models.tsx";
+import {DonationCreation, Project, VolunteerCreation} from "../models/models.tsx";
 import ProjectCard from "../components/ProjectCard.tsx";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 
 
-export default function AddDonation() {
+export default function AddDonationOrVolunteer() {
 
     const fetchProjects = useFetch(state => state.fetchProjects);
     const getProjectById = useFetch(state => state.getProjectById);
@@ -18,7 +19,11 @@ export default function AddDonation() {
     const {id} = useParams();
     const [amount, setAmount] = useState<string>("");
     const navigate = useNavigate();
+    const location = useLocation();
+    const checkPage = useFetch(state => state.checkPage);
+    const [page, setPAge] = useState("");
     const postDonation = useFetch(state => state.postDonation);
+    const postVolunteer = useFetch(state => state.postVolunteer);
 
 
     useEffect(() => {
@@ -32,9 +37,11 @@ export default function AddDonation() {
             toast.error("Something went wrong");
             navigate("/");
         }
-
-
     }, [id, navigate, getProjectById]);
+
+    useEffect(() => {
+        setPAge(checkPage(location.pathname));
+    }, [location, checkPage]);
 
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -43,7 +50,7 @@ export default function AddDonation() {
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        if (project) {
+        if (project && page === "donation") {
             const donation: DonationCreation = {
                 projectId: project.id,
                 projectName: project.name,
@@ -51,6 +58,16 @@ export default function AddDonation() {
                 amount: amount
             }
             postDonation(project.id, donation);
+            navigate(`/details/${project.id}`);
+        }
+
+        if (project && page === "volunteer") {
+            const volunteer: VolunteerCreation = {
+                projectId: project.id,
+                projectName: project.name,
+                volunteerName: "Anonymous",
+            }
+            postVolunteer(project.id, volunteer);
             navigate(`/details/${project.id}`);
         }
     }
@@ -74,11 +91,16 @@ export default function AddDonation() {
             {project && <ProjectCard project={project}/>}
             <StyledForm onSubmit={handleSubmit}>
 
-                <StyledTextField required id="project-donation" name="donation" value={amount} onChange={handleChange}
-                                 label="Donation"
-                                 variant="outlined"/>
-
-                <StyledButton type={"submit"} variant="outlined" endIcon={<SaveIcon/>}>DONATE</StyledButton>
+                {page === "donate" &&
+                    <StyledTextField required id="project-donation" name="donation" value={amount}
+                                     onChange={handleChange}
+                                     label="Donation"
+                                     variant="outlined"/>}
+                {page === "donate" &&
+                    <StyledButton type={"submit"} variant="outlined" endIcon={<AttachMoneyIcon/>}>DONATE</StyledButton>}
+                {page === "volunteer" &&
+                    <StyledButton type={"submit"} variant="outlined"
+                                  endIcon={<VolunteerActivismIcon/>}>VOLUNTEER</StyledButton>}
                 <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined"
                               endIcon={<CancelIcon/>}>CANCEL</StyledButton>
             </StyledForm>
