@@ -1,4 +1,4 @@
-import {Demand, DonationCreation, Project, ProjectCreation} from "../models/models.tsx";
+import {Demand, DonationCreation, Project, ProjectCreation, VolunteerCreation} from "../models/models.tsx";
 import {create} from "zustand";
 import axios from "axios";
 import {toast} from 'react-toastify';
@@ -17,6 +17,7 @@ type State = {
     mapDemandsToUserFriendly: (demands: Demand[]) => string[],
     mapDemandsToEnum: (string: string[]) => Demand[],
     postDonation: (projectId: string, donationCreation: DonationCreation) => void,
+    postVolunteer: (projectId: string, volunteerCreation: VolunteerCreation) => void,
 
 };
 
@@ -99,6 +100,8 @@ export const useFetch = create<State>((set, get) => ({
                 set({page: "add"})
             } else if ((path.split("/")[1]) === "donate") {
                 set({page: "donate"})
+            } else if ((path.split("/")[1]) === "volunteer") {
+                set({page: "volunteer"})
             } else {
                 set({page: path})
             }
@@ -156,6 +159,17 @@ export const useFetch = create<State>((set, get) => ({
                     toast.error("Something went wrong");
                     console.error(error);
                 })
-        }
+        },
+
+        postVolunteer: (projectId: string, requestBody: VolunteerCreation) => {
+            const {fetchProjects} = get();
+            axios.post(`/api/projects/volunteer/${projectId}`, requestBody)
+                .then(fetchProjects)
+                .then(() => toast.success("Volunteer successfully added"))
+                .catch((error) => {
+                    toast.error("Something went wrong");
+                    console.error(error);
+                })
+        },
     }))
 ;
