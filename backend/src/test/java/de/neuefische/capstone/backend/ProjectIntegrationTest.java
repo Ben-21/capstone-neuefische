@@ -277,14 +277,14 @@ class ProjectIntegrationTest {
                 new BigDecimal(100)
         );
 
-        String donationJson = objectMapper.writeValueAsString(donation);
+        String donationToAddJson = objectMapper.writeValueAsString(donation);
 
 
         //When
         mockMvc.perform(
                         MockMvcRequestBuilders.post("/api/projects/donate/" + projectId)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(donationJson)
+                                .content(donationToAddJson)
                 )
 
                 //Then
@@ -304,5 +304,60 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("donations[0].projectName").value("Earthquake Turkey"))
                 .andExpect(jsonPath("donations[0].donorName").value("Anonymous"))
                 .andExpect(jsonPath("donations[0].amount").value(100));
+    }
+
+    @Test
+    void whenAddVolunteer_thenReturnProjectWithVolunteer() throws Exception {
+        //Given
+        ProjectCreation projectToAddVolunteer = new ProjectCreation(
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                "Turkey",
+                1000);
+
+        String projectToAddVolunteerJson = objectMapper.writeValueAsString(projectToAddVolunteer);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/projects")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(projectToAddVolunteerJson)
+        );
+
+        String projectId = projectService.getAllProjects().get(0).id();
+
+        VolunteerCreation volunteerToAdd = new VolunteerCreation(
+                projectId,
+                "Earthquake Turkey",
+                "Anonymous"
+        );
+
+        String volunteerToAddJson = objectMapper.writeValueAsString(volunteerToAdd);
+
+
+        //When
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/projects/volunteer/" + projectId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(volunteerToAddJson)
+                )
+
+                //Then
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("id").value(projectId))
+                .andExpect(jsonPath("name").value("Earthquake Turkey"))
+                .andExpect(jsonPath("description").value("Help for the people in Turkey"))
+                .andExpect(jsonPath("category").value("PARTICIPATION"))
+                .andExpect(jsonPath("demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
+                .andExpect(jsonPath("progress").value(0))
+                .andExpect(jsonPath("location").value("Turkey"))
+                .andExpect(jsonPath("goal").value(1000))
+                .andExpect(jsonPath("volunteers", hasSize(1)))
+                .andExpect(jsonPath("volunteers[0].id").exists())
+                .andExpect(jsonPath("volunteers[0].projectId").value(projectId))
+                .andExpect(jsonPath("volunteers[0].projectName").value("Earthquake Turkey"))
+                .andExpect(jsonPath("volunteers[0].volunteerName").value("Anonymous"));
     }
 }
