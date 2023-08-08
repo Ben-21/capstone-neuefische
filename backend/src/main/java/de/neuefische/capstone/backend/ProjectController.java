@@ -1,9 +1,6 @@
 package de.neuefische.capstone.backend;
 
-import de.neuefische.capstone.backend.models.DonationCreation;
-import de.neuefische.capstone.backend.models.Project;
-import de.neuefische.capstone.backend.models.ProjectCreation;
-import de.neuefische.capstone.backend.models.ProjectNoId;
+import de.neuefische.capstone.backend.models.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -57,4 +54,8 @@ public class ProjectController {
         return projectService.addDonation(id, donationCreation);
     }
 
+    @PostMapping("/volunteer/{id}")
+    public Project addVolunteer(@PathVariable String id, @RequestBody VolunteerCreation volunteerCreation) {
+        return projectService.addVolunteer(id, volunteerCreation);
+    }
 }

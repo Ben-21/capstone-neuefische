@@ -211,19 +211,6 @@ class ProjectServiceTest {
         //Given
         String projectId = "01A";
 
-        DonationCreation donationToAdd = new DonationCreation(
-                "01A",
-                "ProjectName",
-                "Anonymous",
-                new BigDecimal(100));
-
-        Donation finalDonation = new Donation(
-                "dono-02A",
-                "01A",
-                "ProjectName",
-                "Anonymous",
-                new BigDecimal(100));
-
         Project repoProject = new Project(
                 "01A",
                 "Earthquake Turkey",
@@ -235,6 +222,19 @@ class ProjectServiceTest {
                 "Turkey",
                 new ArrayList<>(),
                 new ArrayList<>());
+
+        DonationCreation donationToAdd = new DonationCreation(
+                repoProject.id(),
+                repoProject.name(),
+                "Anonymous",
+                new BigDecimal(100));
+
+        Donation finalDonation = new Donation(
+                "dono-02A",
+                repoProject.id(),
+                repoProject.name(),
+                "Anonymous",
+                new BigDecimal(100));
 
         Project projectToSave = new Project(
                 "01A",
@@ -252,14 +252,73 @@ class ProjectServiceTest {
         //When
         when(projectRepo.findById(projectId))
                 .thenReturn(Optional.of(repoProject));
-
         when(projectRepo.save(projectToSave))
                 .thenReturn(projectToSave);
-
         when(idService.createRandomId())
                 .thenReturn("dono-02A");
 
         Project actualProject = projectService.addDonation(projectId, donationToAdd);
+
+
+        //Then
+        verify(projectRepo).findById(projectId);
+        verify(projectRepo).save(projectToSave);
+        verify(idService).createRandomId();
+        assertEquals(projectToSave, actualProject);
+    }
+
+    @Test
+    void returnProject_whenAddVolunteer() {
+        //Given
+        String projectId = "01A";
+
+        Project repoProject = new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                0,
+                "Turkey",
+                new ArrayList<>(),
+                new ArrayList<>());
+
+        VolunteerCreation volunteerToAdd = new VolunteerCreation(
+                repoProject.id(),
+                repoProject.name(),
+                "Anonymous"
+        );
+
+        Volunteer finalVolunteer = new Volunteer(
+                "vol-02A",
+                repoProject.id(),
+                repoProject.name(),
+                "Anonymous"
+        );
+
+        Project projectToSave = new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                0,
+                "Turkey",
+                new ArrayList<>(),
+                List.of(finalVolunteer));
+
+
+        //When
+        when(projectRepo.findById(projectId))
+                .thenReturn(Optional.of(repoProject));
+        when(projectRepo.save(projectToSave))
+                .thenReturn(projectToSave);
+        when(idService.createRandomId())
+                .thenReturn("vol-02A");
+
+        Project actualProject = projectService.addVolunteer(projectId, volunteerToAdd);
 
 
         //Then
