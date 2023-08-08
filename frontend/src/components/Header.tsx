@@ -33,6 +33,7 @@ export default function Header() {
             {page === "edit" && <StyledH3>Edit Project</StyledH3>}
             {page === "add" && <StyledH3>Add Project</StyledH3>}
             {page === "donate" && <StyledH3>Donate</StyledH3>}
+            {page === "volunteer" && <StyledH3>Volunteer</StyledH3>}
         </StyledSubHeader>}
             </>
     )
