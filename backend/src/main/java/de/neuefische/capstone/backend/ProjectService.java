@@ -13,10 +13,12 @@ public class ProjectService {
 
     private final ProjectRepo projectRepo;
     private final IdService idService;
+    private final ProjectCalculations projectCalculations;
 
-    public ProjectService(ProjectRepo projectRepo, IdService idService) {
+    public ProjectService(ProjectRepo projectRepo, IdService idService, ProjectCalculations projectCalculations) {
         this.projectRepo = projectRepo;
         this.idService = idService;
+        this.projectCalculations = projectCalculations;
     }
 
     public List<Project> getAllProjects() {
@@ -37,6 +39,10 @@ public class ProjectService {
                 new ArrayList<>()
         );
         return projectRepo.insert(newProject);
+    }
+
+    public Project getProjectById(String id) {
+        return projectRepo.findById(id).orElseThrow(() -> new NoSuchElementException("No project with Id " + id + " found"));
     }
 
     public Project updateProject(String id, ProjectNoId projectNoId) {
@@ -74,7 +80,8 @@ public class ProjectService {
 
         Project project = projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException("No project with Id " + projectId + " found"));
         project.donations().add(newDonation);
-        return projectRepo.save(project);
+
+        return projectRepo.save(projectCalculations.calculateProgressForDonations(project));
     }
 
     public Project addVolunteer(String projectId, VolunteerCreation volunteerCreation) {
@@ -88,6 +95,6 @@ public class ProjectService {
         Project project = projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException("No project with Id" + projectId + "found"));
         project.volunteers().add(newVolunteer);
 
-        return projectRepo.save(project);
+        return projectRepo.save(projectCalculations.calculateProgressForVolunteers(project));
     }
 }

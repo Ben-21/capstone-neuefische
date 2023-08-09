@@ -19,7 +19,8 @@ class ProjectServiceTest {
 
     ProjectRepo projectRepo = mock(ProjectRepo.class);
     IdService idService = mock(IdService.class);
-    ProjectService projectService = new ProjectService(projectRepo, idService);
+    ProjectCalculations projectCalculations = mock(ProjectCalculations.class);
+    ProjectService projectService = new ProjectService(projectRepo, idService, projectCalculations);
 
 
     @Test
@@ -217,8 +218,8 @@ class ProjectServiceTest {
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
-                50,
                 0,
+                100,
                 "Turkey",
                 new ArrayList<>(),
                 new ArrayList<>());
@@ -227,14 +228,14 @@ class ProjectServiceTest {
                 repoProject.id(),
                 repoProject.name(),
                 "Anonymous",
-                new BigDecimal(100));
+                new BigDecimal(50));
 
         Donation finalDonation = new Donation(
                 "dono-02A",
                 repoProject.id(),
                 repoProject.name(),
                 "Anonymous",
-                new BigDecimal(100));
+                new BigDecimal(50));
 
         Project projectToSave = new Project(
                 "01A",
@@ -242,8 +243,20 @@ class ProjectServiceTest {
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
-                50,
                 0,
+                100,
+                "Turkey",
+                List.of(finalDonation),
+                new ArrayList<>());
+
+        Project projectWithProgress = new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                100,
                 "Turkey",
                 List.of(finalDonation),
                 new ArrayList<>());
@@ -252,19 +265,23 @@ class ProjectServiceTest {
         //When
         when(projectRepo.findById(projectId))
                 .thenReturn(Optional.of(repoProject));
-        when(projectRepo.save(projectToSave))
-                .thenReturn(projectToSave);
+        when(projectCalculations.calculateProgressForDonations(projectToSave))
+                .thenReturn(projectWithProgress);
+        when(projectRepo.save(projectWithProgress))
+                .thenReturn(projectWithProgress);
         when(idService.createRandomId())
                 .thenReturn("dono-02A");
+
 
         Project actualProject = projectService.addDonation(projectId, donationToAdd);
 
 
         //Then
         verify(projectRepo).findById(projectId);
-        verify(projectRepo).save(projectToSave);
+        verify(projectCalculations).calculateProgressForDonations(projectToSave);
+        verify(projectRepo).save(projectWithProgress);
         verify(idService).createRandomId();
-        assertEquals(projectToSave, actualProject);
+        assertEquals(projectWithProgress, actualProject);
     }
 
     @Test
@@ -278,8 +295,8 @@ class ProjectServiceTest {
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
-                50,
                 0,
+                100,
                 "Turkey",
                 new ArrayList<>(),
                 new ArrayList<>());
@@ -303,8 +320,20 @@ class ProjectServiceTest {
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
-                50,
                 0,
+                100,
+                "Turkey",
+                new ArrayList<>(),
+                List.of(finalVolunteer));
+
+        Project projectWithProgress = new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                1,
+                100,
                 "Turkey",
                 new ArrayList<>(),
                 List.of(finalVolunteer));
@@ -313,8 +342,10 @@ class ProjectServiceTest {
         //When
         when(projectRepo.findById(projectId))
                 .thenReturn(Optional.of(repoProject));
-        when(projectRepo.save(projectToSave))
-                .thenReturn(projectToSave);
+        when(projectCalculations.calculateProgressForVolunteers(projectToSave))
+                .thenReturn(projectWithProgress);
+        when(projectRepo.save(projectWithProgress))
+                .thenReturn(projectWithProgress);
         when(idService.createRandomId())
                 .thenReturn("vol-02A");
 
@@ -323,8 +354,9 @@ class ProjectServiceTest {
 
         //Then
         verify(projectRepo).findById(projectId);
-        verify(projectRepo).save(projectToSave);
+        verify(projectCalculations).calculateProgressForVolunteers(projectToSave);
+        verify(projectRepo).save(projectWithProgress);
         verify(idService).createRandomId();
-        assertEquals(projectToSave, actualProject);
+        assertEquals(projectWithProgress, actualProject);
     }
 }
