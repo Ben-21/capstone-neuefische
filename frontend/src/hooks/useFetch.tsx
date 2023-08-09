@@ -7,9 +7,9 @@ import {toast} from 'react-toastify';
 type State = {
     projects: Project[],
     fetchProjects: () => void,
-    postProject: (requestBody: ProjectCreation) => void,
+    postProject: (requestBody: ProjectCreation) => Promise<number | string | void>,
     getProjectById: (id: string) => Project | undefined
-    putProject: (requestBody: Project) => void,
+    putProject: (requestBody: Project) => Promise<number | string | void>,
     deleteProject: (id: string) => void,
     isLoading: boolean,
     checkPage: (page: string) => string,
@@ -41,10 +41,11 @@ export const useFetch = create<State>((set, get) => ({
         },
 
         postProject: (requestBody: ProjectCreation) => {
-            const {fetchProjects} = get();
-            axios
+            return axios
                 .post("/api/projects", requestBody)
-                .then(fetchProjects)
+                .then(response => {
+                    set({projects: [...get().projects, response.data]})
+                })
                 .then(() => toast.success("Project successfully added"))
                 .catch((error) => {
                     toast.error("Something went wrong");
@@ -67,11 +68,13 @@ export const useFetch = create<State>((set, get) => ({
 
         putProject: (requestBody: Project) => {
 
-            const {fetchProjects} = get();
+
             const {id, ...projectNoId} = requestBody;
-            axios
+            return axios
                 .put(`/api/projects/${id}`, projectNoId)
-                .then(fetchProjects)
+                .then(response => {
+                    set({projects: get().projects.map(project => project.id === id ? response.data : project)})
+                })
                 .then(() => toast.success("Project successfully updated"))
                 .catch((error) => {
                     toast.error("Something went wrong");
