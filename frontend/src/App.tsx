@@ -9,6 +9,7 @@ import AddEditProject from "./pages/AddEditProject.tsx";
 import NavigationBar from "./components/NavigationBar.tsx";
 import Header from "./components/Header.tsx";
 import AddDonationOrVolunteer from "./pages/AddDonationOrVolunteer.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
 
 
 export default function App() {
@@ -39,6 +40,7 @@ export default function App() {
                 <Route path="/edit/:id" element={<AddEditProject/>}/>
                 <Route path="/donate/:id" element={<AddDonationOrVolunteer/>}/>
                 <Route path="/volunteer/:id" element={<AddDonationOrVolunteer/>}/>
+                <Route path="/login" element={<LoginPage/>}/>
             </Routes>
 
             <NavigationBar/>
