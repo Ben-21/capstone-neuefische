@@ -57,6 +57,37 @@ class ProjectCalculationsTest {
     }
 
     @Test
+    void returnProject_whenCategoryWrong() {
+        //Given
+        Volunteer newVolunteer = new Volunteer(
+                "01A",
+                "01B",
+                "ProjectName",
+                "VolunteerName"
+        );
+
+        Project project = new Project(
+                "01A",
+                "test",
+                "test",
+                Category.DONATION,
+                List.of(Demand.DONATIONINKIND),
+                0,
+                100,
+                "test",
+                new ArrayList<>(),
+                List.of(newVolunteer)
+        );
+
+
+        //When
+        Project actualProject = projectCalculations.calculateProgressForVolunteers(project);
+
+        //Then
+        assertEquals(project, actualProject);
+    }
+
+    @Test
     void returnProjectWithProgress_whenCalculateProgressForDonation() {
         //Given
         Donation newDonation = new Donation(
