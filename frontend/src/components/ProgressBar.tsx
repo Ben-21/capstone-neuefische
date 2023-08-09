@@ -1,9 +1,8 @@
-import * as React from 'react';
 import LinearProgress, {LinearProgressProps} from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box';
 import {Project} from "../models/models.tsx";
 import styled from "@emotion/styled";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 
 type Props = {
     project: Project;
@@ -28,7 +27,7 @@ export default function ProgressBar(props: Props) {
     }
 
 
-    const [progress, setProgress] = React.useState(10);
+    const [progress, setProgress] = useState(0);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -37,9 +36,9 @@ export default function ProgressBar(props: Props) {
                     clearInterval(timer);
                     return props.project.progress;
                 }
-                return prevProgress + 10;
+                return prevProgress + 1;
             });
-        }, 800);
+        }, 100);
 
         return () => {
             clearInterval(timer);
