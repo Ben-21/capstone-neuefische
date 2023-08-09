@@ -31,7 +31,7 @@ public class SecurityConfig {
                         httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(httpRequests ->
                         httpRequests
-                                .requestMatchers(HttpMethod.GET, "/api/projects").authenticated()
+                                .requestMatchers(HttpMethod.GET, "/api/projects").permitAll()
                                 .requestMatchers("/api/projects").authenticated()
 
                                 .requestMatchers(HttpMethod.GET, "/api/projects/**").permitAll()
@@ -41,7 +41,6 @@ public class SecurityConfig {
                 )
                 .logout(logout -> logout.logoutUrl("/api/users/logout")
                         .deleteCookies("JSESSIONID"))
-                .formLogin(Customizer.withDefaults())
                 .build();
 
     }
