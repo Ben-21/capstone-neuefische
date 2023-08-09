@@ -55,9 +55,11 @@ export default function ProjectCard(props: Props) {
                         <StyledDonationVolunteer>
                             {props.project.donations.map(donation => parseFloat(donation.amount)).reduce((a, b) => a + b, 0)} EUR
                         </StyledDonationVolunteer>
-                        <StyledSubDonationVolunteer>
-                            of {props.project.goal} EUR collected
-                        </StyledSubDonationVolunteer>
+                        {props.project.category === "DONATION" &&
+                            <StyledSubDonationVolunteer>
+                                of {props.project.goal} EUR collected
+                            </StyledSubDonationVolunteer>
+                        }
                         {props.project.category === "DONATION" && <ProgressBar project={props.project}/>}
 
                         {props.project.category === "PARTICIPATION" &&
@@ -93,7 +95,7 @@ export default function ProjectCard(props: Props) {
 const StyledCard = styled(Card)`
   width: 100%;
   background-color: #EBE7D8;
-  margin: 0 0 100px 0;
+  margin: 0;
   padding: 0;
   border-radius: 5px;
 `;
