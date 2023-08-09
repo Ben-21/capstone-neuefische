@@ -2,6 +2,7 @@ import {Demand, DonationCreation, Project, ProjectCreation, VolunteerCreation} f
 import {create} from "zustand";
 import axios from "axios";
 import {toast} from 'react-toastify';
+import {NavigateFunction} from "react-router-dom";
 
 
 type State = {
@@ -18,6 +19,9 @@ type State = {
     mapDemandsToEnum: (string: string[]) => Demand[],
     postDonation: (projectId: string, donationCreation: DonationCreation) => void,
     postVolunteer: (projectId: string, volunteerCreation: VolunteerCreation) => void,
+    user: string,
+    login: (username: string, password: string, navigate: NavigateFunction) => void,
+    me: () => void,
 
 };
 
@@ -175,5 +179,32 @@ export const useFetch = create<State>((set, get) => ({
                     console.error(error);
                 })
         },
+
+        user: "",
+        login: (username: string, password: string, navigate: NavigateFunction) => {
+            axios.post("api/users/login", null, {
+                auth: {
+                    username: username,
+                    password: password
+                }
+            })
+                .then(response => {
+                    set({user: response.data.username})
+                    navigate("/")
+                })
+                .then(() => toast.success("Login successful"))
+                .catch((error) => {
+                    toast.error("You are not registered. Please register first");
+                    console.error(error);
+                });
+        },
+
+
+        me: () => {
+            axios.get("api/users/me")
+                .then(response => set({user: response.data}))
+        }
+
+
     }))
 ;
