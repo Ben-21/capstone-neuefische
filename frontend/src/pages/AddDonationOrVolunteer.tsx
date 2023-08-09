@@ -13,7 +13,6 @@ import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 
 export default function AddDonationOrVolunteer() {
 
-    const fetchProjects = useFetch(state => state.fetchProjects);
     const getProjectById = useFetch(state => state.getProjectById);
     const [project, setProject] = useState<Project | undefined>(undefined);
     const {id} = useParams();
@@ -27,12 +26,16 @@ export default function AddDonationOrVolunteer() {
 
 
     useEffect(() => {
-        fetchProjects();
-    }, [fetchProjects]);
-
-    useEffect(() => {
         if (id) {
-            setProject(getProjectById(id));
+            getProjectById(id)
+                .then((project) => {
+                    setProject(project);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
+
         } else {
             toast.error("Something went wrong");
             navigate("/");

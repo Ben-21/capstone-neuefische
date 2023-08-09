@@ -16,14 +16,10 @@ export default function NavigationBar() {
     const id = location.pathname.split("/")[2]
     const [page, setPage] = useState("");
     const checkPage = useFetch(state => state.checkPage);
-    const findProjectById = useFetch(state => state.getProjectById);
+    const getProjectById = useFetch(state => state.getProjectById);
     const [project, setProject] = useState<Project | undefined>(undefined);
     const [volunteerVisible, setVolunteerVisible] = useState(false);
-    const fetchProjects = useFetch(state => state.fetchProjects);
 
-    useEffect(() => {
-        fetchProjects();
-    }, [fetchProjects]);
 
     useEffect(() => {
         setPage(checkPage(location.pathname))
@@ -32,10 +28,15 @@ export default function NavigationBar() {
 
     useEffect(() => {
         if (id) {
-            setProject(findProjectById(id));
-            console.log("project set")
+            getProjectById(id)
+                .then((project) => {
+                    setProject(project);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
         }
-    }, [id, findProjectById, location]);
+    }, [id, getProjectById, location]);
 
     useEffect(() => {
         if (project && project.category === "PARTICIPATION") {

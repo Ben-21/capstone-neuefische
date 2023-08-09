@@ -21,7 +21,6 @@ import CancelIcon from '@mui/icons-material/Cancel';
 export default function AddEditProject() {
 
     const navigate = useNavigate();
-    const fetchProjects = useFetch(state => state.fetchProjects);
     const {id} = useParams();
     const getProjectById = useFetch(state => state.getProjectById);
     const putProject = useFetch(state => state.putProject);
@@ -47,15 +46,16 @@ export default function AddEditProject() {
 
 
     useEffect(() => {
-        fetchProjects();
-    }, [fetchProjects]);
+        if (id) {
+            getProjectById(id)
+                .then((project) => {
+                    setProject(project);
+                })
+        }
+    }, [id, getProjectById]);
+
 
     useEffect(() => {
-        if (id) {
-            setProject(getProjectById(id));
-        }
-
-
         if (project) {
             setFormData({
                 name: project.name.toString(),
@@ -67,7 +67,7 @@ export default function AddEditProject() {
 
             setCategory(project.category)
         }
-    }, [id, project, getProjectById, mapDemandsToUserFriendly])
+    }, [id, project, mapDemandsToUserFriendly])
 
 
     function initialiseAllFields() {
@@ -93,8 +93,11 @@ export default function AddEditProject() {
                 location: formData.location,
                 goal: formData.goal,
             };
-            postProject(requestBody);
-            initialiseAllFields();
+            postProject(requestBody)
+                .then(() => {
+                    initialiseAllFields();
+                });
+
         }
 
         if (project) {
@@ -110,9 +113,11 @@ export default function AddEditProject() {
                 donations: project.donations,
                 volunteers: project.volunteers,
             };
-            putProject(requestBody);
-            initialiseAllFields();
-            navigate(`/details/${project.id}`)
+            putProject(requestBody)
+                .then(() => {
+                    initialiseAllFields();
+                    navigate(`/details/${project.id}`)
+                });
         }
     }
 
@@ -127,6 +132,7 @@ export default function AddEditProject() {
 
     function handleCategoryChange(_: React.MouseEvent<HTMLElement>, newCategory: "DONATION" | "PARTICIPATION") {
         setCategory(newCategory)
+        console.log("changed category" + newCategory)
     }
 
     function handleCancelButton() {

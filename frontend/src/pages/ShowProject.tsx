@@ -2,27 +2,34 @@ import ProjectCard from "../components/ProjectCard.tsx";
 import {useFetch} from "../hooks/useFetch.tsx";
 import {useParams} from "react-router-dom";
 import styled from "@emotion/styled";
+import {useEffect, useState} from "react";
+import {Project} from "../models/models.tsx";
 
 
 export default function ShowProject() {
 
     const {id} = useParams();
     const getProjectById = useFetch(state => state.getProjectById);
-    const isLoading = useFetch(state => state.isLoading);
+    const [project, setProject] = useState<Project | undefined>(undefined);
+
+    useEffect(() => {
+        if (!id) {
+            throw new Error("Id is undefined")
+        }
+        getProjectById(id)
+            .then((project) => {
+                setProject(project);
+            })
+            .catch(error => {
+                console.error(error);
+            });
 
 
-    if (isLoading) return <p>Loading...</p>
-
-    if (!id) {
-        throw new Error("Id is undefined")
-    }
-
-    const project = getProjectById(id);
+    }, [id, getProjectById]);
 
     if (!project) {
-        throw new Error(`No project with id ${id} found`)
+        return <p>Loading...</p>
     }
-
 
     return (
         <>
@@ -40,4 +47,7 @@ const StyledApp = styled.div`
   justify-content: center;
   gap: 1.1em;
   margin-top: 101px;
+  margin-bottom: 101px;
 `;
+
+

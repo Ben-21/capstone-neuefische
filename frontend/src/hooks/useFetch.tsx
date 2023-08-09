@@ -8,7 +8,7 @@ type State = {
     projects: Project[],
     fetchProjects: () => void,
     postProject: (requestBody: ProjectCreation) => Promise<number | string | void>,
-    getProjectById: (id: string) => Project | undefined
+    getProjectById: (id: string) => Promise<Project>,
     putProject: (requestBody: Project) => Promise<number | string | void>,
     deleteProject: (id: string) => void,
     isLoading: boolean,
@@ -57,13 +57,14 @@ export const useFetch = create<State>((set, get) => ({
             if (!id) {
                 throw new Error("Id is undefined")
             }
-            const {projects} = get();
-            const project = projects.find((project) => project.id === id);
 
-            if (!project) {
-                throw new Error(`No project with id ${id} found`)
-            }
-            return project;
+            return axios
+                .get(`/api/projects/${id}`)
+                .then(response => response.data)
+                .catch(error => {
+                    toast.error("Something went wrong");
+                    console.error(error);
+                })
         },
 
         putProject: (requestBody: Project) => {
