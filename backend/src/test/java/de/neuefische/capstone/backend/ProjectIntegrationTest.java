@@ -120,6 +120,47 @@ class ProjectIntegrationTest {
 
 
     @Test
+    void whenGetProjectById_thenReturnProject() throws Exception {
+        //Given
+        ProjectCreation project = new ProjectCreation(
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                "Turkey",
+                1000);
+
+        String projectJson = objectMapper.writeValueAsString(project);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/projects")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(projectJson)
+        );
+
+        String id = projectService.getAllProjects().get(0).id();
+
+        //When
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/projects/" + id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+
+                //Then
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("id").value(id))
+                .andExpect(jsonPath("name").value("Earthquake Turkey"))
+                .andExpect(jsonPath("description").value("Help for the people in Turkey"))
+                .andExpect(jsonPath("category").value("PARTICIPATION"))
+                .andExpect(jsonPath("demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
+                .andExpect(jsonPath("progress").value(0))
+                .andExpect(jsonPath("location").value("Turkey"))
+                .andExpect(jsonPath("goal").value(1000));
+    }
+
+
+    @Test
     void whenUpdateProject_thenReturnProject() throws Exception {
         //Given
         ProjectCreation projectNoIdNoProgress = new ProjectCreation(

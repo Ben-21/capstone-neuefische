@@ -107,6 +107,35 @@ class ProjectServiceTest {
         assertEquals(expectedProjectList, actualProjectList);
     }
 
+
+    @Test
+    void returnProjectById() {
+        //Given
+        String id = "01A";
+        Project expectedProject = new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                0,
+                "Turkey",
+                new ArrayList<>(),
+                new ArrayList<>());
+
+        //When
+        when(projectRepo.findById(id))
+                .thenReturn(Optional.of(expectedProject));
+
+        Project actualProject = projectService.getProjectById(id);
+
+        //Then
+        verify(projectRepo).findById(id);
+        assertEquals(expectedProject, actualProject);
+    }
+
+
     @Test
     void whenProjectUpdated_thenReturnUpdatedProject() {
         //Given
