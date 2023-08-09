@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -30,7 +31,7 @@ class ProjectIntegrationTest {
     @Autowired
     ObjectMapper objectMapper;
 
-
+    @DirtiesContext
     @Test
     void whenAddProject_ThenReturnProject() throws Exception {
         //When
@@ -63,7 +64,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("goal").value(1000));
     }
 
-
+    @DirtiesContext
     @Test
     void whenGetAllProjects_ThenReturnEmptyList() throws Exception {
         //When
@@ -79,7 +80,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
-
+    @DirtiesContext
     @Test
     void whenGetAllProjects_ThenReturnAllProjects() throws Exception {
         //When
@@ -118,7 +119,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("$[0].location").value("Turkey"));
     }
 
-
+    @DirtiesContext
     @Test
     void whenGetProjectById_thenReturnProject() throws Exception {
         //Given
@@ -159,7 +160,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("goal").value(1000));
     }
 
-
+    @DirtiesContext
     @Test
     void whenUpdateProject_thenReturnProject() throws Exception {
         //Given
@@ -206,7 +207,7 @@ class ProjectIntegrationTest {
                 );
     }
 
-
+    @DirtiesContext
     @Test
     void whenUpdateProjectWithWrongId_thenReturnNotFound() throws Exception {
         //Given
@@ -235,7 +236,7 @@ class ProjectIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
-
+    @DirtiesContext
     @Test
     void whenProjectedDeleted_thenReturnEmptyList() throws Exception {
         //Given
@@ -275,7 +276,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
-
+    @DirtiesContext
     @Test
     void whenDeleteProjectWithWrongId_thenReturnNotFound() throws Exception {
         //Given
@@ -290,6 +291,7 @@ class ProjectIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
+    @DirtiesContext
     @Test
     void whenAddDonation_thenReturnProjectWithDonation() throws Exception {
         //Given
@@ -347,6 +349,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("donations[0].amount").value(100));
     }
 
+    @DirtiesContext
     @Test
     void whenAddVolunteer_thenReturnProjectWithVolunteer() throws Exception {
         //Given
