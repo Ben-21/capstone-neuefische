@@ -34,7 +34,7 @@ public class MongoUserDetailsService implements UserDetailsService {
         return new User(mongoUser.username(), mongoUser.password(), Collections.emptyList());
     }
 
-    public void registerUser(MongoUserWithoutId mongoUserWithoutId) {
+    public void registerUser(MongoUserWithNoId mongoUserWithoutId) {
         if (mongoUserRepository.findByUsername(mongoUserWithoutId.username()).isPresent()) {
             throw new IllegalArgumentException("User already exists");
         }
