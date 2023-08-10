@@ -1,7 +1,6 @@
 package de.neuefische.capstone.backend.security;
 
 import de.neuefische.capstone.backend.services.IdService;
-import de.neuefische.capstone.backend.services.PasswordValidator;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,13 +16,11 @@ public class MongoUserDetailsService implements UserDetailsService {
 
     private final MongoUserRepository mongoUserRepository;
     private final IdService idService;
-    private final PasswordValidator passwordValidator;
 
 
-    public MongoUserDetailsService(MongoUserRepository mongoUserRepository, IdService idService, PasswordValidator passwordValidator) {
+    public MongoUserDetailsService(MongoUserRepository mongoUserRepository, IdService idService) {
         this.mongoUserRepository = mongoUserRepository;
         this.idService = idService;
-        this.passwordValidator = passwordValidator;
     }
 
     @Override
@@ -37,9 +34,6 @@ public class MongoUserDetailsService implements UserDetailsService {
     public void registerUser(MongoUserWithNoId mongoUserWithoutId) {
         if (mongoUserRepository.findByUsername(mongoUserWithoutId.username()).isPresent()) {
             throw new IllegalArgumentException("User already exists");
-        }
-        if (!passwordValidator.isValidPassword(mongoUserWithoutId.password())) {
-            throw new IllegalArgumentException("Password is not valid");
         }
 
         PasswordEncoder encoder = new Argon2PasswordEncoder(16, 32, 8, 1 << 16, 4);

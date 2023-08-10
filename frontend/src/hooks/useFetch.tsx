@@ -227,7 +227,7 @@ export const useFetch = create<State>((set, get) => ({
                     .then(() => toast.success("Registration successful"))
                     .catch((error) => {
                         console.error(error);
-                        toast.error(error.response.data.message);
+                        toast.error(error.response.data.errors[0].defaultMessage);
                     })
 
             } else {

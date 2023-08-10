@@ -1,6 +1,7 @@
 package de.neuefische.capstone.backend.security;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class MongoUserController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody MongoUserWithNoId mongoUserWithoutId) {
+    public String register(@Valid @RequestBody MongoUserWithNoId mongoUserWithoutId) {
         mongoUserDetailsService.registerUser(mongoUserWithoutId);
         return "registered";
     }
