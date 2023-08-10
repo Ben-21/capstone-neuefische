@@ -64,7 +64,7 @@ class MongoUserServiceTest {
         MongoUserWithoutPassword actual = mongoUserService.findByUsername("test");
 
         // Then
-        verify(mongoUserRepository).findByUsername("test");
+        verify(mongoUserRepository, times(2)).findByUsername("test");
         assertEquals(expected, actual);
     }
 }
