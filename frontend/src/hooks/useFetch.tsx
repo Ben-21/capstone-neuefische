@@ -22,6 +22,13 @@ type State = {
     user: string,
     login: (username: string, password: string, navigate: NavigateFunction) => void,
     me: () => void,
+    register: (username: string,
+               password: string,
+               repeatedPassword: string,
+               setPassword: (password: string) => void,
+               setRepeatedPassword: (repeatedPassword: string) => void,
+               navigate: NavigateFunction)
+        => void
 
 };
 
@@ -199,12 +206,35 @@ export const useFetch = create<State>((set, get) => ({
                 });
         },
 
-
         me: () => {
             axios.get("api/users/me")
                 .then(response => set({user: response.data}))
+        },
+
+        register: (userName: string, password: string, repeatedPassword: string, setPassword: (password: string) => void, setRepeatedPassword: (repeatedPassword: string) => void, navigate: NavigateFunction) => {
+            const newUserData = {
+                "username": `${userName}`,
+                "password": `${password}`
+            }
+
+            if (password === repeatedPassword) {
+
+                axios.post("/api/users/register", newUserData)
+                    .then(response => {
+                        console.error(response);
+                        navigate("/login");
+                    })
+                    .then(() => toast.success("Registration successful"))
+                    .catch((error) => {
+                        console.error(error);
+                        toast.error(error.response.data.message);
+                    })
+
+            } else {
+                toast.error("Passwords do not match");
+                setPassword("");
+                setRepeatedPassword("");
+            }
         }
-
-
     }))
 ;
