@@ -1,6 +1,5 @@
 package de.neuefische.capstone.backend.Security;
 
-import de.neuefische.capstone.backend.security.*;
 import de.neuefische.capstone.backend.services.IdService;
 import org.junit.jupiter.api.Test;
 

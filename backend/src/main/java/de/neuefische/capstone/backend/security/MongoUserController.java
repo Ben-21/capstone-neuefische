@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
 public class MongoUserController {
-    private final MongoUserDetailsService mongoUserDetailsService;
     private final MongoUserService mongoUserService;
 
     @GetMapping("/me")
