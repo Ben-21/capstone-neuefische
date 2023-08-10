@@ -18,16 +18,20 @@ export default function App() {
 
     const fetchProjects = useFetch((state) => state.fetchProjects);
     const [initialLoad, setInitialLoad] = useState(true);
+    const me = useFetch(state => state.me);
+    const meAll = useFetch(state => state.meAll);
 
     useEffect(() => {
         try {
             fetchProjects();
+            me();
+            meAll();
         } catch (error) {
             console.error(error);
         } finally {
             setInitialLoad(false);
         }
-    }, [fetchProjects]);
+    }, [fetchProjects, me, meAll]);
 
     if (initialLoad) return null;
 

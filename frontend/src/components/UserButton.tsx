@@ -9,14 +9,14 @@ export default function UserButton() {
 
     const navigate = useNavigate();
     const me = useFetch(state => state.me);
-    const user = useFetch(state => state.user);
+    const userName = useFetch(state => state.userName);
 
     useEffect(() => {
         me();
-    }, [me, user]);
+    }, [me, userName]);
 
     function handleClick() {
-        if (user === "anonymousUser"){
+        if (userName === "anonymousUser"){
             navigate("/login")
         }else {
             navigate("/profile")

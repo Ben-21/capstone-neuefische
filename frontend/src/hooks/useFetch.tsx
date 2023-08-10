@@ -1,4 +1,4 @@
-import {Demand, DonationCreation, Project, ProjectCreation, VolunteerCreation} from "../models/models.tsx";
+import {Demand, DonationCreation, Project, ProjectCreation, User, VolunteerCreation} from "../models/models.tsx";
 import {create} from "zustand";
 import axios from "axios";
 import {toast} from 'react-toastify';
@@ -19,7 +19,7 @@ type State = {
     mapDemandsToEnum: (string: string[]) => Demand[],
     postDonation: (projectId: string, donationCreation: DonationCreation) => void,
     postVolunteer: (projectId: string, volunteerCreation: VolunteerCreation) => void,
-    user: string,
+    userName: string,
     login: (username: string, password: string, navigate: NavigateFunction) => void,
     me: () => void,
     register: (username: string,
@@ -28,7 +28,9 @@ type State = {
                setPassword: (password: string) => void,
                setRepeatedPassword: (repeatedPassword: string) => void,
                navigate: NavigateFunction)
-        => void
+        => void,
+    user: User,
+    meAll: () => void,
 
 };
 
@@ -37,6 +39,14 @@ export const useFetch = create<State>((set, get) => ({
         projects: [],
         isLoading: true,
         page: "",
+        userName: "",
+        user:
+            {
+                id: "",
+                username: "",
+                donations: [],
+                volunteers: []
+            },
 
 
         fetchProjects: () => {
@@ -193,16 +203,16 @@ export const useFetch = create<State>((set, get) => ({
                 })
         },
 
-        user: "",
+
         login: (username: string, password: string, navigate: NavigateFunction) => {
-            axios.post("api/users/login", null, {
+            axios.post("/api/users/login", null, {
                 auth: {
                     username: username,
                     password: password
                 }
             })
                 .then(response => {
-                    set({user: response.data.username})
+                    set({userName: response.data.username})
                     navigate("/")
                 })
                 .then(() => toast.success("Login successful"))
@@ -213,8 +223,14 @@ export const useFetch = create<State>((set, get) => ({
         },
 
         me: () => {
-            axios.get("api/users/me")
+            axios.get("/api/users/me")
+                .then(response => set({userName: response.data}))
+        },
+
+        meAll: () => {
+            axios.get("/api/users/me-object")
                 .then(response => set({user: response.data}))
+
         },
 
         register: (userName: string, password: string, repeatedPassword: string, setPassword: (password: string) => void, setRepeatedPassword: (repeatedPassword: string) => void, navigate: NavigateFunction) => {

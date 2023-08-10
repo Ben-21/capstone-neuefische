@@ -33,10 +33,11 @@ public class SecurityConfig {
                         httpRequests
                                 .requestMatchers(HttpMethod.GET, "/api/projects").permitAll()
                                 .requestMatchers("/api/projects").authenticated()
-
                                 .requestMatchers(HttpMethod.GET, "/api/projects/**").permitAll()
-                                .requestMatchers( "/api/projects/**").authenticated()
+                                .requestMatchers("/api/projects/**").authenticated()
                                 .requestMatchers("/api/users/me").permitAll()
+                                .requestMatchers("/api/users/me-object").permitAll()
+
                                 .anyRequest().permitAll()
                 )
                 .build();

@@ -8,16 +8,17 @@ import {useEffect} from "react";
 export default function UserProfile() {
 
     const user = useFetch(state => state.user);
-    const me = useFetch(state => state.me);
+    const meAll = useFetch(state => state.meAll);
 
     useEffect(() => {
-        me();
-    }, [me, user]);
+        meAll();
+    }, [meAll]);
+
 
     return (
         <StyledBody>
             <StyledH2>Personal Data</StyledH2>
-            <StyledTextField required id="username" name="username" value={user}
+            <StyledTextField required id="username" name="username" value={user.username}
                              label="Username"
                              variant="outlined"
                              disabled/>
@@ -25,7 +26,9 @@ export default function UserProfile() {
                           endIcon={<EditIcon/>}>EDIT USERDATA</StyledButton>
             <StyledH2>Project Data</StyledH2>
             <StyledH3>Donations</StyledH3>
+            {user.donations.map((donation) => <div key={donation.id}>{donation.projectName}</div>)}
             <StyledH3>Volunteered</StyledH3>
+            {user.volunteers.map((volunteer) => <div key={volunteer.id}>{volunteer.projectName}</div>)}
         </StyledBody>
     )
 }
