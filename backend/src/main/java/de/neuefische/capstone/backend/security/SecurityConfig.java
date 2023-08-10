@@ -39,8 +39,6 @@ public class SecurityConfig {
                                 .requestMatchers("/api/users/me").permitAll()
                                 .anyRequest().permitAll()
                 )
-                .logout(logout -> logout.logoutUrl("/api/users/logout")
-                        .deleteCookies("JSESSIONID"))
                 .build();
 
     }
