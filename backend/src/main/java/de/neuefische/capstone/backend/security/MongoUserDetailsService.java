@@ -9,6 +9,7 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 @Service
@@ -31,7 +32,14 @@ public class MongoUserDetailsService implements UserDetailsService {
         return new User(mongoUser.username(), mongoUser.password(), Collections.emptyList());
     }
 
-    public void registerUser(MongoUserWithNoId mongoUserWithoutId) {
+    public MongoUserWithoutPassword findByUsernameTest(String username) {
+        MongoUser mongoUser = mongoUserRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username " + username + " not found"));
+
+        return new MongoUserWithoutPassword(mongoUser.id(), mongoUser.username(), mongoUser.donations(), mongoUser.volunteers());
+    }
+
+    public void registerUser(MongoUserCreation mongoUserWithoutId) {
         if (mongoUserRepository.findByUsername(mongoUserWithoutId.username()).isPresent()) {
             throw new IllegalArgumentException("User already exists");
         }
@@ -39,7 +47,7 @@ public class MongoUserDetailsService implements UserDetailsService {
         PasswordEncoder encoder = new Argon2PasswordEncoder(16, 32, 8, 1 << 16, 4);
         String encodedPassword = encoder.encode(mongoUserWithoutId.password());
 
-        MongoUser newUser = new MongoUser(idService.createRandomId(), mongoUserWithoutId.username(), encodedPassword);
+        MongoUser newUser = new MongoUser(idService.createRandomId(), mongoUserWithoutId.username(), encodedPassword, new ArrayList<>(), new ArrayList<>());
         mongoUserRepository.insert(newUser);
 
     }

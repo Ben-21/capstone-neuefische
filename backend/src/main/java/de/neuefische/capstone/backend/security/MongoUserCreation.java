@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 
-public record MongoUserWithNoId(
+public record MongoUserCreation(
         @NotEmpty
         @Size(min=4, max=14, message = "Username must be between 4 and 14 characters")
         String username,

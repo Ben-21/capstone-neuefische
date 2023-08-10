@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +16,13 @@ public class MongoUserController {
     @GetMapping("/me")
     public String getUserInfo() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    @GetMapping("/me-all")
+    public MongoUserWithoutPassword getUserAllInfo() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        return mongoUserDetailsService.findByUsernameTest(userDetails.getUsername());
     }
 
     @PostMapping("/login")
@@ -29,7 +37,7 @@ public class MongoUserController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid @RequestBody MongoUserWithNoId mongoUserWithoutId) {
+    public String register(@Valid @RequestBody MongoUserCreation mongoUserWithoutId) {
         mongoUserDetailsService.registerUser(mongoUserWithoutId);
         return "registered";
     }
