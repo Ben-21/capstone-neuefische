@@ -30,8 +30,6 @@ export default function LoginPage() {
 
         <StyledBody>
             <StyledForm onSubmit={handleSubmit}>
-                {/*<InputField value={username} onChange={handleUsernameInput} type="text" name="userName"*/}
-                {/*            placeholder="username"/>*/}
                 <StyledTextField required id="username" name="username" value={username}
                                  onChange={handleUsernameInput}
                                  label="Username"
@@ -41,10 +39,6 @@ export default function LoginPage() {
                                  label="Password"
                                  variant="outlined"
                                  type="password"/>
-
-                {/*<InputField value={password} onChange={handlePasswordInput} type="password" name="password"*/}
-                {/*            placeholder="password"/>*/}
-
                 <StyledButton type={"submit"} variant="outlined"
                               endIcon={<LoginIcon/>}>LOGIN</StyledButton>
                 <StyledSpan>OR</StyledSpan>

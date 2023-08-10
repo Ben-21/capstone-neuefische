@@ -7,7 +7,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 
 
-
 export default function RegisterPage() {
 
     const [username, setUsername] = useState("");
@@ -26,13 +25,13 @@ export default function RegisterPage() {
         setPassword(event.currentTarget.value);
     }
 
-    function handleRepeatedPasswordInput(event: ChangeEvent<HTMLInputElement>){
+    function handleRepeatedPasswordInput(event: ChangeEvent<HTMLInputElement>) {
         setRepeatedPassword(event.currentTarget.value);
     }
 
-    function handleRegistration(event: FormEvent<HTMLFormElement>){
+    function handleRegistration(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
-        register(username,password, repeatedPassword, setPassword, setRepeatedPassword, navigate);
+        register(username, password, repeatedPassword, setPassword, setRepeatedPassword, navigate);
     }
 
     return (
@@ -49,6 +48,7 @@ export default function RegisterPage() {
                                  onChange={handlePasswordInput}
                                  label="Password"
                                  variant="outlined"
+                                 type="password"
                                  style={{backgroundColor: regex.test(password) ? "lightgreen" : "tomato"}}/>
                 <br/>
                 <StyledSpan>
@@ -60,6 +60,7 @@ export default function RegisterPage() {
                                  onChange={handleRepeatedPasswordInput}
                                  label="Repeat Password"
                                  variant="outlined"
+                                 type="password"
                                  style={{backgroundColor: regex.test(password) ? "lightgreen" : "tomato"}}/>
                 <StyledButton type={"button"} onClick={() => navigate("/login")} variant="outlined"
                               endIcon={<ArrowBackIcon/>}>BACK</StyledButton>
@@ -69,7 +70,7 @@ export default function RegisterPage() {
         </StyledBody>
 
 
-        )
+    )
 
 
 }

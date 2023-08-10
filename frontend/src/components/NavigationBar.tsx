@@ -9,6 +9,7 @@ import {useFetch} from "../hooks/useFetch.tsx";
 import DonationButton from "./DonationButton.tsx";
 import VolunteerButton from "./VolunteerButton.tsx";
 import {Project} from "../models/models.tsx";
+import UserButton from "./UserButton.tsx";
 
 
 export default function NavigationBar() {
@@ -56,6 +57,7 @@ export default function NavigationBar() {
                 {page === "edit" && <DeleteButton projectId={id}/>}
                 {page === "details" && <DonationButton projectId={id}/>}
                 {page === "details" && volunteerVisible && <VolunteerButton projectId={id}/>}
+                <UserButton/>
             </StyledNavigationBar>
         </StyledNavigationWrapper>
     )

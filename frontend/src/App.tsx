@@ -11,6 +11,7 @@ import Header from "./components/Header.tsx";
 import AddDonationOrVolunteer from "./pages/AddDonationOrVolunteer.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
+import UserProfile from "./pages/UserProfile.tsx";
 
 
 export default function App() {
@@ -43,6 +44,7 @@ export default function App() {
                 <Route path="/volunteer/:id" element={<AddDonationOrVolunteer/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
+                <Route path="/profile" element={<UserProfile/>}/>
             </Routes>
 
             <NavigationBar/>
