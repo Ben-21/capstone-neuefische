@@ -117,6 +117,12 @@ export const useFetch = create<State>((set, get) => ({
                 set({page: "donate"})
             } else if ((path.split("/")[1]) === "volunteer") {
                 set({page: "volunteer"})
+            } else if ((path.split("/")[1]) === "login") {
+                set({page: "login"})
+            } else if ((path.split("/")[1]) === "register") {
+                set({page: "register"})
+            } else if ((path.split("/")[1]) === "profile") {
+                set({page: "profile"})
             } else {
                 set({page: path})
             }

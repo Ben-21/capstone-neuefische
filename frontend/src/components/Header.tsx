@@ -34,6 +34,9 @@ export default function Header() {
             {page === "add" && <StyledH3>Add Project</StyledH3>}
             {page === "donate" && <StyledH3>Donate</StyledH3>}
             {page === "volunteer" && <StyledH3>Volunteer</StyledH3>}
+            {page === "login" && <StyledH3>Login</StyledH3>}
+            {page === "register" && <StyledH3>Registration</StyledH3>}
+            {page === "profile" && <StyledH3>Profile</StyledH3>}
         </StyledSubHeader>}
             </>
     )
