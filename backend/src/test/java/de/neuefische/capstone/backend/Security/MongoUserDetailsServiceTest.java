@@ -66,4 +66,20 @@ class MongoUserDetailsServiceTest {
         verify(mongoUserRepository).findByUsername("test");
         verify(idService).createRandomId();
     }
+
+    @Test
+    void throwException_WhenNoUseralreadyExists(){
+        //Given
+        when(mongoUserRepository.findByUsername("test"))
+                .thenReturn(Optional.of(new MongoUser("1", "test", "test")));
+
+        //When / Then
+        try{
+            mongoUserDetailsService.registerUser(new MongoUserWithNoId("test", "test"));
+        } catch (Exception e){
+            assertEquals("User already exists", e.getMessage());
+        }
+
+
+    }
 }
