@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/users")
 public class MongoUserController {
     private final MongoUserDetailsService mongoUserDetailsService;
+    private final MongoUserService mongoUserService;
 
     @GetMapping("/me")
     public String getUserInfo() {
@@ -22,7 +23,7 @@ public class MongoUserController {
     public MongoUserWithoutPassword getUserAllInfo() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return mongoUserDetailsService.findByUsername(userDetails.getUsername());
+        return mongoUserService.findByUsername(userDetails.getUsername());
     }
 
     @PostMapping("/login")
@@ -38,7 +39,7 @@ public class MongoUserController {
 
     @PostMapping("/register")
     public String register(@Valid @RequestBody MongoUserCreation mongoUserWithoutId) {
-        mongoUserDetailsService.registerUser(mongoUserWithoutId);
+        mongoUserService.registerUser(mongoUserWithoutId);
         return "registered";
     }
 }
