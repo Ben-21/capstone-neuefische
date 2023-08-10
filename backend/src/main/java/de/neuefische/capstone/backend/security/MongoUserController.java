@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,11 +17,11 @@ public class MongoUserController {
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
-    @GetMapping("/me-all")
-    public MongoUserWithoutPassword getUserAllInfo() {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    @GetMapping("/me-object")
+    public MongoUserWithoutPassword getUserObject() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        return mongoUserService.findByUsername(userDetails.getUsername());
+        return mongoUserService.findByUsername(username);
     }
 
     @PostMapping("/login")

@@ -18,6 +18,9 @@ public class MongoUserService {
 
 
     public MongoUserWithoutPassword findByUsername(String username) {
+        if (mongoUserRepository.findByUsername(username).isEmpty()) {
+            return new MongoUserWithoutPassword("unknown", "anonymousUser", new ArrayList<>(), new ArrayList<>());
+        }
         MongoUser mongoUser = mongoUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username " + username + " not found"));
 
