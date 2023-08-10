@@ -22,7 +22,7 @@ public class MongoUserController {
     public MongoUserWithoutPassword getUserAllInfo() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return mongoUserDetailsService.findByUsernameTest(userDetails.getUsername());
+        return mongoUserDetailsService.findByUsername(userDetails.getUsername());
     }
 
     @PostMapping("/login")

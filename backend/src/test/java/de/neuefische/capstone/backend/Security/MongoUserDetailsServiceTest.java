@@ -1,6 +1,5 @@
 package de.neuefische.capstone.backend.Security;
 
-import de.neuefische.capstone.backend.security.*;
 import de.neuefische.capstone.backend.services.IdService;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.core.userdetails.User;
@@ -13,13 +12,11 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-
 import de.neuefische.capstone.backend.security.MongoUser;
 import de.neuefische.capstone.backend.security.MongoUserDetailsService;
 import de.neuefische.capstone.backend.security.MongoUserRepository;
 import de.neuefische.capstone.backend.security.MongoUserCreation;
 import de.neuefische.capstone.backend.security.MongoUserWithoutPassword;
-
 
 
 class MongoUserDetailsServiceTest {
@@ -97,7 +94,7 @@ class MongoUserDetailsServiceTest {
         MongoUserWithoutPassword expected = new MongoUserWithoutPassword("1", "test", new ArrayList<>(), new ArrayList<>());
 
         // When
-        MongoUserWithoutPassword actual = mongoUserDetailsService.findByUsernameTest("test");
+        MongoUserWithoutPassword actual = mongoUserDetailsService.findByUsername("test");
 
         // Then
         verify(mongoUserRepository).findByUsername("test");
