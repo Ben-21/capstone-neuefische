@@ -1,10 +1,10 @@
 import {useFetch} from "../hooks/useFetch.tsx";
-import React, {useEffect, useState} from "react";
-import {Project, ProjectCreation} from "../models/models.tsx";
+import React, {ChangeEvent, useEffect, useState} from "react";
+import {ImageCreation, Project, ProjectCreation} from "../models/models.tsx";
 import {
     Box,
     Button, Chip,
-    FormControl,
+    FormControl, Input,
     InputLabel, MenuItem,
     OutlinedInput,
     Select, SelectChangeEvent,
@@ -43,7 +43,10 @@ export default function AddEditProject() {
     ];
     const mapDemandsToUserFriendly = useFetch(state => state.mapDemandsToUserFriendly);
     const mapDemandsToEnum = useFetch(state => state.mapDemandsToEnum);
-
+    const [imageName, setImageName] = useState<string>("");
+    const [image, setImage] = useState<File>();
+    const addImage = useFetch(state => state.addImage);
+    const addedImage = useFetch(state => state.addedImage);
 
     useEffect(() => {
         if (id) {
@@ -53,6 +56,10 @@ export default function AddEditProject() {
                 })
         }
     }, [id, getProjectById]);
+
+    useEffect(() => {
+        console.log(addedImage)
+    }, [addedImage])
 
 
     useEffect(() => {
@@ -176,6 +183,37 @@ export default function AddEditProject() {
     };
 
 
+    function handleImageNameChange(event: ChangeEvent<HTMLInputElement>) {
+        setImageName(event.target.value);
+    }
+
+    function handleImageInput(event: ChangeEvent<HTMLInputElement>) {
+        if (event.target.files) {
+            setImage(event.target.files[0])
+        }
+    }
+
+    function handleImageSubmit() {
+        const data = new FormData()
+        const ImageCreation: ImageCreation = {
+            name: imageName
+        }
+
+        if (image) {
+            data.append("file", image)
+        }
+
+        data.append("data", new Blob([JSON.stringify(ImageCreation)], {type: "application/json"}))
+        addImage(data)
+            .then(() => {
+                setImageName("")
+                setImage(undefined)
+            });
+
+
+    }
+
+
     return (
         <StyledBody>
             <StyledForm onSubmit={handleSubmit}>
@@ -230,6 +268,12 @@ export default function AddEditProject() {
                         ))}
                     </Select>
                 </StyledChipFormControl>
+                <StyledTextField required id="image-name" name="imageName" value={imageName}
+                                 onChange={handleImageNameChange}
+                                 label="Name"
+                                 variant="outlined"/>
+                <StyledInputFile type="file" onChange={handleImageInput}/>
+                <StyledButton type="button" onClick={handleImageSubmit}>upload</StyledButton>
                 <StyledButton type={"submit"} variant="outlined" endIcon={<SaveIcon/>}>SAVE</StyledButton>
                 <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined"
                               endIcon={<CancelIcon/>}>CANCEL</StyledButton>
@@ -293,4 +337,8 @@ const StyledButton = styled(Button)`
 const StyledChipFormControl = styled(FormControl)`
   width: 100%;
   border-radius: 4px;
+`;
+
+const StyledInputFile = styled(Input)`
+
 `;
