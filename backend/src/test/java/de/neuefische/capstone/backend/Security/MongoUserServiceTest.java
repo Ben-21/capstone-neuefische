@@ -67,4 +67,19 @@ class MongoUserServiceTest {
         verify(mongoUserRepository, times(2)).findByUsername("test");
         assertEquals(expected, actual);
     }
+
+    @Test
+    void returnObjectOfAnonymousUser_WhenUsernameExists() {
+        // Given
+        when(mongoUserRepository.findByUsername("test"))
+                .thenReturn(Optional.empty());
+        MongoUserWithoutPassword expected = new MongoUserWithoutPassword("unknown", "anonymousUser", new ArrayList<>(), new ArrayList<>());
+
+        // When
+        MongoUserWithoutPassword actual = mongoUserService.findByUsername("test");
+
+        // Then
+        verify(mongoUserRepository).findByUsername("test");
+        assertEquals(expected, actual);
+    }
 }

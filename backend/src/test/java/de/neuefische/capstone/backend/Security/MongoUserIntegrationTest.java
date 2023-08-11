@@ -30,6 +30,19 @@ class MongoUserIntegrationTest {
     }
 
     @Test
+    void getUserObject_whenGetUserName() throws Exception {
+        // GIVEN that user is not logged in
+        // WHEN
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/users/me-object"))
+                // THEN
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("username").value("anonymousUser"))
+                .andExpect(MockMvcResultMatchers.jsonPath("id").value("unknown"))
+                .andExpect(MockMvcResultMatchers.jsonPath("donations").isEmpty())
+                .andExpect(MockMvcResultMatchers.jsonPath("volunteers").isEmpty());
+    }
+
+    @Test
     @WithMockUser(username = "testUser", password = "testPassword")
     void getUsername_whenLoggedInGetUserName() throws Exception {
         // Given that user is logged in
@@ -60,11 +73,11 @@ class MongoUserIntegrationTest {
     void expectRegistration_whenRegisterUser() throws Exception {
         //GIVEN
         String testUserWithoutId = """
-                {
-                    "username": "themeTest",
-                    "password": "secretPass3"
-                }
-            """;
+                    {
+                        "username": "themeTest",
+                        "password": "secretPass3"
+                    }
+                """;
 
         //WHEN
         mockMvc.perform(MockMvcRequestBuilders.post("/api/users/register")
