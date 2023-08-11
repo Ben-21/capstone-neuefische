@@ -41,8 +41,15 @@ export type User = {
     volunteers: Volunteer[];
 }
 
+export type Image = {
+    id: string;
+    name: string;
+    url: string;
+}
+
 export type Demand = "MONEYDONATION" | "DONATIONINKIND" | "FOODDONATION" | "DRUGDONATION";
 export type Donation = {id: string, projectId: string, projectName: string, donorName: string, amount: string, userId: string};
 export type DonationCreation = {projectId: string, projectName: string, amount: string};
 export type Volunteer = {id: string, projectId: string, projectName: string, volunteerName: string, userId: string};
 export type VolunteerCreation = {projectId: string, projectName: string};
+export type ImageCreation = {name: string};
