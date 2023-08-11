@@ -112,6 +112,7 @@ export default function AddEditProject() {
                 location: formData.location,
                 donations: project.donations,
                 volunteers: project.volunteers,
+                userId: project.userId,
             };
             putProject(requestBody)
                 .then(() => {

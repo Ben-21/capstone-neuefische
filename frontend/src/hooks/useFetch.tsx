@@ -243,7 +243,7 @@ export const useFetch = create<State>((set, get) => ({
 
                 axios.post("/api/users/register", newUserData)
                     .then(response => {
-                        console.error(response);
+                        console.log(response);
                         navigate("/login");
                     })
                     .then(() => toast.success("Registration successful"))
