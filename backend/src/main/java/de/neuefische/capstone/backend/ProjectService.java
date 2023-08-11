@@ -6,6 +6,7 @@ import de.neuefische.capstone.backend.security.MongoUserWithoutPassword;
 import de.neuefische.capstone.backend.services.IdService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.MethodNotAllowedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,13 @@ public class ProjectService {
 
     public Project updateProject(String id, ProjectNoId projectNoId) {
         if (!projectRepo.existsById(id)) throw new NoSuchElementException("No project with Id " + id + " found");
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        MongoUserWithoutPassword user = mongoUserService.findByUsername(username);
+
+        if(!user.id().equals(projectNoId.userId()))
+            throw new MethodNotAllowedException("You are not allowed to edit this project", null);
+
 
         Project updatedProject = new Project(
                 id,
