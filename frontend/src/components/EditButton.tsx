@@ -2,6 +2,9 @@ import {useNavigate} from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import {IconButton} from "@mui/material";
 import styled from "@emotion/styled";
+import {useFetch} from "../hooks/useFetch.tsx";
+import {useEffect, useState} from "react";
+import {Project} from "../models/models.tsx";
 
 
 type Props = {
@@ -10,17 +13,48 @@ type Props = {
 export default function EditButton(props: Props) {
 
     const navigate = useNavigate();
+    const user = useFetch(state => state.user);
+    const meObject = useFetch(state => state.meObject);
+    const getProjectById = useFetch(state => state.getProjectById);
+    const [project, setProject] = useState<Project | undefined>(undefined);
+    const [checkUser, setCheckUser] = useState<boolean>(false);
 
+    useEffect(() => {
+        meObject();
+    }, [meObject]);
+
+    useEffect(() => {
+        if (props.projectId) {
+            getProjectById(props.projectId)
+                .then((project) => {
+                    setProject(project);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    }, [props.projectId, getProjectById]);
+
+    useEffect(() => {
+        if (project?.userId === user?.id) {
+            setCheckUser(true);
+        } else {
+            setCheckUser(false);
+        }
+    }, [project, user]);
 
     function handleClick() {
         navigate(`/edit/${props.projectId}`)
     }
 
-
     return (
-        <StyledIconButton aria-label="Edit" onClick={handleClick}>
-            <EditIcon/>
-        </StyledIconButton>
+        <>
+            {checkUser &&
+                <StyledIconButton aria-label="Edit" onClick={handleClick}>
+                    <EditIcon/>
+                </StyledIconButton>
+            }
+        </>
     )
 }
 

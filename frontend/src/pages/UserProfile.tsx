@@ -3,16 +3,17 @@ import {Button, TextField} from "@mui/material";
 import {useFetch} from "../hooks/useFetch.tsx";
 import EditIcon from "@mui/icons-material/Edit";
 import {useEffect} from "react";
+import LogoutButton from "../components/LogoutButton.tsx";
 
 
 export default function UserProfile() {
 
     const user = useFetch(state => state.user);
-    const meAll = useFetch(state => state.meAll);
+    const meObject = useFetch(state => state.meObject);
 
     useEffect(() => {
-        meAll();
-    }, [meAll]);
+        meObject();
+    }, [meObject]);
 
 
     return (
@@ -24,6 +25,7 @@ export default function UserProfile() {
                              disabled/>
             <StyledButton type={"submit"} variant="outlined"
                           endIcon={<EditIcon/>}>EDIT USERDATA</StyledButton>
+            <LogoutButton/>
             <StyledH2>Project Data</StyledH2>
             <StyledH3>Donations</StyledH3>
             {user.donations.map((donation) => <div key={donation.id}>{donation.projectName}</div>)}

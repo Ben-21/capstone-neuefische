@@ -191,6 +191,13 @@ class ProjectServiceTest {
                 .thenReturn(expectedProject);
         when(projectRepo.existsById(id))
                 .thenReturn(true);
+        when(securityContext.getAuthentication())
+                .thenReturn(authentication);
+        when(authentication.getName())
+                .thenReturn("test");
+        SecurityContextHolder.setContext(securityContext);
+        when(mongoUserService.findByUsername("test"))
+                .thenReturn(new MongoUserWithoutPassword("userId123", "test", new ArrayList<>(), new ArrayList<>()));
 
         Project actualProject = projectService.updateProject("01A", projectWithoutId);
 

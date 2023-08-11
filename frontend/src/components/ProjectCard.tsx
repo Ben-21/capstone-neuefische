@@ -8,6 +8,7 @@ import seenotrettung from "../assets/seenotrettung.jpg"
 import {useEffect, useState} from "react";
 import {useFetch} from "../hooks/useFetch.tsx";
 import ProgressBar from "./ProgressBar.tsx";
+import ProgressBarGalleryView from "./ProgressBarGalleryView.tsx";
 
 
 type Props = {
@@ -46,6 +47,7 @@ export default function ProjectCard(props: Props) {
                 <StyledH1>
                     {props.project.name}
                 </StyledH1>
+                {page === "/" && <ProgressBarGalleryView project={props.project}/>}
                 {page === "details" &&
                     <>
                         <StyledDescription>

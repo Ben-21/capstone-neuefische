@@ -12,6 +12,7 @@ import AddDonationOrVolunteer from "./pages/AddDonationOrVolunteer.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import UserProfile from "./pages/UserProfile.tsx";
+import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
 
 
 export default function App() {
@@ -19,19 +20,20 @@ export default function App() {
     const fetchProjects = useFetch((state) => state.fetchProjects);
     const [initialLoad, setInitialLoad] = useState(true);
     const me = useFetch(state => state.me);
-    const meAll = useFetch(state => state.meAll);
+    const meObject = useFetch(state => state.meObject);
+    const userName = useFetch(state => state.userName);
 
     useEffect(() => {
         try {
             fetchProjects();
             me();
-            meAll();
+            meObject();
         } catch (error) {
             console.error(error);
         } finally {
             setInitialLoad(false);
         }
-    }, [fetchProjects, me, meAll]);
+    }, [fetchProjects, me, meObject]);
 
     if (initialLoad) return null;
 
@@ -40,17 +42,18 @@ export default function App() {
             <Header/>
             <ToastContainer/>
             <Routes>
+                <Route element={<ProtectedRoutes user={userName}/>}>
+                    <Route path="/add" element={<AddEditProject/>}/>
+                    <Route path="/edit/:id" element={<AddEditProject/>}/>
+                    <Route path="/profile" element={<UserProfile/>}/>
+                    <Route path="/donate/:id" element={<AddDonationOrVolunteer/>}/>
+                    <Route path="/volunteer/:id" element={<AddDonationOrVolunteer/>}/>
+                </Route>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/add" element={<AddEditProject/>}/>
                 <Route path="/details/:id" element={<ShowProject/>}/>
-                <Route path="/edit/:id" element={<AddEditProject/>}/>
-                <Route path="/donate/:id" element={<AddDonationOrVolunteer/>}/>
-                <Route path="/volunteer/:id" element={<AddDonationOrVolunteer/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
-                <Route path="/profile" element={<UserProfile/>}/>
             </Routes>
-
             <NavigationBar/>
         </>
     )
