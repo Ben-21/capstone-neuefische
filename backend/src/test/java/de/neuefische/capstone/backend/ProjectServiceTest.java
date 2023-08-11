@@ -4,11 +4,11 @@ import de.neuefische.capstone.backend.models.*;
 import de.neuefische.capstone.backend.services.IdService;
 import org.junit.jupiter.api.Test;
 
-
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -19,7 +19,8 @@ class ProjectServiceTest {
 
     ProjectRepo projectRepo = mock(ProjectRepo.class);
     IdService idService = mock(IdService.class);
-    ProjectService projectService = new ProjectService(projectRepo, idService);
+    ProjectCalculations projectCalculations = mock(ProjectCalculations.class);
+    ProjectService projectService = new ProjectService(projectRepo, idService, projectCalculations);
 
 
     @Test
@@ -105,6 +106,35 @@ class ProjectServiceTest {
         assertEquals(1, projectService.getAllProjects().size());
         assertEquals(expectedProjectList, actualProjectList);
     }
+
+
+    @Test
+    void returnProjectById() {
+        //Given
+        String id = "01A";
+        Project expectedProject = new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                0,
+                "Turkey",
+                new ArrayList<>(),
+                new ArrayList<>());
+
+        //When
+        when(projectRepo.findById(id))
+                .thenReturn(Optional.of(expectedProject));
+
+        Project actualProject = projectService.getProjectById(id);
+
+        //Then
+        verify(projectRepo).findById(id);
+        assertEquals(expectedProject, actualProject);
+    }
+
 
     @Test
     void whenProjectUpdated_thenReturnUpdatedProject() {
@@ -206,4 +236,156 @@ class ProjectServiceTest {
         verify(projectRepo, never()).deleteById(id);
     }
 
+    @Test
+    void whenDonationAdded_thenReturnProject() {
+        //Given
+        String projectId = "01A";
+
+        Project repoProject = new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                0,
+                100,
+                "Turkey",
+                new ArrayList<>(),
+                new ArrayList<>());
+
+        DonationCreation donationToAdd = new DonationCreation(
+                repoProject.id(),
+                repoProject.name(),
+                "Anonymous",
+                new BigDecimal(50));
+
+        Donation finalDonation = new Donation(
+                "dono-02A",
+                repoProject.id(),
+                repoProject.name(),
+                "Anonymous",
+                new BigDecimal(50));
+
+        Project projectToSave = new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                0,
+                100,
+                "Turkey",
+                List.of(finalDonation),
+                new ArrayList<>());
+
+        Project projectWithProgress = new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                50,
+                100,
+                "Turkey",
+                List.of(finalDonation),
+                new ArrayList<>());
+
+
+        //When
+        when(projectRepo.findById(projectId))
+                .thenReturn(Optional.of(repoProject));
+        when(projectCalculations.calculateProgressForDonations(projectToSave))
+                .thenReturn(projectWithProgress);
+        when(projectRepo.save(projectWithProgress))
+                .thenReturn(projectWithProgress);
+        when(idService.createRandomId())
+                .thenReturn("dono-02A");
+
+
+        Project actualProject = projectService.addDonation(projectId, donationToAdd);
+
+
+        //Then
+        verify(projectRepo).findById(projectId);
+        verify(projectCalculations).calculateProgressForDonations(projectToSave);
+        verify(projectRepo).save(projectWithProgress);
+        verify(idService).createRandomId();
+        assertEquals(projectWithProgress, actualProject);
+    }
+
+    @Test
+    void returnProject_whenAddVolunteer() {
+        //Given
+        String projectId = "01A";
+
+        Project repoProject = new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                0,
+                100,
+                "Turkey",
+                new ArrayList<>(),
+                new ArrayList<>());
+
+        VolunteerCreation volunteerToAdd = new VolunteerCreation(
+                repoProject.id(),
+                repoProject.name(),
+                "Anonymous"
+        );
+
+        Volunteer finalVolunteer = new Volunteer(
+                "vol-02A",
+                repoProject.id(),
+                repoProject.name(),
+                "Anonymous"
+        );
+
+        Project projectToSave = new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                0,
+                100,
+                "Turkey",
+                new ArrayList<>(),
+                List.of(finalVolunteer));
+
+        Project projectWithProgress = new Project(
+                "01A",
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                1,
+                100,
+                "Turkey",
+                new ArrayList<>(),
+                List.of(finalVolunteer));
+
+
+        //When
+        when(projectRepo.findById(projectId))
+                .thenReturn(Optional.of(repoProject));
+        when(projectCalculations.calculateProgressForVolunteers(projectToSave))
+                .thenReturn(projectWithProgress);
+        when(projectRepo.save(projectWithProgress))
+                .thenReturn(projectWithProgress);
+        when(idService.createRandomId())
+                .thenReturn("vol-02A");
+
+        Project actualProject = projectService.addVolunteer(projectId, volunteerToAdd);
+
+
+        //Then
+        verify(projectRepo).findById(projectId);
+        verify(projectCalculations).calculateProgressForVolunteers(projectToSave);
+        verify(projectRepo).save(projectWithProgress);
+        verify(idService).createRandomId();
+        assertEquals(projectWithProgress, actualProject);
+    }
 }

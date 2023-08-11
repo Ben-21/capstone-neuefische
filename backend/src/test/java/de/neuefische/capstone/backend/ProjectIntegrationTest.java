@@ -1,23 +1,21 @@
 package de.neuefische.capstone.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.neuefische.capstone.backend.models.Category;
-import de.neuefische.capstone.backend.models.Demand;
-import de.neuefische.capstone.backend.models.ProjectNoId;
-import de.neuefische.capstone.backend.models.ProjectCreation;
+import de.neuefische.capstone.backend.models.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -33,7 +31,7 @@ class ProjectIntegrationTest {
     @Autowired
     ObjectMapper objectMapper;
 
-
+    @DirtiesContext
     @Test
     void whenAddProject_ThenReturnProject() throws Exception {
         //When
@@ -66,7 +64,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("goal").value(1000));
     }
 
-
+    @DirtiesContext
     @Test
     void whenGetAllProjects_ThenReturnEmptyList() throws Exception {
         //When
@@ -82,7 +80,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
-
+    @DirtiesContext
     @Test
     void whenGetAllProjects_ThenReturnAllProjects() throws Exception {
         //When
@@ -121,7 +119,48 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("$[0].location").value("Turkey"));
     }
 
+    @DirtiesContext
+    @Test
+    void whenGetProjectById_thenReturnProject() throws Exception {
+        //Given
+        ProjectCreation project = new ProjectCreation(
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                "Turkey",
+                1000);
 
+        String projectJson = objectMapper.writeValueAsString(project);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/projects")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(projectJson)
+        );
+
+        String id = projectService.getAllProjects().get(0).id();
+
+        //When
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/api/projects/" + id)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+
+                //Then
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("id").value(id))
+                .andExpect(jsonPath("name").value("Earthquake Turkey"))
+                .andExpect(jsonPath("description").value("Help for the people in Turkey"))
+                .andExpect(jsonPath("category").value("PARTICIPATION"))
+                .andExpect(jsonPath("demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
+                .andExpect(jsonPath("progress").value(0))
+                .andExpect(jsonPath("location").value("Turkey"))
+                .andExpect(jsonPath("goal").value(1000));
+    }
+
+    @DirtiesContext
     @Test
     void whenUpdateProject_thenReturnProject() throws Exception {
         //Given
@@ -168,7 +207,7 @@ class ProjectIntegrationTest {
                 );
     }
 
-
+    @DirtiesContext
     @Test
     void whenUpdateProjectWithWrongId_thenReturnNotFound() throws Exception {
         //Given
@@ -197,7 +236,7 @@ class ProjectIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
-
+    @DirtiesContext
     @Test
     void whenProjectedDeleted_thenReturnEmptyList() throws Exception {
         //Given
@@ -237,7 +276,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("$", hasSize(0)));
     }
 
-
+    @DirtiesContext
     @Test
     void whenDeleteProjectWithWrongId_thenReturnNotFound() throws Exception {
         //Given
@@ -250,5 +289,119 @@ class ProjectIntegrationTest {
 
                 //Then
                 .andExpect(status().isNotFound());
+    }
+
+    @DirtiesContext
+    @Test
+    void whenAddDonation_thenReturnProjectWithDonation() throws Exception {
+        //Given
+        ProjectCreation projectToAddDonation = new ProjectCreation(
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                "Turkey",
+                1000);
+
+        String projectToAddDonationJson = objectMapper.writeValueAsString(projectToAddDonation);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/projects")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(projectToAddDonationJson)
+        );
+
+        String projectId = projectService.getAllProjects().get(0).id();
+
+        DonationCreation donation = new DonationCreation(
+                projectId,
+                "Earthquake Turkey",
+                "Anonymous",
+                new BigDecimal(100)
+        );
+
+        String donationToAddJson = objectMapper.writeValueAsString(donation);
+
+
+        //When
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/projects/donate/" + projectId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(donationToAddJson)
+                )
+
+                //Then
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("id").value(projectId))
+                .andExpect(jsonPath("name").value("Earthquake Turkey"))
+                .andExpect(jsonPath("description").value("Help for the people in Turkey"))
+                .andExpect(jsonPath("category").value("PARTICIPATION"))
+                .andExpect(jsonPath("demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
+                .andExpect(jsonPath("progress").value(0))
+                .andExpect(jsonPath("location").value("Turkey"))
+                .andExpect(jsonPath("goal").value(1000))
+                .andExpect(jsonPath("donations", hasSize(1)))
+                .andExpect(jsonPath("donations[0].id").exists())
+                .andExpect(jsonPath("donations[0].projectId").value(projectId))
+                .andExpect(jsonPath("donations[0].projectName").value("Earthquake Turkey"))
+                .andExpect(jsonPath("donations[0].donorName").value("Anonymous"))
+                .andExpect(jsonPath("donations[0].amount").value(100));
+    }
+
+    @DirtiesContext
+    @Test
+    void whenAddVolunteer_thenReturnProjectWithVolunteer() throws Exception {
+        //Given
+        ProjectCreation projectToAddVolunteer = new ProjectCreation(
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                "Turkey",
+                1000);
+
+        String projectToAddVolunteerJson = objectMapper.writeValueAsString(projectToAddVolunteer);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/projects")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(projectToAddVolunteerJson)
+        );
+
+        String projectId = projectService.getAllProjects().get(0).id();
+
+        VolunteerCreation volunteerToAdd = new VolunteerCreation(
+                projectId,
+                "Earthquake Turkey",
+                "Anonymous"
+        );
+
+        String volunteerToAddJson = objectMapper.writeValueAsString(volunteerToAdd);
+
+
+        //When
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/projects/volunteer/" + projectId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(volunteerToAddJson)
+                )
+
+                //Then
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("id").value(projectId))
+                .andExpect(jsonPath("name").value("Earthquake Turkey"))
+                .andExpect(jsonPath("description").value("Help for the people in Turkey"))
+                .andExpect(jsonPath("category").value("PARTICIPATION"))
+                .andExpect(jsonPath("demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
+                .andExpect(jsonPath("progress").value(0))
+                .andExpect(jsonPath("location").value("Turkey"))
+                .andExpect(jsonPath("goal").value(1000))
+                .andExpect(jsonPath("volunteers", hasSize(1)))
+                .andExpect(jsonPath("volunteers[0].id").exists())
+                .andExpect(jsonPath("volunteers[0].projectId").value(projectId))
+                .andExpect(jsonPath("volunteers[0].projectName").value("Earthquake Turkey"))
+                .andExpect(jsonPath("volunteers[0].volunteerName").value("Anonymous"));
     }
 }

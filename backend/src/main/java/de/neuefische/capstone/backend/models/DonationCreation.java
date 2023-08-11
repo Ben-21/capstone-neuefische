@@ -2,8 +2,7 @@ package de.neuefische.capstone.backend.models;
 
 import java.math.BigDecimal;
 
-public record Donation(
-        String id,
+public record DonationCreation(
         String projectId,
         String projectName,
         String donorName,

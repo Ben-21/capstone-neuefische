@@ -1,8 +1,6 @@
 package de.neuefische.capstone.backend;
 
-import de.neuefische.capstone.backend.models.Project;
-import de.neuefische.capstone.backend.models.ProjectCreation;
-import de.neuefische.capstone.backend.models.ProjectNoId;
+import de.neuefische.capstone.backend.models.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +22,15 @@ public class ProjectController {
         return projectService.addProject(projectCreation);
     }
 
+    @GetMapping("{id}")
+    public Project getProjectById(@PathVariable String id) {
+        return projectService.getProjectById(id);
+    }
 
     @GetMapping
     public List<Project> getAllProjects() {
         return projectService.getAllProjects();
     }
-
 
     @PutMapping("{id}")
     public ResponseEntity<Project> updateProject(@PathVariable String id, @RequestBody ProjectNoId projectNoId) {
@@ -41,7 +42,6 @@ public class ProjectController {
         }
     }
 
-
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteProject(@PathVariable String id) {
 
@@ -52,5 +52,15 @@ public class ProjectController {
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/donate/{id}")
+    public Project addDonation(@PathVariable String id, @RequestBody DonationCreation donationCreation) {
+        return projectService.addDonation(id, donationCreation);
+    }
+
+    @PostMapping("/volunteer/{id}")
+    public Project addVolunteer(@PathVariable String id, @RequestBody VolunteerCreation volunteerCreation) {
+        return projectService.addVolunteer(id, volunteerCreation);
     }
 }
