@@ -23,11 +23,6 @@ export default function EditButton(props: Props) {
         meObject();
     }, [meObject]);
 
-
-    function handleClick() {
-        navigate(`/edit/${props.projectId}`)
-    }
-
     useEffect(() => {
         if (props.projectId) {
             getProjectById(props.projectId)
@@ -40,7 +35,6 @@ export default function EditButton(props: Props) {
         }
     }, [props.projectId, getProjectById]);
 
-
     useEffect(() => {
         if (project?.userId === user?.id) {
             setCheckUser(true);
@@ -49,6 +43,9 @@ export default function EditButton(props: Props) {
         }
     }, [project, user]);
 
+    function handleClick() {
+        navigate(`/edit/${props.projectId}`)
+    }
 
     return (
         <>
