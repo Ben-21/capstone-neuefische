@@ -133,7 +133,6 @@ export default function AddEditProject() {
 
     function handleCategoryChange(_: React.MouseEvent<HTMLElement>, newCategory: "DONATION" | "PARTICIPATION") {
         setCategory(newCategory)
-        console.log("changed category" + newCategory)
     }
 
     function handleCancelButton() {
