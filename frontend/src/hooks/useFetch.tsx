@@ -1,4 +1,4 @@
-import {Demand, DonationCreation, Project, ProjectCreation, User, VolunteerCreation} from "../models/models.tsx";
+import {Demand, DonationCreation, Image, Project, ProjectCreation, User, VolunteerCreation} from "../models/models.tsx";
 import {create} from "zustand";
 import axios from "axios";
 import {toast} from 'react-toastify';
@@ -31,6 +31,8 @@ type State = {
         => void,
     user: User,
     meObject: () => void,
+    addImage: (data: FormData) => Promise<Image | any>,
+    addedImage: Image,
 
 };
 
@@ -47,6 +49,11 @@ export const useFetch = create<State>((set, get) => ({
                 donations: [],
                 volunteers: []
             },
+        addedImage: {
+            id: "",
+            name: "",
+            url: ""
+        },
 
 
         fetchProjects: () => {
@@ -257,6 +264,25 @@ export const useFetch = create<State>((set, get) => ({
                 setPassword("");
                 setRepeatedPassword("");
             }
+        },
+        addImage: (data: FormData) => {
+            set({addedImage: {id: "", name: "", url: ""}})
+            return axios
+                .post('/api/upload', data, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }).then(response => {
+                    set({addedImage: response.data})
+
+                    toast.success(`Image ${get().addedImage.name} successfully added`);
+                    console.log(get().addedImage)
+                })
+                .catch((error) => {
+                    console.log(error)
+                    toast.error('Error adding ImageProfile' + error.response?.statusText);
+                });
         }
+
     }))
 ;
