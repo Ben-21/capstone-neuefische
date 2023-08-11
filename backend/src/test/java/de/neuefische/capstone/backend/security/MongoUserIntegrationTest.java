@@ -1,4 +1,4 @@
-package de.neuefische.capstone.backend.Security;
+package de.neuefische.capstone.backend.security;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

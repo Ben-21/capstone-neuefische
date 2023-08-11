@@ -1,4 +1,4 @@
-package de.neuefische.capstone.backend.Security;
+package de.neuefische.capstone.backend.security;
 
 import de.neuefische.capstone.backend.services.IdService;
 import org.junit.jupiter.api.Test;
@@ -8,12 +8,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-
-import de.neuefische.capstone.backend.security.MongoUserRepository;
-import de.neuefische.capstone.backend.security.MongoUserCreation;
-import de.neuefische.capstone.backend.security.MongoUserWithoutPassword;
-import de.neuefische.capstone.backend.security.MongoUser;
-import de.neuefische.capstone.backend.security.MongoUserService;
 
 class MongoUserServiceTest {
     private final MongoUserRepository mongoUserRepository = mock(MongoUserRepository.class);

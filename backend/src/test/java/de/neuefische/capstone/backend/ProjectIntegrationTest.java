@@ -230,7 +230,8 @@ class ProjectIntegrationTest {
                 1000,
                 "Turkey",
                 new ArrayList<>(),
-                new ArrayList<>());
+                new ArrayList<>(),
+                "userId123");
 
         String projectJson = objectMapper.writeValueAsString(project);
 
@@ -330,7 +331,6 @@ class ProjectIntegrationTest {
         DonationCreation donation = new DonationCreation(
                 projectId,
                 "Earthquake Turkey",
-                "Anonymous",
                 new BigDecimal(100)
         );
 
@@ -360,7 +360,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("donations[0].id").exists())
                 .andExpect(jsonPath("donations[0].projectId").value(projectId))
                 .andExpect(jsonPath("donations[0].projectName").value("Earthquake Turkey"))
-                .andExpect(jsonPath("donations[0].donorName").value("Anonymous"))
+                .andExpect(jsonPath("donations[0].donorName").value("anonymousUser"))
                 .andExpect(jsonPath("donations[0].amount").value(100));
     }
 
@@ -389,8 +389,7 @@ class ProjectIntegrationTest {
 
         VolunteerCreation volunteerToAdd = new VolunteerCreation(
                 projectId,
-                "Earthquake Turkey",
-                "Anonymous"
+                "Earthquake Turkey"
         );
 
         String volunteerToAddJson = objectMapper.writeValueAsString(volunteerToAdd);
@@ -419,6 +418,6 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("volunteers[0].id").exists())
                 .andExpect(jsonPath("volunteers[0].projectId").value(projectId))
                 .andExpect(jsonPath("volunteers[0].projectName").value("Earthquake Turkey"))
-                .andExpect(jsonPath("volunteers[0].volunteerName").value("Anonymous"));
+                .andExpect(jsonPath("volunteers[0].volunteerName").value("anonymousUser"));
     }
 }

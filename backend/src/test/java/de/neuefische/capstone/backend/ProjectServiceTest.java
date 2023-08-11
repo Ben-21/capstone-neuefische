@@ -1,8 +1,14 @@
 package de.neuefische.capstone.backend;
 
 import de.neuefische.capstone.backend.models.*;
+import de.neuefische.capstone.backend.security.MongoUserService;
+import de.neuefische.capstone.backend.security.MongoUserWithoutPassword;
 import de.neuefische.capstone.backend.services.IdService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -20,7 +26,12 @@ class ProjectServiceTest {
     ProjectRepo projectRepo = mock(ProjectRepo.class);
     IdService idService = mock(IdService.class);
     ProjectCalculations projectCalculations = mock(ProjectCalculations.class);
-    ProjectService projectService = new ProjectService(projectRepo, idService, projectCalculations);
+    MongoUserService mongoUserService = mock(MongoUserService.class);
+    ProjectService projectService = new ProjectService(projectRepo, idService, projectCalculations, mongoUserService);
+
+    SecurityContext securityContext = mock(SecurityContext.class);
+    @Mock
+    Authentication authentication = mock(Authentication.class);
 
 
     @Test
@@ -54,7 +65,8 @@ class ProjectServiceTest {
                 0,
                 "Turkey",
                 new ArrayList<>(),
-                new ArrayList<>());
+                new ArrayList<>(),
+                "userId123");
 
 
         //When
@@ -62,6 +74,13 @@ class ProjectServiceTest {
                 .thenReturn("01A");
         when(projectRepo.insert(projectWithId))
                 .thenReturn(projectWithId);
+        when(securityContext.getAuthentication())
+                .thenReturn(authentication);
+        when(authentication.getName())
+                .thenReturn("test");
+        SecurityContextHolder.setContext(securityContext);
+        when(mongoUserService.findByUsername("test"))
+                .thenReturn(new MongoUserWithoutPassword("userId123", "test", new ArrayList<>(), new ArrayList<>()));
 
 
         Project actualProject = projectService.addProject(new ProjectCreation(
@@ -93,7 +112,8 @@ class ProjectServiceTest {
                 0,
                 "Turkey",
                 new ArrayList<>(),
-                new ArrayList<>())));
+                new ArrayList<>(),
+                "userId123")));
 
         //When
         when(projectRepo.findAll())
@@ -122,7 +142,8 @@ class ProjectServiceTest {
                 0,
                 "Turkey",
                 new ArrayList<>(),
-                new ArrayList<>());
+                new ArrayList<>(),
+                "userId123");
 
         //When
         when(projectRepo.findById(id))
@@ -149,7 +170,8 @@ class ProjectServiceTest {
                 0,
                 "Turkey",
                 new ArrayList<>(),
-                new ArrayList<>());
+                new ArrayList<>(),
+                "userId123");
 
         Project expectedProject = new Project(
                 "01A",
@@ -161,7 +183,8 @@ class ProjectServiceTest {
                 projectWithoutId.goal(),
                 projectWithoutId.location(),
                 projectWithoutId.donations(),
-                projectWithoutId.volunteers());
+                projectWithoutId.volunteers(),
+                projectWithoutId.userId());
 
         //When
         when(projectRepo.save(expectedProject))
@@ -190,7 +213,8 @@ class ProjectServiceTest {
                 0,
                 "Turkey",
                 new ArrayList<>(),
-                new ArrayList<>());
+                new ArrayList<>(),
+                "userId123");
 
 
         //When
@@ -236,6 +260,7 @@ class ProjectServiceTest {
         verify(projectRepo, never()).deleteById(id);
     }
 
+
     @Test
     void whenDonationAdded_thenReturnProject() {
         //Given
@@ -251,20 +276,21 @@ class ProjectServiceTest {
                 100,
                 "Turkey",
                 new ArrayList<>(),
-                new ArrayList<>());
+                new ArrayList<>(),
+                "userId123");
 
         DonationCreation donationToAdd = new DonationCreation(
                 repoProject.id(),
                 repoProject.name(),
-                "Anonymous",
                 new BigDecimal(50));
 
         Donation finalDonation = new Donation(
                 "dono-02A",
                 repoProject.id(),
                 repoProject.name(),
-                "Anonymous",
-                new BigDecimal(50));
+                "test",
+                new BigDecimal(50),
+                "userId123");
 
         Project projectToSave = new Project(
                 "01A",
@@ -276,7 +302,8 @@ class ProjectServiceTest {
                 100,
                 "Turkey",
                 List.of(finalDonation),
-                new ArrayList<>());
+                new ArrayList<>(),
+                "userId123");
 
         Project projectWithProgress = new Project(
                 "01A",
@@ -288,7 +315,8 @@ class ProjectServiceTest {
                 100,
                 "Turkey",
                 List.of(finalDonation),
-                new ArrayList<>());
+                new ArrayList<>(),
+                "userId123");
 
 
         //When
@@ -300,6 +328,13 @@ class ProjectServiceTest {
                 .thenReturn(projectWithProgress);
         when(idService.createRandomId())
                 .thenReturn("dono-02A");
+        when(securityContext.getAuthentication())
+                .thenReturn(authentication);
+        when(authentication.getName())
+                .thenReturn("test");
+        SecurityContextHolder.setContext(securityContext);
+        when(mongoUserService.findByUsername("test"))
+                .thenReturn(new MongoUserWithoutPassword("userId123", "test", new ArrayList<>(), new ArrayList<>()));
 
 
         Project actualProject = projectService.addDonation(projectId, donationToAdd);
@@ -328,19 +363,20 @@ class ProjectServiceTest {
                 100,
                 "Turkey",
                 new ArrayList<>(),
-                new ArrayList<>());
+                new ArrayList<>(),
+                "userId123");
 
         VolunteerCreation volunteerToAdd = new VolunteerCreation(
                 repoProject.id(),
-                repoProject.name(),
-                "Anonymous"
+                repoProject.name()
         );
 
         Volunteer finalVolunteer = new Volunteer(
                 "vol-02A",
                 repoProject.id(),
                 repoProject.name(),
-                "Anonymous"
+                "test",
+                "userId123"
         );
 
         Project projectToSave = new Project(
@@ -353,7 +389,8 @@ class ProjectServiceTest {
                 100,
                 "Turkey",
                 new ArrayList<>(),
-                List.of(finalVolunteer));
+                List.of(finalVolunteer),
+                "userId123");
 
         Project projectWithProgress = new Project(
                 "01A",
@@ -365,7 +402,8 @@ class ProjectServiceTest {
                 100,
                 "Turkey",
                 new ArrayList<>(),
-                List.of(finalVolunteer));
+                List.of(finalVolunteer),
+                "userId123");
 
 
         //When
@@ -377,6 +415,13 @@ class ProjectServiceTest {
                 .thenReturn(projectWithProgress);
         when(idService.createRandomId())
                 .thenReturn("vol-02A");
+        when(securityContext.getAuthentication())
+                .thenReturn(authentication);
+        when(authentication.getName())
+                .thenReturn("test");
+        SecurityContextHolder.setContext(securityContext);
+        when(mongoUserService.findByUsername("test"))
+                .thenReturn(new MongoUserWithoutPassword("userId123", "test", new ArrayList<>(), new ArrayList<>()));
 
         Project actualProject = projectService.addVolunteer(projectId, volunteerToAdd);
 
