@@ -1,5 +1,6 @@
 import Gallery from "./Gallery.tsx";
 import styled from "@emotion/styled";
+import LogoutButton from "../components/LogoutButton.tsx";
 
 
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
             <Main>
                 <Gallery/>
             </Main>
+            <LogoutButton/>
         </StyledBody>
     )
 }

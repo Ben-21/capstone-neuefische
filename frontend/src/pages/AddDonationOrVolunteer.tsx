@@ -57,7 +57,6 @@ export default function AddDonationOrVolunteer() {
             const donation: DonationCreation = {
                 projectId: project.id,
                 projectName: project.name,
-                donorName: "Anonymous",
                 amount: amount
             }
             postDonation(project.id, donation);
@@ -68,7 +67,6 @@ export default function AddDonationOrVolunteer() {
             const volunteer: VolunteerCreation = {
                 projectId: project.id,
                 projectName: project.name,
-                volunteerName: "Anonymous",
             }
             postVolunteer(project.id, volunteer);
             navigate(`/details/${project.id}`);

@@ -17,6 +17,7 @@ public record Project(
         int goal,
         String location,
         List<Donation> donations,
-        List<Volunteer> volunteers
+        List<Volunteer> volunteers,
+        String userId
 ) {
 }

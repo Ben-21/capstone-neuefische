@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -16,10 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser
 class ProjectIntegrationTest {
 
     @Autowired
@@ -30,6 +33,8 @@ class ProjectIntegrationTest {
 
     @Autowired
     ObjectMapper objectMapper;
+
+
 
     @DirtiesContext
     @Test
@@ -49,6 +54,7 @@ class ProjectIntegrationTest {
                                         }
                                         """
                                 )
+                                .with(csrf())
                 )
 
                 //Then
@@ -98,6 +104,7 @@ class ProjectIntegrationTest {
                                 }
                                 """
                         )
+                        .with(csrf())
         );
 
 
@@ -137,6 +144,7 @@ class ProjectIntegrationTest {
                 MockMvcRequestBuilders.post("/api/projects")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(projectJson)
+                        .with(csrf())
         );
 
         String id = projectService.getAllProjects().get(0).id();
@@ -192,6 +200,7 @@ class ProjectIntegrationTest {
                                                                      }
                                         """
                                 )
+                                .with(csrf())
                 )
 
                 //Then
@@ -221,7 +230,8 @@ class ProjectIntegrationTest {
                 1000,
                 "Turkey",
                 new ArrayList<>(),
-                new ArrayList<>());
+                new ArrayList<>(),
+                "userId123");
 
         String projectJson = objectMapper.writeValueAsString(project);
 
@@ -230,6 +240,7 @@ class ProjectIntegrationTest {
                         MockMvcRequestBuilders.put("/api/projects/" + invalidId)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(projectJson)
+                                .with(csrf())
                 )
 
                 //Then
@@ -254,6 +265,7 @@ class ProjectIntegrationTest {
                 MockMvcRequestBuilders.post("/api/projects")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(projectJson)
+                        .with(csrf())
         );
 
         String id = projectService.getAllProjects().get(0).id();
@@ -262,6 +274,7 @@ class ProjectIntegrationTest {
         //When
         mockMvc.perform(
                         MockMvcRequestBuilders.delete("/api/projects/" + id)
+                                .with(csrf())
                 )
 
                 //Then
@@ -285,6 +298,7 @@ class ProjectIntegrationTest {
         //When
         mockMvc.perform(
                         MockMvcRequestBuilders.delete("/api/projects/" + invalidId)
+                                .with(csrf())
                 )
 
                 //Then
@@ -309,6 +323,7 @@ class ProjectIntegrationTest {
                 MockMvcRequestBuilders.post("/api/projects")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(projectToAddDonationJson)
+                        .with(csrf())
         );
 
         String projectId = projectService.getAllProjects().get(0).id();
@@ -316,7 +331,6 @@ class ProjectIntegrationTest {
         DonationCreation donation = new DonationCreation(
                 projectId,
                 "Earthquake Turkey",
-                "Anonymous",
                 new BigDecimal(100)
         );
 
@@ -328,6 +342,7 @@ class ProjectIntegrationTest {
                         MockMvcRequestBuilders.post("/api/projects/donate/" + projectId)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(donationToAddJson)
+                                .with(csrf())
                 )
 
                 //Then
@@ -345,7 +360,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("donations[0].id").exists())
                 .andExpect(jsonPath("donations[0].projectId").value(projectId))
                 .andExpect(jsonPath("donations[0].projectName").value("Earthquake Turkey"))
-                .andExpect(jsonPath("donations[0].donorName").value("Anonymous"))
+                .andExpect(jsonPath("donations[0].donorName").value("anonymousUser"))
                 .andExpect(jsonPath("donations[0].amount").value(100));
     }
 
@@ -367,14 +382,14 @@ class ProjectIntegrationTest {
                 MockMvcRequestBuilders.post("/api/projects")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(projectToAddVolunteerJson)
+                        .with(csrf())
         );
 
         String projectId = projectService.getAllProjects().get(0).id();
 
         VolunteerCreation volunteerToAdd = new VolunteerCreation(
                 projectId,
-                "Earthquake Turkey",
-                "Anonymous"
+                "Earthquake Turkey"
         );
 
         String volunteerToAddJson = objectMapper.writeValueAsString(volunteerToAdd);
@@ -385,6 +400,7 @@ class ProjectIntegrationTest {
                         MockMvcRequestBuilders.post("/api/projects/volunteer/" + projectId)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(volunteerToAddJson)
+                                .with(csrf())
                 )
 
                 //Then
@@ -402,6 +418,6 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("volunteers[0].id").exists())
                 .andExpect(jsonPath("volunteers[0].projectId").value(projectId))
                 .andExpect(jsonPath("volunteers[0].projectName").value("Earthquake Turkey"))
-                .andExpect(jsonPath("volunteers[0].volunteerName").value("Anonymous"));
+                .andExpect(jsonPath("volunteers[0].volunteerName").value("anonymousUser"));
     }
 }

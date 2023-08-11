@@ -20,7 +20,8 @@ class ProjectCalculationsTest {
                 "01A",
                 "01B",
                 "ProjectName",
-                "VolunteerName"
+                "VolunteerName",
+                "userId123"
         );
 
         Project project = new Project(
@@ -33,7 +34,8 @@ class ProjectCalculationsTest {
                 100,
                 "test",
                 new ArrayList<>(),
-                List.of(newVolunteer)
+                List.of(newVolunteer),
+                "userId123"
         );
 
         Project expectedProject = new Project(
@@ -46,7 +48,8 @@ class ProjectCalculationsTest {
                 100,
                 "test",
                 new ArrayList<>(),
-                List.of(newVolunteer)
+                List.of(newVolunteer),
+                "userId123"
         );
 
         //When
@@ -63,7 +66,8 @@ class ProjectCalculationsTest {
                 "01A",
                 "01B",
                 "ProjectName",
-                "VolunteerName"
+                "VolunteerName",
+                "userId123"
         );
 
         Project project = new Project(
@@ -76,7 +80,8 @@ class ProjectCalculationsTest {
                 100,
                 "test",
                 new ArrayList<>(),
-                List.of(newVolunteer)
+                List.of(newVolunteer),
+                "userId123"
         );
 
 
@@ -95,7 +100,8 @@ class ProjectCalculationsTest {
                 "01B",
                 "ProjectName",
                 "DonationName",
-                new BigDecimal(50)
+                new BigDecimal(50),
+                "userId123"
         );
 
         Project project = new Project(
@@ -108,7 +114,8 @@ class ProjectCalculationsTest {
                 100,
                 "test",
                 List.of(newDonation),
-                new ArrayList<>()
+                new ArrayList<>(),
+                "userId123"
         );
 
         Project expectedProject = new Project(
@@ -121,7 +128,8 @@ class ProjectCalculationsTest {
                 100,
                 "test",
                 List.of(newDonation),
-                new ArrayList<>()
+                new ArrayList<>(),
+                "userId123"
         );
 
         //When

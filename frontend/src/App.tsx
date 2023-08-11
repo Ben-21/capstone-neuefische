@@ -9,22 +9,29 @@ import AddEditProject from "./pages/AddEditProject.tsx";
 import NavigationBar from "./components/NavigationBar.tsx";
 import Header from "./components/Header.tsx";
 import AddDonationOrVolunteer from "./pages/AddDonationOrVolunteer.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import RegisterPage from "./pages/RegisterPage.tsx";
+import UserProfile from "./pages/UserProfile.tsx";
 
 
 export default function App() {
 
     const fetchProjects = useFetch((state) => state.fetchProjects);
     const [initialLoad, setInitialLoad] = useState(true);
+    const me = useFetch(state => state.me);
+    const meAll = useFetch(state => state.meAll);
 
     useEffect(() => {
         try {
             fetchProjects();
+            me();
+            meAll();
         } catch (error) {
             console.error(error);
         } finally {
             setInitialLoad(false);
         }
-    }, [fetchProjects]);
+    }, [fetchProjects, me, meAll]);
 
     if (initialLoad) return null;
 
@@ -39,6 +46,9 @@ export default function App() {
                 <Route path="/edit/:id" element={<AddEditProject/>}/>
                 <Route path="/donate/:id" element={<AddDonationOrVolunteer/>}/>
                 <Route path="/volunteer/:id" element={<AddDonationOrVolunteer/>}/>
+                <Route path="/login" element={<LoginPage/>}/>
+                <Route path="/register" element={<RegisterPage/>}/>
+                <Route path="/profile" element={<UserProfile/>}/>
             </Routes>
 
             <NavigationBar/>

@@ -1,7 +1,8 @@
-import {Demand, DonationCreation, Project, ProjectCreation, VolunteerCreation} from "../models/models.tsx";
+import {Demand, DonationCreation, Project, ProjectCreation, User, VolunteerCreation} from "../models/models.tsx";
 import {create} from "zustand";
 import axios from "axios";
 import {toast} from 'react-toastify';
+import {NavigateFunction} from "react-router-dom";
 
 
 type State = {
@@ -18,6 +19,18 @@ type State = {
     mapDemandsToEnum: (string: string[]) => Demand[],
     postDonation: (projectId: string, donationCreation: DonationCreation) => void,
     postVolunteer: (projectId: string, volunteerCreation: VolunteerCreation) => void,
+    userName: string,
+    login: (username: string, password: string, navigate: NavigateFunction) => void,
+    me: () => void,
+    register: (username: string,
+               password: string,
+               repeatedPassword: string,
+               setPassword: (password: string) => void,
+               setRepeatedPassword: (repeatedPassword: string) => void,
+               navigate: NavigateFunction)
+        => void,
+    user: User,
+    meAll: () => void,
 
 };
 
@@ -26,6 +39,14 @@ export const useFetch = create<State>((set, get) => ({
         projects: [],
         isLoading: true,
         page: "",
+        userName: "",
+        user:
+            {
+                id: "",
+                username: "",
+                donations: [],
+                volunteers: []
+            },
 
 
         fetchProjects: () => {
@@ -106,6 +127,12 @@ export const useFetch = create<State>((set, get) => ({
                 set({page: "donate"})
             } else if ((path.split("/")[1]) === "volunteer") {
                 set({page: "volunteer"})
+            } else if ((path.split("/")[1]) === "login") {
+                set({page: "login"})
+            } else if ((path.split("/")[1]) === "register") {
+                set({page: "register"})
+            } else if ((path.split("/")[1]) === "profile") {
+                set({page: "profile"})
             } else {
                 set({page: path})
             }
@@ -175,5 +202,61 @@ export const useFetch = create<State>((set, get) => ({
                     console.error(error);
                 })
         },
+
+
+        login: (username: string, password: string, navigate: NavigateFunction) => {
+            axios.post("/api/users/login", null, {
+                auth: {
+                    username: username,
+                    password: password
+                }
+            })
+                .then(response => {
+                    set({userName: response.data.username})
+                    navigate("/")
+                })
+                .then(() => toast.success("Login successful"))
+                .catch((error) => {
+                    toast.error("You are not registered. Please register first");
+                    console.error(error);
+                });
+        },
+
+        me: () => {
+            axios.get("/api/users/me")
+                .then(response => set({userName: response.data}))
+        },
+
+        meAll: () => {
+            axios.get("/api/users/me-object")
+                .then(response => set({user: response.data}))
+
+        },
+
+        register: (userName: string, password: string, repeatedPassword: string, setPassword: (password: string) => void, setRepeatedPassword: (repeatedPassword: string) => void, navigate: NavigateFunction) => {
+            const newUserData = {
+                "username": `${userName}`,
+                "password": `${password}`
+            }
+
+            if (password === repeatedPassword) {
+
+                axios.post("/api/users/register", newUserData)
+                    .then(response => {
+                        console.log(response);
+                        navigate("/login");
+                    })
+                    .then(() => toast.success("Registration successful"))
+                    .catch((error) => {
+                        console.error(error);
+                        toast.error(error.response.data.errors[0].defaultMessage);
+                    })
+
+            } else {
+                toast.error("Passwords do not match");
+                setPassword("");
+                setRepeatedPassword("");
+            }
+        }
     }))
 ;

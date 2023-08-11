@@ -1,7 +1,10 @@
 package de.neuefische.capstone.backend;
 
 import de.neuefische.capstone.backend.models.*;
+import de.neuefische.capstone.backend.security.MongoUserService;
+import de.neuefische.capstone.backend.security.MongoUserWithoutPassword;
 import de.neuefische.capstone.backend.services.IdService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,11 +17,13 @@ public class ProjectService {
     private final ProjectRepo projectRepo;
     private final IdService idService;
     private final ProjectCalculations projectCalculations;
+    private final MongoUserService mongoUserService;
 
-    public ProjectService(ProjectRepo projectRepo, IdService idService, ProjectCalculations projectCalculations) {
+    public ProjectService(ProjectRepo projectRepo, IdService idService, ProjectCalculations projectCalculations, MongoUserService mongoUserService) {
         this.projectRepo = projectRepo;
         this.idService = idService;
         this.projectCalculations = projectCalculations;
+        this.mongoUserService = mongoUserService;
     }
 
     public List<Project> getAllProjects() {
@@ -26,6 +31,10 @@ public class ProjectService {
     }
 
     public Project addProject(ProjectCreation projectCreation) {
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        MongoUserWithoutPassword user = mongoUserService.findByUsername(username);
+
         Project newProject = new Project(
                 idService.createRandomId(),
                 projectCreation.name(),
@@ -36,7 +45,8 @@ public class ProjectService {
                 projectCreation.goal(),
                 projectCreation.location(),
                 new ArrayList<>(),
-                new ArrayList<>()
+                new ArrayList<>(),
+                user.id()
         );
         return projectRepo.insert(newProject);
     }
@@ -58,7 +68,8 @@ public class ProjectService {
                 projectNoId.goal(),
                 projectNoId.location(),
                 projectNoId.donations(),
-                projectNoId.volunteers());
+                projectNoId.volunteers(),
+                projectNoId.userId());
 
 
         return projectRepo.save(updatedProject);
@@ -70,12 +81,17 @@ public class ProjectService {
     }
 
     public Project addDonation(String projectId, DonationCreation donationCreation) {
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        MongoUserWithoutPassword user = mongoUserService.findByUsername(username);
+
         Donation newDonation = new Donation(
                 idService.createRandomId(),
                 donationCreation.projectId(),
                 donationCreation.projectName(),
-                donationCreation.donorName(),
-                donationCreation.amount()
+                user.username(),
+                donationCreation.amount(),
+                user.id()
         );
 
         Project project = projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException("No project with Id " + projectId + " found"));
@@ -85,11 +101,15 @@ public class ProjectService {
     }
 
     public Project addVolunteer(String projectId, VolunteerCreation volunteerCreation) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        MongoUserWithoutPassword user = mongoUserService.findByUsername(username);
+
         Volunteer newVolunteer = new Volunteer(
                 idService.createRandomId(),
                 volunteerCreation.projectId(),
                 volunteerCreation.projectName(),
-                volunteerCreation.volunteerName()
+                user.username(),
+                user.id()
         );
 
         Project project = projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException("No project with Id" + projectId + "found"));
