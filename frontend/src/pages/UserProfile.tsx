@@ -9,11 +9,11 @@ import LogoutButton from "../components/LogoutButton.tsx";
 export default function UserProfile() {
 
     const user = useFetch(state => state.user);
-    const meAll = useFetch(state => state.meAll);
+    const meObject = useFetch(state => state.meObject);
 
     useEffect(() => {
-        meAll();
-    }, [meAll]);
+        meObject();
+    }, [meObject]);
 
 
     return (
