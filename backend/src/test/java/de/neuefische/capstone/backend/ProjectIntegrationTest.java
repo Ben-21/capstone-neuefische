@@ -35,7 +35,6 @@ class ProjectIntegrationTest {
     ObjectMapper objectMapper;
 
 
-
     @DirtiesContext
     @Test
     void whenAddProject_ThenReturnProject() throws Exception {
@@ -183,23 +182,29 @@ class ProjectIntegrationTest {
 
         projectService.addProject(projectNoIdNoProgress);
         String id = projectService.getAllProjects().get(0).id();
+        String userId = projectService.getAllProjects().get(0).userId();
+
+        Project projectToUpdate = new Project(
+                id,
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND),
+                10,
+                1000,
+                "Turkey",
+                new ArrayList<>(),
+                new ArrayList<>(),
+                userId);
+
+        String projectJson = objectMapper.writeValueAsString(projectToUpdate);
 
 
         //When
         mockMvc.perform(
                         MockMvcRequestBuilders.put("/api/projects/" + id)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content("""
-                                                                     {
-                                         "name": "Earthquake Turkey",
-                                         "description": "Help for the people in Turkey",
-                                         "category": "PARTICIPATION",
-                                         "demands": ["DONATIONINKIND"],
-                                         "progress": 10,
-                                         "location": "Turkey"
-                                                                     }
-                                        """
-                                )
+                                .content(projectJson)
                                 .with(csrf())
                 )
 
