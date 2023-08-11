@@ -9,6 +9,7 @@ export type Project = {
     location: string;
     donations: Donation[];
     volunteers: Volunteer[];
+    userId: string;
 }
 
 export type ProjectCreation = {
@@ -30,6 +31,7 @@ export type ProjectNoId = {
     location: string;
     donations: Donation[];
     volunteers: Volunteer[];
+    userId: string;
 }
 
 export type User = {
@@ -40,7 +42,7 @@ export type User = {
 }
 
 export type Demand = "MONEYDONATION" | "DONATIONINKIND" | "FOODDONATION" | "DRUGDONATION";
-export type Donation = {id: string, projectId: string, projectName: string, donorName: string, amount: string};
-export type DonationCreation = {projectId: string, projectName: string, donorName: string, amount: string};
-export type Volunteer = {id: string, projectId: string, projectName: string, volunteerName: string};
-export type VolunteerCreation = {projectId: string, projectName: string, volunteerName: string};
+export type Donation = {id: string, projectId: string, projectName: string, donorName: string, amount: string, userId: string};
+export type DonationCreation = {projectId: string, projectName: string, amount: string};
+export type Volunteer = {id: string, projectId: string, projectName: string, volunteerName: string, userId: string};
+export type VolunteerCreation = {projectId: string, projectName: string};
