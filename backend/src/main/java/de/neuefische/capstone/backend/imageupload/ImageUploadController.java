@@ -17,13 +17,13 @@ public class ImageUploadController {
     private final ImageUploadService imageUploadService;
 
     @GetMapping
-    List<Image> getAllImages() {
+   public List<Image> getAllImages() {
         return imageUploadService.getAllImages();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    Image addImageProfile(@RequestPart("data") ImageWithoutId imageProfileWithoutId, @RequestPart(name="file",required = false) MultipartFile image) throws IOException {
+    public Image addImageProfile(@RequestPart("data") ImageWithoutId imageProfileWithoutId, @RequestPart(name="file",required = false) MultipartFile image) throws IOException {
         return imageUploadService.addImage(imageProfileWithoutId, image);
     }
 }
