@@ -30,7 +30,7 @@ type State = {
                navigate: NavigateFunction)
         => void,
     user: User,
-    meAll: () => void,
+    meObject: () => void,
 
 };
 
@@ -227,7 +227,7 @@ export const useFetch = create<State>((set, get) => ({
                 .then(response => set({userName: response.data}))
         },
 
-        meAll: () => {
+        meObject: () => {
             axios.get("/api/users/me-object")
                 .then(response => set({user: response.data}))
 
