@@ -4,7 +4,6 @@ import {CardActionArea} from '@mui/material';
 import styled from "@emotion/styled";
 import {Project} from "../models/models.tsx";
 import {useLocation, useNavigate} from "react-router-dom";
-import seenotrettung from "../assets/seenotrettung.jpg"
 import {useEffect, useState} from "react";
 import {useFetch} from "../hooks/useFetch.tsx";
 import ProgressBar from "./ProgressBar.tsx";
@@ -38,12 +37,13 @@ export default function ProjectCard(props: Props) {
     return (
         <StyledCard onClick={() => navigate(`/details/${props.project.id}`)}>
             <CardActionArea>
-                <CardMedia
-                    component="img"
-                    height="140"
-                    image={seenotrettung}
-                    alt="seenotrettung"
-                />
+                {props.project.image.url &&
+                    <CardMedia sx={{objectFit: 'contain'}}
+                               component="img"
+                               height="140"
+                               image={props.project.image.url}
+                               alt="Project Image"
+                    />}
                 <StyledH1>
                     {props.project.name}
                 </StyledH1>

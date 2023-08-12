@@ -98,6 +98,7 @@ export default function AddEditProject() {
                 demands: mapDemandsToEnum(selectedDemands),
                 location: formData.location,
                 goal: formData.goal,
+                image: addedImage,
             };
             postProject(requestBody)
                 .then(() => {
@@ -119,6 +120,7 @@ export default function AddEditProject() {
                 donations: project.donations,
                 volunteers: project.volunteers,
                 userId: project.userId,
+                image: addedImage,
             };
             putProject(requestBody)
                 .then(() => {
