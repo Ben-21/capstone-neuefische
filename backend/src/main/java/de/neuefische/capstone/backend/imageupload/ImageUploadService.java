@@ -1,7 +1,7 @@
 package de.neuefische.capstone.backend.imageupload;
 
 import de.neuefische.capstone.backend.models.Image;
-import de.neuefische.capstone.backend.models.ImageWithoutId;
+import de.neuefische.capstone.backend.models.ImageCreation;
 import de.neuefische.capstone.backend.services.IdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class ImageUploadService {
         return imageUploadRepo.findAll();
     }
 
-    public Image addImage(ImageWithoutId imageWithoutId, MultipartFile image) throws IOException {
+    public Image addImage(ImageCreation imageWithoutId, MultipartFile image) throws IOException {
         String id = idService.createRandomId();
         String url = null;
 

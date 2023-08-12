@@ -1,7 +1,7 @@
 package de.neuefische.capstone.backend.imageupload;
 
 import de.neuefische.capstone.backend.models.Image;
-import de.neuefische.capstone.backend.models.ImageWithoutId;
+import de.neuefische.capstone.backend.models.ImageCreation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ public class ImageUploadController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Image addImageProfile(@RequestPart("data") ImageWithoutId imageProfileWithoutId, @RequestPart(name="file",required = false) MultipartFile image) throws IOException {
+    public Image addImageProfile(@RequestPart("data") ImageCreation imageProfileWithoutId, @RequestPart(name="file",required = false) MultipartFile image) throws IOException {
         return imageUploadService.addImage(imageProfileWithoutId, image);
     }
 }
