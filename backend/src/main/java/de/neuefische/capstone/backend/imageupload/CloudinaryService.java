@@ -10,13 +10,15 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
+
 @Service
 @RequiredArgsConstructor
 public class CloudinaryService {
     private final Cloudinary cloudinary;
+    private static final String TEMP_DIRECTORY = System.getProperty("java.io.tmpdir");
 
     public String uploadImage(MultipartFile image) throws IOException {
-        File fileToUpload = File.createTempFile("image", null);
+        File fileToUpload = File.createTempFile("image", null, new File(TEMP_DIRECTORY));
         image.transferTo(fileToUpload);
 
         Map response = cloudinary.uploader().upload(fileToUpload, Collections.emptyMap());
