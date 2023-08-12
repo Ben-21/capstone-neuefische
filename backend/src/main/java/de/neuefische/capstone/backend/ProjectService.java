@@ -47,7 +47,8 @@ public class ProjectService {
                 projectCreation.location(),
                 new ArrayList<>(),
                 new ArrayList<>(),
-                user.id()
+                user.id(),
+                projectCreation.image()
         );
         return projectRepo.insert(newProject);
     }
@@ -77,7 +78,8 @@ public class ProjectService {
                 projectNoId.location(),
                 projectNoId.donations(),
                 projectNoId.volunteers(),
-                projectNoId.userId());
+                projectNoId.userId(),
+                projectNoId.image());
 
 
         return projectRepo.save(updatedProject);
