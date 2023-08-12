@@ -16,6 +16,8 @@ import styled from "@emotion/styled";
 import {useNavigate, useParams} from "react-router-dom";
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
+import {toast} from "react-toastify";
+import CardMedia from "@mui/material/CardMedia";
 
 
 export default function AddEditProject() {
@@ -47,6 +49,7 @@ export default function AddEditProject() {
     const [image, setImage] = useState<File>();
     const addImage = useFetch(state => state.addImage);
     const addedImage = useFetch(state => state.addedImage);
+    const [showImage, setShowImage] = useState<boolean>(false);
 
     useEffect(() => {
         if (id) {
@@ -56,10 +59,6 @@ export default function AddEditProject() {
                 })
         }
     }, [id, getProjectById]);
-
-    useEffect(() => {
-        console.log(addedImage)
-    }, [addedImage])
 
 
     useEffect(() => {
@@ -194,6 +193,15 @@ export default function AddEditProject() {
     }
 
     function handleImageSubmit() {
+        if (imageName.trim() === "") {
+            toast.error("Please enter a name for the image")
+            return
+        }
+        if (!image) {
+            toast.error("Please select an image")
+            return
+        }
+
         const data = new FormData()
         const ImageCreation: ImageCreation = {
             name: imageName
@@ -208,11 +216,9 @@ export default function AddEditProject() {
             .then(() => {
                 setImageName("")
                 setImage(undefined)
+                setShowImage(true)
             });
-
-
     }
-
 
     return (
         <StyledBody>
@@ -268,13 +274,25 @@ export default function AddEditProject() {
                         ))}
                     </Select>
                 </StyledChipFormControl>
-                <StyledTextField required id="image-name" name="imageName" value={imageName}
+                <StyledTextField id="image-name" name="imageName" value={imageName}
                                  onChange={handleImageNameChange}
-                                 label="Name"
+                                 label="Image Name"
                                  variant="outlined"/>
-                <StyledInputFile type="file" onChange={handleImageInput}/>
-                <StyledButton type="button" onClick={handleImageSubmit}>upload</StyledButton>
-                <StyledButton type={"submit"} variant="outlined" endIcon={<SaveIcon/>}>SAVE</StyledButton>
+                <Input id="image-upload" type={"file"} onChange={handleImageInput}/>
+                <StyledButton type="button" onClick={handleImageSubmit} variant="outlined" endIcon={<SaveIcon/>}>IMAGE
+                    UPLOAD</StyledButton>
+                {showImage &&
+                    <>
+                        <StyledH3>IMAGE PREVIEW</StyledH3>
+                        <CardMedia
+                            sx={{borderRadius: '5px'}}
+                            component="img"
+                            height="140"
+                            src={addedImage.url}
+                            alt="Your Uploaded Image"
+                        />
+                    </>}
+                <StyledButton type={"submit"} variant="outlined" endIcon={<SaveIcon/>}>SAVE PROJECT</StyledButton>
                 <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined"
                               endIcon={<CancelIcon/>}>CANCEL</StyledButton>
             </StyledForm>
@@ -339,6 +357,11 @@ const StyledChipFormControl = styled(FormControl)`
   border-radius: 4px;
 `;
 
-const StyledInputFile = styled(Input)`
-
+const StyledH3 = styled.h3`
+  padding: 0;
+  margin: 0;
+  font-family: "Robot", sans-serif;
+  font-weight: 400;
+  color: #163E56;
 `;
+
