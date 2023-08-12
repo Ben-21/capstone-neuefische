@@ -104,6 +104,9 @@ public class ProjectService {
                 user.id()
         );
 
+        user.donations().add(newDonation);
+        mongoUserService.updateUser(user);
+
         Project project = projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException("No project with Id " + projectId + " found"));
         project.donations().add(newDonation);
 
@@ -121,6 +124,9 @@ public class ProjectService {
                 user.username(),
                 user.id()
         );
+
+        user.volunteers().add(newVolunteer);
+        mongoUserService.updateUser(user);
 
         Project project = projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException("No project with Id" + projectId + "found"));
         project.volunteers().add(newVolunteer);

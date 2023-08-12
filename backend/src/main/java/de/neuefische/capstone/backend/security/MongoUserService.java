@@ -37,6 +37,19 @@ public class MongoUserService {
 
         MongoUser newUser = new MongoUser(idService.createRandomId(), mongoUserWithoutId.username(), encodedPassword, new ArrayList<>(), new ArrayList<>());
         mongoUserRepository.insert(newUser);
+    }
 
+    public MongoUserWithoutPassword updateUser(MongoUserWithoutPassword mongoUserWithoutPassword) {
+        MongoUser mongoUser = mongoUserRepository.findById(mongoUserWithoutPassword.id()).orElseThrow(() -> new UsernameNotFoundException("Username " + mongoUserWithoutPassword.id() + " not found"));
+        MongoUser updatedUser = new MongoUser(
+                mongoUserWithoutPassword.id(),
+                mongoUserWithoutPassword.username(),
+                mongoUser.password(),
+                mongoUserWithoutPassword.donations(),
+                mongoUserWithoutPassword.volunteers());
+
+        MongoUser returnUser = mongoUserRepository.save(updatedUser);
+        return new MongoUserWithoutPassword(returnUser.id(), returnUser.username(), returnUser.donations(), returnUser.volunteers());
     }
 }
+
