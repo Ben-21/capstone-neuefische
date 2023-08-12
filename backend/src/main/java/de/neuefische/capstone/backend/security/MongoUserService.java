@@ -40,7 +40,7 @@ public class MongoUserService {
     }
 
     public MongoUserWithoutPassword updateUser(MongoUserWithoutPassword mongoUserWithoutPassword) {
-        MongoUser mongoUser = mongoUserRepository.findById(mongoUserWithoutPassword.id()).orElseThrow(() -> new UsernameNotFoundException("Username " + mongoUserWithoutPassword.id() + " not found"));
+        MongoUser mongoUser = mongoUserRepository.findById(mongoUserWithoutPassword.id()).orElseThrow(() -> new UsernameNotFoundException("Username " + mongoUserWithoutPassword.username() + " not found"));
         MongoUser updatedUser = new MongoUser(
                 mongoUserWithoutPassword.id(),
                 mongoUserWithoutPassword.username(),
