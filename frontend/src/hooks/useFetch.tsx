@@ -31,7 +31,7 @@ type State = {
         => void,
     user: User,
     meObject: () => void,
-    addImage: (data: FormData) => Promise<Image | any>,
+    addImage: (data: FormData) => Promise<Image | void>,
     addedImage: Image,
 
 };
