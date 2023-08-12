@@ -285,7 +285,7 @@ export default function AddEditProject() {
                     <>
                         <StyledH3>IMAGE PREVIEW</StyledH3>
                         <CardMedia
-                            sx={{borderRadius: '5px'}}
+                            sx={{borderRadius: '5px', objectFit: 'contain'}}
                             component="img"
                             height="140"
                             src={addedImage.url}
