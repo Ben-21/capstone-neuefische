@@ -59,8 +59,10 @@ export default function AddDonationOrVolunteer() {
                 projectName: project.name,
                 amount: amount
             }
-            postDonation(project.id, donation);
-            navigate(`/details/${project.id}`);
+            postDonation(project.id, donation)
+                .then(() => {
+                    navigate(`/details/${project.id}`);
+                });
         }
 
         if (project && page === "volunteer") {
@@ -68,8 +70,10 @@ export default function AddDonationOrVolunteer() {
                 projectId: project.id,
                 projectName: project.name,
             }
-            postVolunteer(project.id, volunteer);
-            navigate(`/details/${project.id}`);
+            postVolunteer(project.id, volunteer)
+                .then(() => {
+                    navigate(`/details/${project.id}`);
+                });
         }
     }
 

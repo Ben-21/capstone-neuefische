@@ -1,4 +1,13 @@
-import {Demand, DonationCreation, Image, Project, ProjectCreation, User, VolunteerCreation} from "../models/models.tsx";
+import {
+    Demand,
+
+    DonationCreation,
+    Image,
+    Project,
+    ProjectCreation,
+    User,
+    VolunteerCreation
+} from "../models/models.tsx";
 import {create} from "zustand";
 import axios from "axios";
 import {toast} from 'react-toastify';
@@ -17,8 +26,8 @@ type State = {
     page: string,
     mapDemandsToUserFriendly: (demands: Demand[]) => string[],
     mapDemandsToEnum: (string: string[]) => Demand[],
-    postDonation: (projectId: string, donationCreation: DonationCreation) => void,
-    postVolunteer: (projectId: string, volunteerCreation: VolunteerCreation) => void,
+    postDonation: (projectId: string, donationCreation: DonationCreation) => Promise<string | number | void>,
+    postVolunteer: (projectId: string, volunteerCreation: VolunteerCreation) => Promise<string | number | void>,
     userName: string,
     login: (username: string, password: string, navigate: NavigateFunction) => void,
     me: () => void,
@@ -190,7 +199,7 @@ export const useFetch = create<State>((set, get) => ({
 
         postDonation: (projectId: string, requestBody: DonationCreation) => {
             const {fetchProjects} = get();
-            axios.post(`/api/projects/donate/${projectId}`, requestBody)
+           return axios.post(`/api/projects/donate/${projectId}`, requestBody)
                 .then(fetchProjects)
                 .then(() => toast.success("Donation successfully added"))
                 .catch((error) => {
@@ -201,7 +210,7 @@ export const useFetch = create<State>((set, get) => ({
 
         postVolunteer: (projectId: string, requestBody: VolunteerCreation) => {
             const {fetchProjects} = get();
-            axios.post(`/api/projects/volunteer/${projectId}`, requestBody)
+            return axios.post(`/api/projects/volunteer/${projectId}`, requestBody)
                 .then(fetchProjects)
                 .then(() => toast.success("Volunteer successfully added"))
                 .catch((error) => {
