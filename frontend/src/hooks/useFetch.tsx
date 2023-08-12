@@ -276,7 +276,6 @@ export const useFetch = create<State>((set, get) => ({
                     set({addedImage: response.data})
 
                     toast.success(`Image ${get().addedImage.name} successfully added`);
-                    console.log(get().addedImage)
                 })
                 .catch((error) => {
                     console.log(error)
