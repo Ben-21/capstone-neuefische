@@ -8,6 +8,7 @@ public record ProjectCreation(
         Category category,
         List<Demand> demands,
         String location,
-        int goal
+        int goal,
+        Image image
 ) {
 }

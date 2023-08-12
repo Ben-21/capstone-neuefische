@@ -10,6 +10,7 @@ export type Project = {
     donations: Donation[];
     volunteers: Volunteer[];
     userId: string;
+    image: Image;
 }
 
 export type ProjectCreation = {
@@ -19,6 +20,7 @@ export type ProjectCreation = {
     demands: Demand[];
     location: string;
     goal: string;
+    image: Image;
 }
 
 export type ProjectNoId = {
@@ -32,6 +34,7 @@ export type ProjectNoId = {
     donations: Donation[];
     volunteers: Volunteer[];
     userId: string;
+    image: Image;
 }
 
 export type User = {
