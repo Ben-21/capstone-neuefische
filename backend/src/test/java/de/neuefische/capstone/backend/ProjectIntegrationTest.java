@@ -135,7 +135,8 @@ class ProjectIntegrationTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 "Turkey",
-                1000);
+                1000,
+                new Image("", "", ""));
 
         String projectJson = objectMapper.writeValueAsString(project);
 
@@ -177,7 +178,8 @@ class ProjectIntegrationTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 "Turkey",
-                0);
+                0,
+                new Image("", "", ""));
 
 
         projectService.addProject(projectNoIdNoProgress);
@@ -195,7 +197,8 @@ class ProjectIntegrationTest {
                 "Turkey",
                 new ArrayList<>(),
                 new ArrayList<>(),
-                userId);
+                userId,
+                new Image("", "", ""));
 
         String projectJson = objectMapper.writeValueAsString(projectToUpdate);
 
@@ -236,7 +239,8 @@ class ProjectIntegrationTest {
                 "Turkey",
                 new ArrayList<>(),
                 new ArrayList<>(),
-                "userId123");
+                "userId123",
+                new Image("", "", ""));
 
         String projectJson = objectMapper.writeValueAsString(project);
 
@@ -262,7 +266,8 @@ class ProjectIntegrationTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 "Turkey",
-                1000);
+                1000,
+                new Image("", "", ""));
 
         String projectJson = objectMapper.writeValueAsString(project);
 
@@ -320,7 +325,8 @@ class ProjectIntegrationTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 "Turkey",
-                1000);
+                1000,
+                new Image("", "", ""));
 
         String projectToAddDonationJson = objectMapper.writeValueAsString(projectToAddDonation);
 
@@ -379,7 +385,8 @@ class ProjectIntegrationTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 "Turkey",
-                1000);
+                1000,
+                new Image("", "", ""));
 
         String projectToAddVolunteerJson = objectMapper.writeValueAsString(projectToAddVolunteer);
 

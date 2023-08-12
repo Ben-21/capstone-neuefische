@@ -35,7 +35,8 @@ class ProjectCalculationsTest {
                 "test",
                 new ArrayList<>(),
                 List.of(newVolunteer),
-                "userId123"
+                "userId123",
+                new Image("", "", "")
         );
 
         Project expectedProject = new Project(
@@ -49,7 +50,8 @@ class ProjectCalculationsTest {
                 "test",
                 new ArrayList<>(),
                 List.of(newVolunteer),
-                "userId123"
+                "userId123",
+                new Image("", "", "")
         );
 
         //When
@@ -81,7 +83,8 @@ class ProjectCalculationsTest {
                 "test",
                 new ArrayList<>(),
                 List.of(newVolunteer),
-                "userId123"
+                "userId123",
+                new Image("", "", "")
         );
 
 
@@ -115,7 +118,8 @@ class ProjectCalculationsTest {
                 "test",
                 List.of(newDonation),
                 new ArrayList<>(),
-                "userId123"
+                "userId123",
+                new Image("", "", "")
         );
 
         Project expectedProject = new Project(
@@ -129,7 +133,8 @@ class ProjectCalculationsTest {
                 "test",
                 List.of(newDonation),
                 new ArrayList<>(),
-                "userId123"
+                "userId123",
+                new Image("", "", "")
         );
 
         //When
