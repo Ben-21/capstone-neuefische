@@ -4,12 +4,14 @@ import {useFetch} from "../hooks/useFetch.tsx";
 import EditIcon from "@mui/icons-material/Edit";
 import {useEffect} from "react";
 import LogoutButton from "../components/LogoutButton.tsx";
+import {useNavigate} from "react-router-dom";
 
 
 export default function UserProfile() {
 
     const user = useFetch(state => state.user);
     const meObject = useFetch(state => state.meObject);
+    const navigate = useNavigate();
 
     useEffect(() => {
         meObject();
@@ -38,8 +40,8 @@ export default function UserProfile() {
             <StyledH2>Project Data</StyledH2>
             <StyledH3>Donations</StyledH3>
             {user.donations.map((donation) =>
-                <StyledListDiv
-                    key={donation.id}>
+                <StyledListDiv onClick={() => navigate(`/details/${donation.projectId}`)}
+                               key={donation.id}>
                     <StyledP>{donation.projectName}</StyledP>
                     <StyledP>{formatAmountToCurrency(donation.amount)}</StyledP>
                 </StyledListDiv>)}
@@ -47,7 +49,9 @@ export default function UserProfile() {
                 <StyledSumP>Sum: {formatAmountToCurrency(totalDonations)}</StyledSumP>
             </StyledTotalPWrapper>
             <StyledH3>Volunteered</StyledH3>
-            {user.volunteers.map((volunteer) => <StyledListDiv key={volunteer.id}>{volunteer.projectName}</StyledListDiv>)}
+            {user.volunteers.map((volunteer) =>
+                <StyledListDiv onClick={() => navigate(`/details/${volunteer.projectId}`)}
+                               key={volunteer.id}>{volunteer.projectName}</StyledListDiv>)}
             <StyledTotalPWrapper>
                 <StyledSumP>Sum: {user.volunteers.length}</StyledSumP>
             </StyledTotalPWrapper>
@@ -101,6 +105,7 @@ const StyledListDiv = styled.div`
   border-radius: 4px;
   padding: 5px;
   margin: 0;
+  cursor: pointer;
 `;
 
 const StyledP = styled.p`
