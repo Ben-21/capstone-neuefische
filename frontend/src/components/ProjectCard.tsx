@@ -99,7 +99,7 @@ const StyledCard = styled(Card)`
   background-color: #EBE7D8;
   margin: 0;
   padding: 0;
-  border-radius: 5px;
+  border-radius: 4px;
 `;
 const StyledH1 = styled.h1`
   padding-left: 10px;
@@ -155,7 +155,7 @@ const StyledDemands = styled.div`
   border: none;
   width: 96px;
   height: 44px;
-  border-radius: 10px;
+  border-radius: 4px;
   background: var(--orange, #FFB34F);
   font-family: "Robot", sans-serif;
   font-weight: 500;

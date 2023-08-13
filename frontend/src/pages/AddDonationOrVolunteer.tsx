@@ -130,7 +130,7 @@ const StyledForm = styled.form`
   justify-content: center;
   gap: 1.1em;
   background-color: #EBE7D8;
-  border-radius: 5px;
+  border-radius: 4px;
   padding: 20px 10px 10px 10px;
   margin-top: -30px;
 `;

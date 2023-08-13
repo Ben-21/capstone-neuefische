@@ -66,7 +66,7 @@ const StyledIconButton = styled(IconButton)`
     font-size: 32px;
   }
 
-  border-radius: 5px;
+  border-radius: 4px;
   border: none;
   background-color: var(--colorBlack);
   margin: 0;
