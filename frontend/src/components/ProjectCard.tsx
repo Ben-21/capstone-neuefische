@@ -38,7 +38,7 @@ export default function ProjectCard(props: Props) {
         <StyledCard onClick={() => navigate(`/details/${props.project.id}`)}>
             <CardActionArea>
                 {props.project.image.url &&
-                    <CardMedia sx={{objectFit: 'contain'}}
+                    <CardMedia sx={{objectFit: 'cover'}}
                                component="img"
                                height="140"
                                image={props.project.image.url}
@@ -47,7 +47,6 @@ export default function ProjectCard(props: Props) {
                 <StyledH1>
                     {props.project.name}
                 </StyledH1>
-                {page === "/" && <ProgressBarGalleryView project={props.project}/>}
                 {page === "details" &&
                     <>
                         <StyledDescription>
@@ -88,6 +87,7 @@ export default function ProjectCard(props: Props) {
                 <StyledDescription>
                     {props.project.location}
                 </StyledDescription>
+                {page === "/" && <ProgressBarGalleryView project={props.project}/>}
             </CardActionArea>
         </StyledCard>
     )

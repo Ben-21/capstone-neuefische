@@ -85,6 +85,7 @@ export default function AddEditProject() {
         })
         setSelectedDemands([]);
         setCategory("DONATION");
+        setShowImage(false);
     }
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
