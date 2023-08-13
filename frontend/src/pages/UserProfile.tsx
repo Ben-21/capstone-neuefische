@@ -38,16 +38,19 @@ export default function UserProfile() {
             <StyledH2>Project Data</StyledH2>
             <StyledH3>Donations</StyledH3>
             {user.donations.map((donation) =>
-                <StyledDivDonations
+                <StyledListDiv
                     key={donation.id}>
                     <StyledP>{donation.projectName}</StyledP>
                     <StyledP>{formatAmountToCurrency(donation.amount)}</StyledP>
-                </StyledDivDonations>)}
+                </StyledListDiv>)}
             <StyledTotalPWrapper>
                 <StyledSumP>Sum: {formatAmountToCurrency(totalDonations)}</StyledSumP>
             </StyledTotalPWrapper>
             <StyledH3>Volunteered</StyledH3>
-            {user.volunteers.map((volunteer) => <div key={volunteer.id}>{volunteer.projectName}</div>)}
+            {user.volunteers.map((volunteer) => <StyledListDiv key={volunteer.id}>{volunteer.projectName}</StyledListDiv>)}
+            <StyledTotalPWrapper>
+                <StyledSumP>Sum: {user.volunteers.length}</StyledSumP>
+            </StyledTotalPWrapper>
         </StyledBody>
     )
 }
@@ -90,7 +93,7 @@ const StyledButton = styled(Button)`
   border-color: #163E56;
 `;
 
-const StyledDivDonations = styled.div`
+const StyledListDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
