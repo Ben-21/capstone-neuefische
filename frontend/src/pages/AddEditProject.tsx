@@ -75,7 +75,7 @@ export default function AddEditProject() {
             setCategory(project.category);
             setAddedImage(project.image);
         }
-    }, [id, project, mapDemandsToUserFriendly])
+    }, [setAddedImage, id, project, mapDemandsToUserFriendly])
 
 
     function initialiseAllFields() {
