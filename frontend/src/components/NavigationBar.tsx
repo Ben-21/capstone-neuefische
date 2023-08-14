@@ -10,6 +10,7 @@ import DonationButton from "./DonationButton.tsx";
 import VolunteerButton from "./VolunteerButton.tsx";
 import {Project} from "../models/models.tsx";
 import UserButton from "./UserButton.tsx";
+import FilterButton from "./FilterButton.tsx";
 
 
 export default function NavigationBar() {
@@ -57,6 +58,7 @@ export default function NavigationBar() {
                 {page === "edit" && <DeleteButton projectId={id}/>}
                 {page === "details" && <DonationButton projectId={id}/>}
                 {page === "details" && volunteerVisible && <VolunteerButton projectId={id}/>}
+                {(page === "/" || page === "filter") && <FilterButton/>}
                 <UserButton/>
             </StyledNavigationBar>
         </StyledNavigationWrapper>
