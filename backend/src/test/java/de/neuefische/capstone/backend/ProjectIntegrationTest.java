@@ -41,9 +41,8 @@ class ProjectIntegrationTest {
     @Autowired
     ObjectMapper objectMapper;
 
-//    @MockBean
-//    MongoUserService mongoUserService;
-
+    @Autowired
+    MongoUserRepository mongoRepository;
 
 
     @DirtiesContext
@@ -325,75 +324,75 @@ class ProjectIntegrationTest {
                 .andExpect(status().isNotFound());
     }
 
-//    @DirtiesContext
-//    @Test
-//    @WithMockUser(username = "testUser")
-//    void whenAddDonation_thenReturnProjectWithDonation() throws Exception {
-//
-//        //Given
-//        ProjectCreation projectToAddDonation = new ProjectCreation(
-//                "Earthquake Turkey",
-//                "Help for the people in Turkey",
-//                Category.PARTICIPATION,
-//                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
-//                "Turkey",
-//                1000,
-//                new Image("", "", ""));
-//
-//        String projectToAddDonationJson = objectMapper.writeValueAsString(projectToAddDonation);
-//
-//        MongoUser user = new MongoUser("userId123", "testUser", "testPassword", new ArrayList<>(), new ArrayList<>());
-//        MongoUserWithoutPassword userWithoutPassword = new MongoUserWithoutPassword("userId123", "testUser", new ArrayList<>(), new ArrayList<>());
-//        Mockito.when(mongoUserService.findByUsername("testUser")).thenReturn(userWithoutPassword);
-//
-//        mockMvc.perform(
-//                MockMvcRequestBuilders.post("/api/projects")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(projectToAddDonationJson)
-//                        .with(csrf())
-//        );
-//
-//        String projectId = projectService.getAllProjects().get(0).id();
-//
-//        DonationCreation donation = new DonationCreation(
-//                projectId,
-//                "Earthquake Turkey",
-//                new BigDecimal(100)
-//        );
-//
-//        String donationToAddJson = objectMapper.writeValueAsString(donation);
-//
-//
-//        //When
-//        mockMvc.perform(
-//                        MockMvcRequestBuilders.post("/api/projects/donate/" + projectId)
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(donationToAddJson)
-//                                .with(csrf())
-//                )
-//
-//                //Then
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(jsonPath("id").value(projectId))
-//                .andExpect(jsonPath("name").value("Earthquake Turkey"))
-//                .andExpect(jsonPath("description").value("Help for the people in Turkey"))
-//                .andExpect(jsonPath("category").value("PARTICIPATION"))
-//                .andExpect(jsonPath("demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
-//                .andExpect(jsonPath("progress").value(0))
-//                .andExpect(jsonPath("location").value("Turkey"))
-//                .andExpect(jsonPath("goal").value(1000))
-//                .andExpect(jsonPath("donations", hasSize(1)))
-//                .andExpect(jsonPath("donations[0].id").exists())
-//                .andExpect(jsonPath("donations[0].projectId").value(projectId))
-//                .andExpect(jsonPath("donations[0].projectName").value("Earthquake Turkey"))
-//                .andExpect(jsonPath("donations[0].donorName").value("testUser"))
-//                .andExpect(jsonPath("donations[0].amount").value(100))
-//                .andExpect(jsonPath("donations[0].userId").value("userId123"));
-//    }
+    @DirtiesContext
+    @WithMockUser(username = "testUser")
+    @Test
+    void whenAddDonation_thenReturnProjectWithDonation() throws Exception {
+
+        //Given
+        ProjectCreation projectToAddDonation = new ProjectCreation(
+                "Earthquake Turkey",
+                "Help for the people in Turkey",
+                Category.PARTICIPATION,
+                List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
+                "Turkey",
+                1000,
+                new Image("", "", ""));
+
+        String projectToAddDonationJson = objectMapper.writeValueAsString(projectToAddDonation);
+
+        MongoUser user = new MongoUser("userId123", "testUser", "testPassword", new ArrayList<>(), new ArrayList<>());
+        mongoRepository.save(user);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/projects")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(projectToAddDonationJson)
+                        .with(csrf())
+        );
+
+        String projectId = projectService.getAllProjects().get(0).id();
+
+        DonationCreation donation = new DonationCreation(
+                projectId,
+                "Earthquake Turkey",
+                new BigDecimal(100)
+        );
+
+        String donationToAddJson = objectMapper.writeValueAsString(donation);
+
+
+        //When
+        mockMvc.perform(
+                        MockMvcRequestBuilders.post("/api/projects/donate/" + projectId)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(donationToAddJson)
+                                .with(csrf())
+                )
+
+                //Then
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("id").value(projectId))
+                .andExpect(jsonPath("name").value("Earthquake Turkey"))
+                .andExpect(jsonPath("description").value("Help for the people in Turkey"))
+                .andExpect(jsonPath("category").value("PARTICIPATION"))
+                .andExpect(jsonPath("demands", containsInAnyOrder("DONATIONINKIND", "MONEYDONATION")))
+                .andExpect(jsonPath("progress").value(0))
+                .andExpect(jsonPath("location").value("Turkey"))
+                .andExpect(jsonPath("goal").value(1000))
+                .andExpect(jsonPath("donations", hasSize(1)))
+                .andExpect(jsonPath("donations[0].id").exists())
+                .andExpect(jsonPath("donations[0].projectId").value(projectId))
+                .andExpect(jsonPath("donations[0].projectName").value("Earthquake Turkey"))
+                .andExpect(jsonPath("donations[0].donorName").value("testUser"))
+                .andExpect(jsonPath("donations[0].amount").value(100))
+                .andExpect(jsonPath("donations[0].userId").value("userId123"));
+    }
 
 
     @DirtiesContext
+    @WithMockUser(username = "testUser")
     @Test
     void whenAddVolunteer_thenReturnProjectWithVolunteer() throws Exception {
         //Given
@@ -407,6 +406,9 @@ class ProjectIntegrationTest {
                 new Image("", "", ""));
 
         String projectToAddVolunteerJson = objectMapper.writeValueAsString(projectToAddVolunteer);
+
+        MongoUser user = new MongoUser("userId123", "testUser", "testPassword", new ArrayList<>(), new ArrayList<>());
+        mongoRepository.save(user);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/projects")
@@ -448,6 +450,6 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("volunteers[0].id").exists())
                 .andExpect(jsonPath("volunteers[0].projectId").value(projectId))
                 .andExpect(jsonPath("volunteers[0].projectName").value("Earthquake Turkey"))
-                .andExpect(jsonPath("volunteers[0].volunteerName").value("anonymousUser"));
+                .andExpect(jsonPath("volunteers[0].volunteerName").value("testUser"));
     }
 }
