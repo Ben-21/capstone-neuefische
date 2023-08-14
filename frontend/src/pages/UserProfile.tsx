@@ -5,6 +5,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import {useEffect} from "react";
 import LogoutButton from "../components/LogoutButton.tsx";
 import {useNavigate} from "react-router-dom";
+import FilterUserData from "../components/FilterUserData.tsx";
 
 
 export default function UserProfile() {
@@ -25,6 +26,7 @@ export default function UserProfile() {
             maximumFractionDigits: 2,
         })
     }
+
     const totalDonations = (user.donations.reduce((sum, donation) => sum + parseFloat(donation.amount), 0)).toString();
 
     return (
@@ -55,6 +57,8 @@ export default function UserProfile() {
             <StyledTotalPWrapper>
                 <StyledSumP>Sum: {user.volunteers.length}</StyledSumP>
             </StyledTotalPWrapper>
+            <FilterUserData user={user} filterArgument={"Donations"}/>
+            <FilterUserData user={user} filterArgument={"Volunteered"}/>
         </StyledBody>
     )
 }
@@ -101,7 +105,8 @@ const StyledListDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #163E56;
+  border: none;
+    background-color: #FFB34F;
   border-radius: 4px;
   padding: 5px;
   margin: 0;
@@ -115,7 +120,6 @@ const StyledP = styled.p`
 `;
 
 const StyledSumP = styled.p`
-
   margin: 0;
   font-family: "Roboto", sans-serif;
   font-weight: 600;

@@ -42,19 +42,15 @@ export default function RegisterPage() {
                                  onChange={handleUsernameInput}
                                  label="Username"
                                  variant="outlined"/>
-                <br/>
-                <StyledSpan>at least 4 characters</StyledSpan>
+                <StyledSpan>At least 4 characters</StyledSpan>
                 <StyledTextField required id="password" name="password" value={password}
                                  onChange={handlePasswordInput}
                                  label="Password"
                                  variant="outlined"
                                  type="password"
                                  style={{backgroundColor: regex.test(password) ? "lightgreen" : "tomato"}}/>
-                <br/>
                 <StyledSpan>
-                    at least 6 characters,
-                    <br/>
-                    must contain numbers and letters
+                    At least 6 characters, must contain numbers and letters
                 </StyledSpan>
                 <StyledTextField required id="repeated-password" name="repeatedPassword" value={repeatedPassword}
                                  onChange={handleRepeatedPasswordInput}
@@ -110,6 +106,8 @@ const StyledButton = styled(Button)`
 
 const StyledSpan = styled.span`
   font-family: "Roboto Light", sans-serif;
-  font-size: 28px;
+  font-size: 0.8em;
   color: #163E56;
+  padding: 0;
+    margin: 0;
 `;
