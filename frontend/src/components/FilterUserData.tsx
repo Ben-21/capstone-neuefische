@@ -76,17 +76,10 @@ export default function FilterUserData(props: Props) {
 
     return (
         <>
-            <StyledH3>{props.filterArgument}</StyledH3>
             {filter(props.filterArgument)}
         </>
     )
 }
-
-const StyledH3 = styled.h3`
-  padding-left: 0;
-  margin-bottom: 6px;
-  margin-top: 0;
-`;
 
 const StyledListDiv = styled.div`
   display: flex;
