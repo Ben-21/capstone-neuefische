@@ -50,6 +50,8 @@ export default function AddEditProject() {
     const addImage = useFetch(state => state.addImage);
     const addedImage = useFetch(state => state.addedImage);
     const [showImage, setShowImage] = useState<boolean>(false);
+    const resetAddedImage = useFetch(state => state.resetAddedImage);
+    const setAddedImage = useFetch(state => state.setAddedImage);
 
     useEffect(() => {
         if (id) {
@@ -70,8 +72,8 @@ export default function AddEditProject() {
                 goal: project.goal.toString(),
             })
             setSelectedDemands(mapDemandsToUserFriendly(project.demands));
-
-            setCategory(project.category)
+            setCategory(project.category);
+            setAddedImage(project.image);
         }
     }, [id, project, mapDemandsToUserFriendly])
 
@@ -86,6 +88,7 @@ export default function AddEditProject() {
         setSelectedDemands([]);
         setCategory("DONATION");
         setShowImage(false);
+        resetAddedImage();
     }
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -146,8 +149,10 @@ export default function AddEditProject() {
 
     function handleCancelButton() {
         if (project) {
+            initialiseAllFields();
             navigate(`/details/${project.id}`)
         } else {
+            initialiseAllFields();
             navigate("/")
         }
         window.scrollTo(0, 0);

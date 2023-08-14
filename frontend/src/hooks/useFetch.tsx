@@ -42,6 +42,8 @@ type State = {
     meObject: () => void,
     addImage: (data: FormData) => Promise<Image | void>,
     addedImage: Image,
+    setAddedImage: (image: Image) => void,
+    resetAddedImage: () => void
 
 };
 
@@ -290,7 +292,20 @@ export const useFetch = create<State>((set, get) => ({
                     console.log(error)
                     toast.error('Error adding ImageProfile' + error.response?.statusText);
                 });
+        },
+
+    setAddedImage: (image: Image) => {
+            set({addedImage: image})
+    },
+
+    resetAddedImage: () => {
+        const resettedImage: Image = {
+            id: "",
+            name: "",
+            url: ""
         }
+        set({addedImage: resettedImage})
+    }
 
     }))
 ;
