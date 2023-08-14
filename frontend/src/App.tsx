@@ -1,5 +1,4 @@
 import {Route, Routes} from "react-router-dom";
-import Home from "./pages/Home.tsx";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {useFetch} from "./hooks/useFetch.tsx";
@@ -49,7 +48,7 @@ export default function App() {
                     <Route path="/donate/:id" element={<AddDonationOrVolunteer/>}/>
                     <Route path="/volunteer/:id" element={<AddDonationOrVolunteer/>}/>
                 </Route>
-                <Route path="/" element={<Home/>}/>
+                {/*<Route path="/" element={<Home/>}/>*/}
                 <Route path="/details/:id" element={<ShowProject/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
