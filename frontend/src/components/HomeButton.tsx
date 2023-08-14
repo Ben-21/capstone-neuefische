@@ -10,6 +10,7 @@ export default function HomeButton() {
 
     function handleClick() {
         navigate("/")
+        window.scrollTo(0, 0);
     }
 
 
