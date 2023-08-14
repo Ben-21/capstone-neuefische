@@ -13,6 +13,7 @@ import RegisterPage from "./pages/RegisterPage.tsx";
 import UserProfile from "./pages/UserProfile.tsx";
 import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
 import Home from "./pages/Home.tsx";
+import FilteredGallery from "./pages/FilteredGallery.tsx";
 
 
 export default function App() {
@@ -50,6 +51,7 @@ export default function App() {
                     <Route path="/volunteer/:id" element={<AddDonationOrVolunteer/>}/>
                 </Route>
                 <Route path="/" element={<Home/>}/>
+                <Route path="/filter" element={<FilteredGallery/>}/>
                 <Route path="/details/:id" element={<ShowProject/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
