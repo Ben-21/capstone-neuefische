@@ -1,33 +1,33 @@
 import styled from "@emotion/styled";
-import {Button, TextField} from "@mui/material";
+import {Button, SelectChangeEvent, TextField} from "@mui/material";
 import {useFetch} from "../hooks/useFetch.tsx";
 import EditIcon from "@mui/icons-material/Edit";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import LogoutButton from "../components/LogoutButton.tsx";
-import {useNavigate} from "react-router-dom";
 import FilterUserData from "../components/FilterUserData.tsx";
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 
 export default function UserProfile() {
 
     const user = useFetch(state => state.user);
     const meObject = useFetch(state => state.meObject);
-    const navigate = useNavigate();
+    const [filter, setFilter] = useState("My Projects");
+
 
     useEffect(() => {
         meObject();
     }, [meObject]);
 
-    const formatAmountToCurrency = (amount: string) => {
-        return parseFloat(amount).toLocaleString("de-DE", {
-            style: "currency",
-            currency: "EUR",
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        })
-    }
 
-    const totalDonations = (user.donations.reduce((sum, donation) => sum + parseFloat(donation.amount), 0)).toString();
+    const handleFilterChange = (event: SelectChangeEvent) => {
+        setFilter(event.target.value as string);
+    };
+
 
     return (
         <StyledBody>
@@ -40,25 +40,23 @@ export default function UserProfile() {
                           endIcon={<EditIcon/>}>EDIT USERDATA</StyledButton>
             <LogoutButton/>
             <StyledH2>Project Data</StyledH2>
-            <StyledH3>Donations</StyledH3>
-            {user.donations.map((donation) =>
-                <StyledListDiv onClick={() => navigate(`/details/${donation.projectId}`)}
-                               key={donation.id}>
-                    <StyledP>{donation.projectName}</StyledP>
-                    <StyledP>{formatAmountToCurrency(donation.amount)}</StyledP>
-                </StyledListDiv>)}
-            <StyledTotalPWrapper>
-                <StyledSumP>Sum: {formatAmountToCurrency(totalDonations)}</StyledSumP>
-            </StyledTotalPWrapper>
-            <StyledH3>Volunteered</StyledH3>
-            {user.volunteers.map((volunteer) =>
-                <StyledListDiv onClick={() => navigate(`/details/${volunteer.projectId}`)}
-                               key={volunteer.id}>{volunteer.projectName}</StyledListDiv>)}
-            <StyledTotalPWrapper>
-                <StyledSumP>Sum: {user.volunteers.length}</StyledSumP>
-            </StyledTotalPWrapper>
-            <FilterUserData user={user} filterArgument={"Donations"}/>
-            <FilterUserData user={user} filterArgument={"Volunteered"}/>
+            <Box sx={{minWidth: 120}}>
+                <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={filter}
+                        label="Filter"
+                        onChange={handleFilterChange}
+                    >
+                        <MenuItem value={"My Projects"}>My Projects</MenuItem>
+                        <MenuItem value={"My Donations"}>My Donations</MenuItem>
+                        <MenuItem value={"My Volunteers"}>My Volunteers</MenuItem>
+                    </Select>
+                </FormControl>
+            </Box>
+            <FilterUserData user={user} filterArgument={filter}/>
         </StyledBody>
     )
 }
@@ -82,12 +80,6 @@ const StyledH2 = styled.h2`
   margin-bottom: 6px;
 `;
 
-const StyledH3 = styled.h3`
-  padding-left: 0;
-  margin-bottom: 6px;
-  margin-top: 0;
-`;
-
 const StyledTextField = styled(TextField)`
   width: 100%;
   font-family: "Roboto", sans-serif;
@@ -99,33 +91,4 @@ const StyledButton = styled(Button)`
   height: 56px;
   color: #163E56;
   border-color: #163E56;
-`;
-
-const StyledListDiv = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: none;
-    background-color: #FFB34F;
-  border-radius: 4px;
-  padding: 5px;
-  margin: 0;
-  cursor: pointer;
-`;
-
-const StyledP = styled.p`
-  margin: 0;
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-`;
-
-const StyledSumP = styled.p`
-  margin: 0;
-  font-family: "Roboto", sans-serif;
-  font-weight: 600;
-`;
-
-const StyledTotalPWrapper = styled.div`
-  display: flex;
-  justify-content: right;
 `;

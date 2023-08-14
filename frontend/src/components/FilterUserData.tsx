@@ -1,7 +1,8 @@
 import {User} from "../models/models.tsx";
 import styled from "@emotion/styled";
-import {Button, TextField} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import {useFetch} from "../hooks/useFetch.tsx";
+import {useEffect} from "react";
 
 type Props = {
     user: User,
@@ -10,6 +11,14 @@ type Props = {
 export default function FilterUserData(props: Props) {
 
     const navigate = useNavigate();
+    const projects = useFetch(state => state.projects);
+    const fetchProjects = useFetch(state => state.fetchProjects);
+
+
+    useEffect(() => {
+        fetchProjects();
+    }, [fetchProjects]);
+
 
     const formatAmountToCurrency = (amount: string) => {
         return parseFloat(amount).toLocaleString("de-DE", {
@@ -20,24 +29,50 @@ export default function FilterUserData(props: Props) {
         })
     }
 
+    const totalDonations = (props.user.donations.reduce((sum, donation) => sum + parseFloat(donation.amount), 0)).toString();
+
     function filter(filter: string) {
-        if (filter === "Donations") {
+        if (filter === "My Donations") {
             return (
-                props.user.donations.map((donation) =>
-                    <StyledListDiv onClick={() => navigate(`/details/${donation.projectId}`)}
-                                   key={donation.id}>
-                        <StyledP>{donation.projectName}</StyledP>
-                        <StyledP>{formatAmountToCurrency(donation.amount)}</StyledP>
-                    </StyledListDiv>)
+                <>
+                    {props.user.donations.map((donation) =>
+                        <StyledListDiv onClick={() => navigate(`/details/${donation.projectId}`)}
+                                       key={donation.id}>
+                            <StyledP>{donation.projectName}</StyledP>
+                            <StyledP>{formatAmountToCurrency(donation.amount)}</StyledP>
+                        </StyledListDiv>)}
+                    <StyledTotalPWrapper>
+                        <StyledSumP>Sum: {formatAmountToCurrency(totalDonations)}</StyledSumP>
+                    </StyledTotalPWrapper>
+                </>
             )
-        } else if (filter === "Volunteered") {
+        } else if (filter === "My Volunteers") {
             return (
-                props.user.volunteers.map((volunteer) =>
-                    <StyledListDiv onClick={() => navigate(`/details/${volunteer.projectId}`)}
-                                   key={volunteer.id}>{volunteer.projectName}</StyledListDiv>)
+                <>
+                    {props.user.volunteers.map((volunteer) =>
+                        <StyledListDiv onClick={() => navigate(`/details/${volunteer.projectId}`)}
+                                       key={volunteer.id}>{volunteer.projectName}</StyledListDiv>)}
+                    <StyledTotalPWrapper>
+                        <StyledSumP>Sum: {props.user.volunteers.length}</StyledSumP>
+                    </StyledTotalPWrapper>
+                </>
+            )
+        } else if (filter === "My Projects") {
+            const userProjects = projects.filter(project => project.userId === props.user.id);
+
+            return (
+                <>
+                    {userProjects.map((project) =>
+                        <StyledListDiv onClick={() => navigate(`/details/${project.id}`)}
+                                       key={project.id}>{project.name}</StyledListDiv>)}
+                    <StyledTotalPWrapper>
+                        <StyledSumP>Sum: {userProjects.length}</StyledSumP>
+                    </StyledTotalPWrapper>
+                </>
             )
         }
     }
+
 
     return (
         <>
@@ -47,42 +82,10 @@ export default function FilterUserData(props: Props) {
     )
 }
 
-const StyledBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-bottom: 100px;
-  margin-top: 101px;
-  font-family: "Roboto", sans-serif;
-  background-color: #EBE7D8;
-  border-radius: 4px;
-  padding: 0 10px 10px 10px;
-`;
-
-const StyledH2 = styled.h2`
-  padding-left: 0;
-  margin-top: 10px;
-  margin-bottom: 6px;
-`;
-
 const StyledH3 = styled.h3`
   padding-left: 0;
   margin-bottom: 6px;
   margin-top: 0;
-`;
-
-const StyledTextField = styled(TextField)`
-  width: 100%;
-  font-family: "Roboto", sans-serif;
-  border-radius: 4px;
-`;
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  height: 56px;
-  color: #163E56;
-  border-color: #163E56;
 `;
 
 const StyledListDiv = styled.div`
