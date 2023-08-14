@@ -184,7 +184,6 @@ export default function AddEditProject() {
             target: {value},
         } = event;
         setSelectedDemands(
-            // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
     };
@@ -372,4 +371,3 @@ const StyledH3 = styled.h3`
   font-weight: 400;
   color: #163E56;
 `;
-
