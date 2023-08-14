@@ -26,7 +26,8 @@ public class ProjectCalculations {
                     project.location(),
                     project.donations(),
                     project.volunteers(),
-                    project.userId()
+                    project.userId(),
+                    project.image()
             );
         }
         return project;
@@ -48,7 +49,8 @@ public class ProjectCalculations {
                     project.location(),
                     project.donations(),
                     project.volunteers(),
-                    project.userId()
+                    project.userId(),
+                    project.image()
             );
         }
         return project;

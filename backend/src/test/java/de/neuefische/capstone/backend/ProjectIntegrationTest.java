@@ -2,6 +2,8 @@ package de.neuefische.capstone.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.neuefische.capstone.backend.models.*;
+import de.neuefische.capstone.backend.security.MongoUser;
+import de.neuefische.capstone.backend.security.MongoUserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -33,6 +35,9 @@ class ProjectIntegrationTest {
 
     @Autowired
     ObjectMapper objectMapper;
+
+    @Autowired
+    MongoUserRepository mongoRepository;
 
 
     @DirtiesContext
@@ -135,7 +140,8 @@ class ProjectIntegrationTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 "Turkey",
-                1000);
+                1000,
+                new Image("", "", ""));
 
         String projectJson = objectMapper.writeValueAsString(project);
 
@@ -177,7 +183,8 @@ class ProjectIntegrationTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 "Turkey",
-                0);
+                0,
+                new Image("", "", ""));
 
 
         projectService.addProject(projectNoIdNoProgress);
@@ -195,7 +202,8 @@ class ProjectIntegrationTest {
                 "Turkey",
                 new ArrayList<>(),
                 new ArrayList<>(),
-                userId);
+                userId,
+                new Image("", "", ""));
 
         String projectJson = objectMapper.writeValueAsString(projectToUpdate);
 
@@ -217,8 +225,7 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("category").value("PARTICIPATION"))
                 .andExpect(jsonPath("demands", containsInAnyOrder("DONATIONINKIND")))
                 .andExpect(jsonPath("progress").value(10))
-                .andExpect(jsonPath("location").value("Turkey")
-                );
+                .andExpect(jsonPath("location").value("Turkey"));
     }
 
     @DirtiesContext
@@ -236,7 +243,8 @@ class ProjectIntegrationTest {
                 "Turkey",
                 new ArrayList<>(),
                 new ArrayList<>(),
-                "userId123");
+                "userId123",
+                new Image("", "", ""));
 
         String projectJson = objectMapper.writeValueAsString(project);
 
@@ -262,7 +270,8 @@ class ProjectIntegrationTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 "Turkey",
-                1000);
+                1000,
+                new Image("", "", ""));
 
         String projectJson = objectMapper.writeValueAsString(project);
 
@@ -311,8 +320,10 @@ class ProjectIntegrationTest {
     }
 
     @DirtiesContext
+    @WithMockUser(username = "testUser")
     @Test
     void whenAddDonation_thenReturnProjectWithDonation() throws Exception {
+
         //Given
         ProjectCreation projectToAddDonation = new ProjectCreation(
                 "Earthquake Turkey",
@@ -320,9 +331,13 @@ class ProjectIntegrationTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 "Turkey",
-                1000);
+                1000,
+                new Image("", "", ""));
 
         String projectToAddDonationJson = objectMapper.writeValueAsString(projectToAddDonation);
+
+        MongoUser user = new MongoUser("userId123", "testUser", "testPassword", new ArrayList<>(), new ArrayList<>());
+        mongoRepository.save(user);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/projects")
@@ -365,11 +380,14 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("donations[0].id").exists())
                 .andExpect(jsonPath("donations[0].projectId").value(projectId))
                 .andExpect(jsonPath("donations[0].projectName").value("Earthquake Turkey"))
-                .andExpect(jsonPath("donations[0].donorName").value("anonymousUser"))
-                .andExpect(jsonPath("donations[0].amount").value(100));
+                .andExpect(jsonPath("donations[0].donorName").value("testUser"))
+                .andExpect(jsonPath("donations[0].amount").value(100))
+                .andExpect(jsonPath("donations[0].userId").value("userId123"));
     }
 
+
     @DirtiesContext
+    @WithMockUser(username = "testUser")
     @Test
     void whenAddVolunteer_thenReturnProjectWithVolunteer() throws Exception {
         //Given
@@ -379,9 +397,13 @@ class ProjectIntegrationTest {
                 Category.PARTICIPATION,
                 List.of(Demand.DONATIONINKIND, Demand.MONEYDONATION),
                 "Turkey",
-                1000);
+                1000,
+                new Image("", "", ""));
 
         String projectToAddVolunteerJson = objectMapper.writeValueAsString(projectToAddVolunteer);
+
+        MongoUser user = new MongoUser("userId123", "testUser", "testPassword", new ArrayList<>(), new ArrayList<>());
+        mongoRepository.save(user);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/projects")
@@ -423,6 +445,6 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("volunteers[0].id").exists())
                 .andExpect(jsonPath("volunteers[0].projectId").value(projectId))
                 .andExpect(jsonPath("volunteers[0].projectName").value("Earthquake Turkey"))
-                .andExpect(jsonPath("volunteers[0].volunteerName").value("anonymousUser"));
+                .andExpect(jsonPath("volunteers[0].volunteerName").value("testUser"));
     }
 }

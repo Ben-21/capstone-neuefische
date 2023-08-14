@@ -66,7 +66,8 @@ class ProjectServiceTest {
                 "Turkey",
                 new ArrayList<>(),
                 new ArrayList<>(),
-                "userId123");
+                "userId123",
+                new Image("", "", ""));
 
 
         //When
@@ -89,7 +90,8 @@ class ProjectServiceTest {
                 Category.PARTICIPATION,
                 listOfDemands,
                 "Turkey",
-                0));
+                0,
+                new Image("", "", "")));
 
 
         //Then
@@ -113,7 +115,8 @@ class ProjectServiceTest {
                 "Turkey",
                 new ArrayList<>(),
                 new ArrayList<>(),
-                "userId123")));
+                "userId123",
+                new Image("", "", ""))));
 
         //When
         when(projectRepo.findAll())
@@ -143,7 +146,8 @@ class ProjectServiceTest {
                 "Turkey",
                 new ArrayList<>(),
                 new ArrayList<>(),
-                "userId123");
+                "userId123",
+                new Image("", "", ""));
 
         //When
         when(projectRepo.findById(id))
@@ -171,7 +175,8 @@ class ProjectServiceTest {
                 "Turkey",
                 new ArrayList<>(),
                 new ArrayList<>(),
-                "userId123");
+                "userId123",
+                new Image("", "", ""));
 
         Project expectedProject = new Project(
                 "01A",
@@ -184,7 +189,8 @@ class ProjectServiceTest {
                 projectWithoutId.location(),
                 projectWithoutId.donations(),
                 projectWithoutId.volunteers(),
-                projectWithoutId.userId());
+                projectWithoutId.userId(),
+                projectWithoutId.image());
 
         //When
         when(projectRepo.save(expectedProject))
@@ -221,7 +227,8 @@ class ProjectServiceTest {
                 "Turkey",
                 new ArrayList<>(),
                 new ArrayList<>(),
-                "userId123");
+                "userId123",
+                new Image("", "", ""));
 
 
         //When
@@ -284,7 +291,8 @@ class ProjectServiceTest {
                 "Turkey",
                 new ArrayList<>(),
                 new ArrayList<>(),
-                "userId123");
+                "userId123",
+                new Image("", "", ""));
 
         DonationCreation donationToAdd = new DonationCreation(
                 repoProject.id(),
@@ -310,7 +318,8 @@ class ProjectServiceTest {
                 "Turkey",
                 List.of(finalDonation),
                 new ArrayList<>(),
-                "userId123");
+                "userId123",
+                new Image("", "", ""));
 
         Project projectWithProgress = new Project(
                 "01A",
@@ -323,7 +332,8 @@ class ProjectServiceTest {
                 "Turkey",
                 List.of(finalDonation),
                 new ArrayList<>(),
-                "userId123");
+                "userId123",
+                new Image("", "", ""));
 
 
         //When
@@ -371,7 +381,8 @@ class ProjectServiceTest {
                 "Turkey",
                 new ArrayList<>(),
                 new ArrayList<>(),
-                "userId123");
+                "userId123",
+                new Image("", "", ""));
 
         VolunteerCreation volunteerToAdd = new VolunteerCreation(
                 repoProject.id(),
@@ -397,7 +408,8 @@ class ProjectServiceTest {
                 "Turkey",
                 new ArrayList<>(),
                 List.of(finalVolunteer),
-                "userId123");
+                "userId123",
+                new Image("", "", ""));
 
         Project projectWithProgress = new Project(
                 "01A",
@@ -410,7 +422,8 @@ class ProjectServiceTest {
                 "Turkey",
                 new ArrayList<>(),
                 List.of(finalVolunteer),
-                "userId123");
+                "userId123",
+                new Image("", "", ""));
 
 
         //When

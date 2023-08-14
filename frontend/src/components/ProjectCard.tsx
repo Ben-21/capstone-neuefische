@@ -4,7 +4,6 @@ import {CardActionArea} from '@mui/material';
 import styled from "@emotion/styled";
 import {Project} from "../models/models.tsx";
 import {useLocation, useNavigate} from "react-router-dom";
-import seenotrettung from "../assets/seenotrettung.jpg"
 import {useEffect, useState} from "react";
 import {useFetch} from "../hooks/useFetch.tsx";
 import ProgressBar from "./ProgressBar.tsx";
@@ -38,16 +37,16 @@ export default function ProjectCard(props: Props) {
     return (
         <StyledCard onClick={() => navigate(`/details/${props.project.id}`)}>
             <CardActionArea>
-                <CardMedia
-                    component="img"
-                    height="140"
-                    image={seenotrettung}
-                    alt="seenotrettung"
-                />
+                {props.project.image.url &&
+                    <CardMedia sx={{objectFit: 'cover'}}
+                               component="img"
+                               height="140"
+                               image={props.project.image.url}
+                               alt="Project Image"
+                    />}
                 <StyledH1>
                     {props.project.name}
                 </StyledH1>
-                {page === "/" && <ProgressBarGalleryView project={props.project}/>}
                 {page === "details" &&
                     <>
                         <StyledDescription>
@@ -88,6 +87,7 @@ export default function ProjectCard(props: Props) {
                 <StyledDescription>
                     {props.project.location}
                 </StyledDescription>
+                {page === "/" && <ProgressBarGalleryView project={props.project}/>}
             </CardActionArea>
         </StyledCard>
     )
@@ -99,7 +99,7 @@ const StyledCard = styled(Card)`
   background-color: #EBE7D8;
   margin: 0;
   padding: 0;
-  border-radius: 5px;
+  border-radius: 4px;
 `;
 const StyledH1 = styled.h1`
   padding-left: 10px;
@@ -155,7 +155,7 @@ const StyledDemands = styled.div`
   border: none;
   width: 96px;
   height: 44px;
-  border-radius: 10px;
+  border-radius: 4px;
   background: var(--orange, #FFB34F);
   font-family: "Robot", sans-serif;
   font-weight: 500;

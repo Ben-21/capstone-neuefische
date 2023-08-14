@@ -47,7 +47,8 @@ public class ProjectService {
                 projectCreation.location(),
                 new ArrayList<>(),
                 new ArrayList<>(),
-                user.id()
+                user.id(),
+                projectCreation.image()
         );
         return projectRepo.insert(newProject);
     }
@@ -77,7 +78,8 @@ public class ProjectService {
                 projectNoId.location(),
                 projectNoId.donations(),
                 projectNoId.volunteers(),
-                projectNoId.userId());
+                projectNoId.userId(),
+                projectNoId.image());
 
 
         return projectRepo.save(updatedProject);
@@ -102,6 +104,9 @@ public class ProjectService {
                 user.id()
         );
 
+        user.donations().add(newDonation);
+        mongoUserService.updateUser(user);
+
         Project project = projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException("No project with Id " + projectId + " found"));
         project.donations().add(newDonation);
 
@@ -119,6 +124,9 @@ public class ProjectService {
                 user.username(),
                 user.id()
         );
+
+        user.volunteers().add(newVolunteer);
+        mongoUserService.updateUser(user);
 
         Project project = projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException("No project with Id" + projectId + "found"));
         project.volunteers().add(newVolunteer);

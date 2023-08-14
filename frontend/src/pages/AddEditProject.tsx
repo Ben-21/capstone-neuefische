@@ -1,10 +1,10 @@
 import {useFetch} from "../hooks/useFetch.tsx";
-import React, {useEffect, useState} from "react";
-import {Project, ProjectCreation} from "../models/models.tsx";
+import React, {ChangeEvent, useEffect, useState} from "react";
+import {ImageCreation, Project, ProjectCreation} from "../models/models.tsx";
 import {
     Box,
     Button, Chip,
-    FormControl,
+    FormControl, Input,
     InputLabel, MenuItem,
     OutlinedInput,
     Select, SelectChangeEvent,
@@ -16,6 +16,8 @@ import styled from "@emotion/styled";
 import {useNavigate, useParams} from "react-router-dom";
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
+import {toast} from "react-toastify";
+import CardMedia from "@mui/material/CardMedia";
 
 
 export default function AddEditProject() {
@@ -43,7 +45,13 @@ export default function AddEditProject() {
     ];
     const mapDemandsToUserFriendly = useFetch(state => state.mapDemandsToUserFriendly);
     const mapDemandsToEnum = useFetch(state => state.mapDemandsToEnum);
-
+    const [imageName, setImageName] = useState<string>("");
+    const [image, setImage] = useState<File>();
+    const addImage = useFetch(state => state.addImage);
+    const addedImage = useFetch(state => state.addedImage);
+    const [showImage, setShowImage] = useState<boolean>(false);
+    const resetAddedImage = useFetch(state => state.resetAddedImage);
+    const setAddedImage = useFetch(state => state.setAddedImage);
 
     useEffect(() => {
         if (id) {
@@ -64,10 +72,10 @@ export default function AddEditProject() {
                 goal: project.goal.toString(),
             })
             setSelectedDemands(mapDemandsToUserFriendly(project.demands));
-
-            setCategory(project.category)
+            setCategory(project.category);
+            setAddedImage(project.image);
         }
-    }, [id, project, mapDemandsToUserFriendly])
+    }, [setAddedImage, id, project, mapDemandsToUserFriendly])
 
 
     function initialiseAllFields() {
@@ -79,6 +87,8 @@ export default function AddEditProject() {
         })
         setSelectedDemands([]);
         setCategory("DONATION");
+        setShowImage(false);
+        resetAddedImage();
     }
 
     function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -92,6 +102,7 @@ export default function AddEditProject() {
                 demands: mapDemandsToEnum(selectedDemands),
                 location: formData.location,
                 goal: formData.goal,
+                image: addedImage,
             };
             postProject(requestBody)
                 .then(() => {
@@ -113,6 +124,7 @@ export default function AddEditProject() {
                 donations: project.donations,
                 volunteers: project.volunteers,
                 userId: project.userId,
+                image: addedImage,
             };
             putProject(requestBody)
                 .then(() => {
@@ -137,8 +149,10 @@ export default function AddEditProject() {
 
     function handleCancelButton() {
         if (project) {
+            initialiseAllFields();
             navigate(`/details/${project.id}`)
         } else {
+            initialiseAllFields();
             navigate("/")
         }
         window.scrollTo(0, 0);
@@ -170,11 +184,48 @@ export default function AddEditProject() {
             target: {value},
         } = event;
         setSelectedDemands(
-            // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
     };
 
+
+    function handleImageNameChange(event: ChangeEvent<HTMLInputElement>) {
+        setImageName(event.target.value);
+    }
+
+    function handleImageInput(event: ChangeEvent<HTMLInputElement>) {
+        if (event.target.files) {
+            setImage(event.target.files[0])
+        }
+    }
+
+    function handleImageSubmit() {
+        if (imageName.trim() === "") {
+            toast.error("Please enter a name for the image")
+            return
+        }
+        if (!image) {
+            toast.error("Please select an image")
+            return
+        }
+
+        const data = new FormData()
+        const ImageCreation: ImageCreation = {
+            name: imageName
+        }
+
+        if (image) {
+            data.append("file", image)
+        }
+
+        data.append("data", new Blob([JSON.stringify(ImageCreation)], {type: "application/json"}))
+        addImage(data)
+            .then(() => {
+                setImageName("")
+                setImage(undefined)
+                setShowImage(true)
+            });
+    }
 
     return (
         <StyledBody>
@@ -230,7 +281,25 @@ export default function AddEditProject() {
                         ))}
                     </Select>
                 </StyledChipFormControl>
-                <StyledButton type={"submit"} variant="outlined" endIcon={<SaveIcon/>}>SAVE</StyledButton>
+                <StyledTextField id="image-name" name="imageName" value={imageName}
+                                 onChange={handleImageNameChange}
+                                 label="Image Name"
+                                 variant="outlined"/>
+                <Input id="image-upload" type={"file"} onChange={handleImageInput}/>
+                <StyledButton type="button" onClick={handleImageSubmit} variant="outlined" endIcon={<SaveIcon/>}>IMAGE
+                    UPLOAD</StyledButton>
+                {showImage &&
+                    <>
+                        <StyledH3>IMAGE PREVIEW</StyledH3>
+                        <CardMedia
+                            sx={{borderRadius: '5px', objectFit: 'contain'}}
+                            component="img"
+                            height="140"
+                            src={addedImage.url}
+                            alt="Your Uploaded Image"
+                        />
+                    </>}
+                <StyledButton type={"submit"} variant="outlined" endIcon={<SaveIcon/>}>SAVE PROJECT</StyledButton>
                 <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined"
                               endIcon={<CancelIcon/>}>CANCEL</StyledButton>
             </StyledForm>
@@ -254,7 +323,7 @@ const StyledForm = styled.form`
   justify-content: center;
   gap: 1.1em;
   background-color: #EBE7D8;
-  border-radius: 5px;
+  border-radius: 4px;
   padding: 10px;
 `;
 
@@ -293,4 +362,12 @@ const StyledButton = styled(Button)`
 const StyledChipFormControl = styled(FormControl)`
   width: 100%;
   border-radius: 4px;
+`;
+
+const StyledH3 = styled.h3`
+  padding: 0;
+  margin: 0;
+  font-family: "Robot", sans-serif;
+  font-weight: 400;
+  color: #163E56;
 `;

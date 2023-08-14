@@ -10,6 +10,7 @@ export type Project = {
     donations: Donation[];
     volunteers: Volunteer[];
     userId: string;
+    image: Image;
 }
 
 export type ProjectCreation = {
@@ -19,6 +20,7 @@ export type ProjectCreation = {
     demands: Demand[];
     location: string;
     goal: string;
+    image: Image;
 }
 
 export type ProjectNoId = {
@@ -32,6 +34,7 @@ export type ProjectNoId = {
     donations: Donation[];
     volunteers: Volunteer[];
     userId: string;
+    image: Image;
 }
 
 export type User = {
@@ -41,8 +44,15 @@ export type User = {
     volunteers: Volunteer[];
 }
 
+export type Image = {
+    id: string;
+    name: string;
+    url: string;
+}
+
 export type Demand = "MONEYDONATION" | "DONATIONINKIND" | "FOODDONATION" | "DRUGDONATION";
 export type Donation = {id: string, projectId: string, projectName: string, donorName: string, amount: string, userId: string};
 export type DonationCreation = {projectId: string, projectName: string, amount: string};
 export type Volunteer = {id: string, projectId: string, projectName: string, volunteerName: string, userId: string};
 export type VolunteerCreation = {projectId: string, projectName: string};
+export type ImageCreation = {name: string};
