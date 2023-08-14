@@ -31,7 +31,7 @@ public class SecurityConfig {
                         httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
                 .authorizeHttpRequests(httpRequests ->
                         httpRequests
-                                .requestMatchers(HttpMethod.POST, "/").permitAll()
+                                .requestMatchers("/").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/projects").permitAll()
                                 .requestMatchers("/api/projects").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/api/projects/**").permitAll()
