@@ -151,6 +151,8 @@ export const useFetch = create<State>((set, get) => ({
                 set({page: "register"})
             } else if ((path.split("/")[1]) === "profile") {
                 set({page: "profile"})
+            } else if ((path.split("/")[1]) === "filter") {
+                set({page: "filter"})
             } else {
                 set({page: path})
             }
@@ -201,7 +203,7 @@ export const useFetch = create<State>((set, get) => ({
 
         postDonation: (projectId: string, requestBody: DonationCreation) => {
             const {fetchProjects} = get();
-           return axios.post(`/api/projects/donate/${projectId}`, requestBody)
+            return axios.post(`/api/projects/donate/${projectId}`, requestBody)
                 .then(fetchProjects)
                 .then(() => toast.success("Donation successfully added"))
                 .catch((error) => {
@@ -294,18 +296,18 @@ export const useFetch = create<State>((set, get) => ({
                 });
         },
 
-    setAddedImage: (image: Image) => {
+        setAddedImage: (image: Image) => {
             set({addedImage: image})
-    },
+        },
 
-    resetAddedImage: () => {
-        const resettedImage: Image = {
-            id: "",
-            name: "",
-            url: ""
+        resetAddedImage: () => {
+            const resettedImage: Image = {
+                id: "",
+                name: "",
+                url: ""
+            }
+            set({addedImage: resettedImage})
         }
-        set({addedImage: resettedImage})
-    }
 
     }))
 ;
