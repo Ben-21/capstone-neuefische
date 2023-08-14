@@ -87,7 +87,7 @@ export default function ProjectCard(props: Props) {
                 <StyledDescription>
                     {props.project.location}
                 </StyledDescription>
-                {page === "/" && <ProgressBarGalleryView project={props.project}/>}
+                {(page === "/" || page === "filter") && <ProgressBarGalleryView project={props.project}/>}
             </CardActionArea>
         </StyledCard>
     )
