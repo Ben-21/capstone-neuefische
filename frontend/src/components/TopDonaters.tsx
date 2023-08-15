@@ -14,7 +14,6 @@ export default function TopDonaters(props: Props) {
 
     function stringAvatar(name: string) {
         const nameParts = name.split(' ');
-        console.log(nameParts)
         return {
             sx: {
                 bgcolor: stringToColor(name),
