@@ -8,6 +8,7 @@ import {useEffect, useState} from "react";
 import {useFetch} from "../hooks/useFetch.tsx";
 import ProgressBar from "./ProgressBar.tsx";
 import ProgressBarGalleryView from "./ProgressBarGalleryView.tsx";
+import TopDonaters from "./TopDonaters.tsx";
 
 
 type Props = {
@@ -81,6 +82,7 @@ export default function ProjectCard(props: Props) {
                                 key={demand}>{demand}</StyledDemands>)}
                         </StyledDemandsWrapper>
                     </>}
+                        <TopDonaters project={props.project}/>
                 <StyledH2>
                     Location:
                 </StyledH2>
