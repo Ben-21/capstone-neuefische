@@ -122,7 +122,7 @@ export default function AddEditProject() {
                 goal: formData.goal,
                 location: formData.location,
                 donations: project.donations,
-                volunteers: project.volunteers,
+                participations: project.participations,
                 userId: project.userId,
                 image: addedImage,
             };

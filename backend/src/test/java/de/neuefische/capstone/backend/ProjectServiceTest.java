@@ -188,7 +188,7 @@ class ProjectServiceTest {
                 projectWithoutId.goal(),
                 projectWithoutId.location(),
                 projectWithoutId.donations(),
-                projectWithoutId.volunteers(),
+                projectWithoutId.participations(),
                 projectWithoutId.userId(),
                 projectWithoutId.image());
 
@@ -384,12 +384,12 @@ class ProjectServiceTest {
                 "userId123",
                 new Image("", "", ""));
 
-        VolunteerCreation volunteerToAdd = new VolunteerCreation(
+        ParticipationCreation volunteerToAdd = new ParticipationCreation(
                 repoProject.id(),
                 repoProject.name()
         );
 
-        Volunteer finalVolunteer = new Volunteer(
+        Participation finalVolunteer = new Participation(
                 "vol-02A",
                 repoProject.id(),
                 repoProject.name(),

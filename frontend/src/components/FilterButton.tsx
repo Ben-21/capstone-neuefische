@@ -23,6 +23,7 @@ export default function FilterButton() {
             setAnchorEl(null)
         } else {
             navigate(`/filter?filter=${filter}`);
+            window.scrollTo(0, 0);
             setAnchorEl(null);
         }
     };

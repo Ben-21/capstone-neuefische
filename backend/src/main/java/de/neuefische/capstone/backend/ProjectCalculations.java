@@ -25,7 +25,7 @@ public class ProjectCalculations {
                     project.goal(),
                     project.location(),
                     project.donations(),
-                    project.volunteers(),
+                    project.participations(),
                     project.userId(),
                     project.image()
             );
@@ -35,7 +35,7 @@ public class ProjectCalculations {
 
     public Project calculateProgressForVolunteers(Project project) {
         if(project.category() == Category.PARTICIPATION) {
-            int newVolunteers = project.volunteers().size();
+            int newVolunteers = project.participations().size();
             int newProgress = (int) ((double) newVolunteers / project.goal() * 100);
 
             return new Project(
@@ -48,7 +48,7 @@ public class ProjectCalculations {
                     project.goal(),
                     project.location(),
                     project.donations(),
-                    project.volunteers(),
+                    project.participations(),
                     project.userId(),
                     project.image()
             );

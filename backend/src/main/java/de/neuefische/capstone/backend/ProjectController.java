@@ -60,7 +60,7 @@ public class ProjectController {
     }
 
     @PostMapping("/volunteer/{id}")
-    public Project addVolunteer(@PathVariable String id, @RequestBody VolunteerCreation volunteerCreation) {
+    public Project addVolunteer(@PathVariable String id, @RequestBody ParticipationCreation volunteerCreation) {
         return projectService.addVolunteer(id, volunteerCreation);
     }
 }

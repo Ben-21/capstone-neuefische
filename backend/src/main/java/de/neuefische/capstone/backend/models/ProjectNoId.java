@@ -11,7 +11,7 @@ public record ProjectNoId(
         int goal,
         String location,
         List<Donation> donations,
-        List<Volunteer> volunteers,
+        List<Participation> participations,
         String userId,
         Image image
 ) {

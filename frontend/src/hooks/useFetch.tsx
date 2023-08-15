@@ -6,7 +6,7 @@ import {
     Project,
     ProjectCreation,
     User,
-    VolunteerCreation
+    ParticipationCreation
 } from "../models/models.tsx";
 import {create} from "zustand";
 import axios from "axios";
@@ -27,7 +27,7 @@ type State = {
     mapDemandsToUserFriendly: (demands: Demand[]) => string[],
     mapDemandsToEnum: (string: string[]) => Demand[],
     postDonation: (projectId: string, donationCreation: DonationCreation) => Promise<string | number | void>,
-    postVolunteer: (projectId: string, volunteerCreation: VolunteerCreation) => Promise<string | number | void>,
+    postVolunteer: (projectId: string, volunteerCreation: ParticipationCreation) => Promise<string | number | void>,
     userName: string,
     login: (username: string, password: string, navigate: NavigateFunction) => void,
     me: () => void,
@@ -58,7 +58,7 @@ export const useFetch = create<State>((set, get) => ({
                 id: "",
                 username: "",
                 donations: [],
-                volunteers: []
+                participations: []
             },
         addedImage: {
             id: "",
@@ -223,7 +223,7 @@ export const useFetch = create<State>((set, get) => ({
                 })
         },
 
-        postVolunteer: (projectId: string, requestBody: VolunteerCreation) => {
+        postVolunteer: (projectId: string, requestBody: ParticipationCreation) => {
             const {fetchProjects} = get();
             return axios.post(`/api/projects/volunteer/${projectId}`, requestBody)
                 .then(fetchProjects)

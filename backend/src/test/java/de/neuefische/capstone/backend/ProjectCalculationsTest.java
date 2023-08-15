@@ -16,7 +16,7 @@ class ProjectCalculationsTest {
     @Test
     void returnProjectWithProgress_whenCalculateProgressForVolunteer() {
         //Given
-        Volunteer newVolunteer = new Volunteer(
+        Participation newVolunteer = new Participation(
                 "01A",
                 "01B",
                 "ProjectName",
@@ -64,7 +64,7 @@ class ProjectCalculationsTest {
     @Test
     void returnProject_whenCategoryWrong() {
         //Given
-        Volunteer newVolunteer = new Volunteer(
+        Participation newVolunteer = new Participation(
                 "01A",
                 "01B",
                 "ProjectName",

@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import CancelIcon from '@mui/icons-material/Cancel';
 import {toast} from "react-toastify";
-import {DonationCreation, Project, VolunteerCreation} from "../models/models.tsx";
+import {DonationCreation, Project, ParticipationCreation} from "../models/models.tsx";
 import ProjectCard from "../components/ProjectCard.tsx";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
@@ -66,7 +66,7 @@ export default function AddDonationOrVolunteer() {
         }
 
         if (project && page === "volunteer") {
-            const volunteer: VolunteerCreation = {
+            const volunteer: ParticipationCreation = {
                 projectId: project.id,
                 projectName: project.name,
             }

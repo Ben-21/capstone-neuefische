@@ -1,6 +1,6 @@
 package de.neuefische.capstone.backend.models;
 
-public record Volunteer(
+public record Participation(
         String id,
         String projectId,
         String projectName,

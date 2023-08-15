@@ -414,7 +414,7 @@ class ProjectIntegrationTest {
 
         String projectId = projectService.getAllProjects().get(0).id();
 
-        VolunteerCreation volunteerToAdd = new VolunteerCreation(
+        ParticipationCreation volunteerToAdd = new ParticipationCreation(
                 projectId,
                 "Earthquake Turkey"
         );

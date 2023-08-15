@@ -49,11 +49,11 @@ export default function FilterUserData(props: Props) {
         } else if (filter === "My Volunteers") {
             return (
                 <>
-                    {props.user.volunteers.map((volunteer) =>
+                    {props.user.participations.map((volunteer) =>
                         <StyledListDiv onClick={() => navigate(`/details/${volunteer.projectId}`)}
                                        key={volunteer.id}>{volunteer.projectName}</StyledListDiv>)}
                     <StyledTotalPWrapper>
-                        <StyledSumP>Sum: {props.user.volunteers.length}</StyledSumP>
+                        <StyledSumP>Sum: {props.user.participations.length}</StyledSumP>
                     </StyledTotalPWrapper>
                 </>
             )

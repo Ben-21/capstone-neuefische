@@ -66,7 +66,7 @@ export default function ProjectCard(props: Props) {
                         {props.project.category === "PARTICIPATION" &&
                             <>
                                 <StyledDonationVolunteer>
-                                    {props.project.volunteers.length} Volunteers
+                                    {props.project.participations.length} Volunteers
                                 </StyledDonationVolunteer>
                                 <StyledSubDonationVolunteer>
                                     of {props.project.goal} needed
