@@ -6,7 +6,7 @@ import {
     Project,
     ProjectCreation,
     User,
-    VolunteerCreation
+    ParticipationCreation
 } from "../models/models.tsx";
 import {create} from "zustand";
 import axios from "axios";
@@ -27,7 +27,7 @@ type State = {
     mapDemandsToUserFriendly: (demands: Demand[]) => string[],
     mapDemandsToEnum: (string: string[]) => Demand[],
     postDonation: (projectId: string, donationCreation: DonationCreation) => Promise<string | number | void>,
-    postVolunteer: (projectId: string, volunteerCreation: VolunteerCreation) => Promise<string | number | void>,
+    postParticipation: (projectId: string, participationCreation: ParticipationCreation) => Promise<string | number | void>,
     userName: string,
     login: (username: string, password: string, navigate: NavigateFunction) => void,
     me: () => void,
@@ -43,7 +43,7 @@ type State = {
     addImage: (data: FormData) => Promise<Image | void>,
     addedImage: Image,
     setAddedImage: (image: Image) => void,
-    resetAddedImage: () => void
+    resetAddedImage: () => void,
 
 };
 
@@ -58,7 +58,7 @@ export const useFetch = create<State>((set, get) => ({
                 id: "",
                 username: "",
                 donations: [],
-                volunteers: []
+                participations: []
             },
         addedImage: {
             id: "",
@@ -135,6 +135,9 @@ export const useFetch = create<State>((set, get) => ({
         },
 
         checkPage: (path) => {
+            const queryParams = new URLSearchParams(window.location.search);
+            const filterQueryParam = queryParams.get('filter');
+
             if ((path.split("/")[1]) === "details") {
                 set({page: "details"})
             } else if ((path.split("/")[1]) === "edit") {
@@ -143,14 +146,24 @@ export const useFetch = create<State>((set, get) => ({
                 set({page: "add"})
             } else if ((path.split("/")[1]) === "donate") {
                 set({page: "donate"})
-            } else if ((path.split("/")[1]) === "volunteer") {
-                set({page: "volunteer"})
+            } else if ((path.split("/")[1]) === "participate") {
+                set({page: "participate"})
             } else if ((path.split("/")[1]) === "login") {
                 set({page: "login"})
             } else if ((path.split("/")[1]) === "register") {
                 set({page: "register"})
             } else if ((path.split("/")[1]) === "profile") {
                 set({page: "profile"})
+            } else if ((path.split("/")[1]) === "filter") {
+                if (filterQueryParam === "all") {
+                    set({page: "filter-all"})
+                } else if (filterQueryParam === "DONATION") {
+                    set({page: "filter-donation"})
+                } else if (filterQueryParam === "PARTICIPATION") {
+                    set({page: "filter-participation"})
+                } else {
+                    set({page: "filter"})
+                }
             } else {
                 set({page: path})
             }
@@ -201,7 +214,7 @@ export const useFetch = create<State>((set, get) => ({
 
         postDonation: (projectId: string, requestBody: DonationCreation) => {
             const {fetchProjects} = get();
-           return axios.post(`/api/projects/donate/${projectId}`, requestBody)
+            return axios.post(`/api/projects/donate/${projectId}`, requestBody)
                 .then(fetchProjects)
                 .then(() => toast.success("Donation successfully added"))
                 .catch((error) => {
@@ -210,11 +223,11 @@ export const useFetch = create<State>((set, get) => ({
                 })
         },
 
-        postVolunteer: (projectId: string, requestBody: VolunteerCreation) => {
+        postParticipation: (projectId: string, requestBody: ParticipationCreation) => {
             const {fetchProjects} = get();
-            return axios.post(`/api/projects/volunteer/${projectId}`, requestBody)
+            return axios.post(`/api/projects/participate/${projectId}`, requestBody)
                 .then(fetchProjects)
-                .then(() => toast.success("Volunteer successfully added"))
+                .then(() => toast.success("Participation successfully added"))
                 .catch((error) => {
                     toast.error("Something went wrong");
                     console.error(error);
@@ -267,7 +280,11 @@ export const useFetch = create<State>((set, get) => ({
                     .then(() => toast.success("Registration successful"))
                     .catch((error) => {
                         console.error(error);
+                        if(error.response.data.errors){
                         toast.error(error.response.data.errors[0].defaultMessage);
+                        } else {
+                        toast.error(error.response.data.message);
+                        }
                     })
 
             } else {
@@ -276,6 +293,7 @@ export const useFetch = create<State>((set, get) => ({
                 setRepeatedPassword("");
             }
         },
+
         addImage: (data: FormData) => {
             set({addedImage: {id: "", name: "", url: ""}})
             return axios
@@ -294,18 +312,18 @@ export const useFetch = create<State>((set, get) => ({
                 });
         },
 
-    setAddedImage: (image: Image) => {
+        setAddedImage: (image: Image) => {
             set({addedImage: image})
-    },
+        },
 
-    resetAddedImage: () => {
-        const resettedImage: Image = {
-            id: "",
-            name: "",
-            url: ""
+        resetAddedImage: () => {
+            const resettedImage: Image = {
+                id: "",
+                name: "",
+                url: ""
+            }
+            set({addedImage: resettedImage})
         }
-        set({addedImage: resettedImage})
-    }
 
     }))
 ;

@@ -1,7 +1,7 @@
 package de.neuefische.capstone.backend.security;
 
 import de.neuefische.capstone.backend.models.Donation;
-import de.neuefische.capstone.backend.models.Volunteer;
+import de.neuefische.capstone.backend.models.Participation;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,6 +14,6 @@ public record MongoUser(
         String username,
         String password,
         List<Donation> donations,
-        List<Volunteer> volunteers
+        List<Participation> participations
 ) {
 }

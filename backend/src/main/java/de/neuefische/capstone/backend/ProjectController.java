@@ -59,8 +59,8 @@ public class ProjectController {
         return projectService.addDonation(id, donationCreation);
     }
 
-    @PostMapping("/volunteer/{id}")
-    public Project addVolunteer(@PathVariable String id, @RequestBody VolunteerCreation volunteerCreation) {
-        return projectService.addVolunteer(id, volunteerCreation);
+    @PostMapping("/participate/{id}")
+    public Project addParticipation(@PathVariable String id, @RequestBody ParticipationCreation participationCreation) {
+        return projectService.addParticipation(id, participationCreation);
     }
 }

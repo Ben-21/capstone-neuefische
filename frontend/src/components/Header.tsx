@@ -29,14 +29,18 @@ export default function Header() {
             </StyledSvgHandsRight>
         </StyledHeader>
             {page !== "/" && <StyledSubHeader>
-            {page === "details" && <StyledH3>Project Detail</StyledH3>}
-            {page === "edit" && <StyledH3>Edit Project</StyledH3>}
-            {page === "add" && <StyledH3>Add Project</StyledH3>}
-            {page === "donate" && <StyledH3>Donate</StyledH3>}
-            {page === "volunteer" && <StyledH3>Volunteer</StyledH3>}
-            {page === "login" && <StyledH3>Login</StyledH3>}
-            {page === "register" && <StyledH3>Registration</StyledH3>}
-            {page === "profile" && <StyledH3>Profile</StyledH3>}
+            {page === "details" && <StyledP>Project Detail</StyledP>}
+            {page === "edit" && <StyledP>Edit Project</StyledP>}
+            {page === "add" && <StyledP>Add Project</StyledP>}
+            {page === "donate" && <StyledP>Donate</StyledP>}
+            {page === "participate" && <StyledP>Participate</StyledP>}
+            {page === "login" && <StyledP>Login</StyledP>}
+            {page === "register" && <StyledP>Registration</StyledP>}
+            {page === "profile" && <StyledP>Profile</StyledP>}
+            {page === "filter" && <StyledP>Filter</StyledP>}
+            {page === "filter-all" && <StyledP>All Projects</StyledP>}
+            {page === "filter-donation" && <StyledP>Donation-Projects</StyledP>}
+            {page === "filter-participation" && <StyledP>Participation-Projects</StyledP>}
         </StyledSubHeader>}
             </>
     )
@@ -56,8 +60,9 @@ const StyledH1 = styled.h1`
   font-weight: 700;
   `;
 
-const StyledH3 = styled.h3`
+const StyledP = styled.p`
   margin: 0;
+  padding: 0;
   position: absolute;
   transform: translateX(-50%) translateY(-50%);
   top: 50%;
@@ -68,6 +73,7 @@ const StyledH3 = styled.h3`
   font-size: 0.9em;
   font-style: normal;
   font-weight: 500;
+  white-space: nowrap;
   `;
 
 const StyledHeader = styled.div`
@@ -85,7 +91,7 @@ const StyledHeader = styled.div`
 const StyledSubHeader = styled.div`
   position: fixed;
   z-index: 1;
-  width: 172px;
+  width: 200px;
   height: 21px;
   top: 60px;
   transform: translateX(-50%);

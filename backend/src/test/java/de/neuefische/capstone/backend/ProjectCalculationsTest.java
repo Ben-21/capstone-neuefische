@@ -14,13 +14,13 @@ class ProjectCalculationsTest {
     ProjectCalculations projectCalculations = new ProjectCalculations();
 
     @Test
-    void returnProjectWithProgress_whenCalculateProgressForVolunteer() {
+    void returnProjectWithProgress_whenCalculateProgressForParticipation() {
         //Given
-        Volunteer newVolunteer = new Volunteer(
+        Participation newParticipation = new Participation(
                 "01A",
                 "01B",
                 "ProjectName",
-                "VolunteerName",
+                "ParticipationName",
                 "userId123"
         );
 
@@ -34,7 +34,7 @@ class ProjectCalculationsTest {
                 100,
                 "test",
                 new ArrayList<>(),
-                List.of(newVolunteer),
+                List.of(newParticipation),
                 "userId123",
                 new Image("", "", "")
         );
@@ -49,13 +49,13 @@ class ProjectCalculationsTest {
                 100,
                 "test",
                 new ArrayList<>(),
-                List.of(newVolunteer),
+                List.of(newParticipation),
                 "userId123",
                 new Image("", "", "")
         );
 
         //When
-        Project actualProject = projectCalculations.calculateProgressForVolunteers(project);
+        Project actualProject = projectCalculations.calculateProgressForParticipations(project);
 
         //Then
         assertEquals(expectedProject, actualProject);
@@ -64,11 +64,11 @@ class ProjectCalculationsTest {
     @Test
     void returnProject_whenCategoryWrong() {
         //Given
-        Volunteer newVolunteer = new Volunteer(
+        Participation newParticipation = new Participation(
                 "01A",
                 "01B",
                 "ProjectName",
-                "VolunteerName",
+                "ParticipationName",
                 "userId123"
         );
 
@@ -82,14 +82,14 @@ class ProjectCalculationsTest {
                 100,
                 "test",
                 new ArrayList<>(),
-                List.of(newVolunteer),
+                List.of(newParticipation),
                 "userId123",
                 new Image("", "", "")
         );
 
 
         //When
-        Project actualProject = projectCalculations.calculateProgressForVolunteers(project);
+        Project actualProject = projectCalculations.calculateProgressForParticipations(project);
 
         //Then
         assertEquals(project, actualProject);

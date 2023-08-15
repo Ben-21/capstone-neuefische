@@ -77,7 +77,7 @@ public class ProjectService {
                 projectNoId.goal(),
                 projectNoId.location(),
                 projectNoId.donations(),
-                projectNoId.volunteers(),
+                projectNoId.participations(),
                 projectNoId.userId(),
                 projectNoId.image());
 
@@ -113,24 +113,24 @@ public class ProjectService {
         return projectRepo.save(projectCalculations.calculateProgressForDonations(project));
     }
 
-    public Project addVolunteer(String projectId, VolunteerCreation volunteerCreation) {
+    public Project addParticipation(String projectId, ParticipationCreation participationCreation) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         MongoUserWithoutPassword user = mongoUserService.findByUsername(username);
 
-        Volunteer newVolunteer = new Volunteer(
+        Participation newParticipation = new Participation(
                 idService.createRandomId(),
-                volunteerCreation.projectId(),
-                volunteerCreation.projectName(),
+                participationCreation.projectId(),
+                participationCreation.projectName(),
                 user.username(),
                 user.id()
         );
 
-        user.volunteers().add(newVolunteer);
+        user.participations().add(newParticipation);
         mongoUserService.updateUser(user);
 
         Project project = projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException("No project with Id" + projectId + "found"));
-        project.volunteers().add(newVolunteer);
+        project.participations().add(newParticipation);
 
-        return projectRepo.save(projectCalculations.calculateProgressForVolunteers(project));
+        return projectRepo.save(projectCalculations.calculateProgressForParticipations(project));
     }
 }

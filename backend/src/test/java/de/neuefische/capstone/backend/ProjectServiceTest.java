@@ -188,7 +188,7 @@ class ProjectServiceTest {
                 projectWithoutId.goal(),
                 projectWithoutId.location(),
                 projectWithoutId.donations(),
-                projectWithoutId.volunteers(),
+                projectWithoutId.participations(),
                 projectWithoutId.userId(),
                 projectWithoutId.image());
 
@@ -366,7 +366,7 @@ class ProjectServiceTest {
     }
 
     @Test
-    void returnProject_whenAddVolunteer() {
+    void returnProject_whenAddParticipation() {
         //Given
         String projectId = "01A";
 
@@ -384,12 +384,12 @@ class ProjectServiceTest {
                 "userId123",
                 new Image("", "", ""));
 
-        VolunteerCreation volunteerToAdd = new VolunteerCreation(
+        ParticipationCreation participationToAdd = new ParticipationCreation(
                 repoProject.id(),
                 repoProject.name()
         );
 
-        Volunteer finalVolunteer = new Volunteer(
+        Participation finalParticipation = new Participation(
                 "vol-02A",
                 repoProject.id(),
                 repoProject.name(),
@@ -407,7 +407,7 @@ class ProjectServiceTest {
                 100,
                 "Turkey",
                 new ArrayList<>(),
-                List.of(finalVolunteer),
+                List.of(finalParticipation),
                 "userId123",
                 new Image("", "", ""));
 
@@ -421,7 +421,7 @@ class ProjectServiceTest {
                 100,
                 "Turkey",
                 new ArrayList<>(),
-                List.of(finalVolunteer),
+                List.of(finalParticipation),
                 "userId123",
                 new Image("", "", ""));
 
@@ -429,7 +429,7 @@ class ProjectServiceTest {
         //When
         when(projectRepo.findById(projectId))
                 .thenReturn(Optional.of(repoProject));
-        when(projectCalculations.calculateProgressForVolunteers(projectToSave))
+        when(projectCalculations.calculateProgressForParticipations(projectToSave))
                 .thenReturn(projectWithProgress);
         when(projectRepo.save(projectWithProgress))
                 .thenReturn(projectWithProgress);
@@ -443,12 +443,12 @@ class ProjectServiceTest {
         when(mongoUserService.findByUsername("test"))
                 .thenReturn(new MongoUserWithoutPassword("userId123", "test", new ArrayList<>(), new ArrayList<>()));
 
-        Project actualProject = projectService.addVolunteer(projectId, volunteerToAdd);
+        Project actualProject = projectService.addParticipation(projectId, participationToAdd);
 
 
         //Then
         verify(projectRepo).findById(projectId);
-        verify(projectCalculations).calculateProgressForVolunteers(projectToSave);
+        verify(projectCalculations).calculateProgressForParticipations(projectToSave);
         verify(projectRepo).save(projectWithProgress);
         verify(idService).createRandomId();
         assertEquals(projectWithProgress, actualProject);

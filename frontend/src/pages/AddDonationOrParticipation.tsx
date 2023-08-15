@@ -5,13 +5,13 @@ import styled from "@emotion/styled";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import CancelIcon from '@mui/icons-material/Cancel';
 import {toast} from "react-toastify";
-import {DonationCreation, Project, VolunteerCreation} from "../models/models.tsx";
+import {DonationCreation, Project, ParticipationCreation} from "../models/models.tsx";
 import ProjectCard from "../components/ProjectCard.tsx";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 
 
-export default function AddDonationOrVolunteer() {
+export default function AddDonationOrParticipation() {
 
     const getProjectById = useFetch(state => state.getProjectById);
     const [project, setProject] = useState<Project | undefined>(undefined);
@@ -22,7 +22,7 @@ export default function AddDonationOrVolunteer() {
     const checkPage = useFetch(state => state.checkPage);
     const [page, setPAge] = useState("");
     const postDonation = useFetch(state => state.postDonation);
-    const postVolunteer = useFetch(state => state.postVolunteer);
+    const postParticipation = useFetch(state => state.postParticipation);
 
 
     useEffect(() => {
@@ -65,12 +65,12 @@ export default function AddDonationOrVolunteer() {
                 });
         }
 
-        if (project && page === "volunteer") {
-            const volunteer: VolunteerCreation = {
+        if (project && page === "participate") {
+            const participation: ParticipationCreation = {
                 projectId: project.id,
                 projectName: project.name,
             }
-            postVolunteer(project.id, volunteer)
+            postParticipation(project.id, participation)
                 .then(() => {
                     navigate(`/details/${project.id}`);
                 });
@@ -103,9 +103,9 @@ export default function AddDonationOrVolunteer() {
                                      variant="outlined"/>}
                 {page === "donate" &&
                     <StyledButton type={"submit"} variant="outlined" endIcon={<AttachMoneyIcon/>}>DONATE</StyledButton>}
-                {page === "volunteer" &&
+                {page === "participate" &&
                     <StyledButton type={"submit"} variant="outlined"
-                                  endIcon={<VolunteerActivismIcon/>}>VOLUNTEER</StyledButton>}
+                                  endIcon={<VolunteerActivismIcon/>}>PARTICIPATE</StyledButton>}
                 <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined"
                               endIcon={<CancelIcon/>}>CANCEL</StyledButton>
             </StyledForm>
