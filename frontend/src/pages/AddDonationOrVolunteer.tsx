@@ -105,7 +105,7 @@ export default function AddDonationOrVolunteer() {
                     <StyledButton type={"submit"} variant="outlined" endIcon={<AttachMoneyIcon/>}>DONATE</StyledButton>}
                 {page === "volunteer" &&
                     <StyledButton type={"submit"} variant="outlined"
-                                  endIcon={<VolunteerActivismIcon/>}>VOLUNTEER</StyledButton>}
+                                  endIcon={<VolunteerActivismIcon/>}>PARTICIPATE</StyledButton>}
                 <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined"
                               endIcon={<CancelIcon/>}>CANCEL</StyledButton>
             </StyledForm>

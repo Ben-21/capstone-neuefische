@@ -50,7 +50,7 @@ export default function FilterButton() {
             >
                 <MenuItem onClick={() => handleClose("all")}>All Projects</MenuItem>
                 <MenuItem onClick={() => handleClose("DONATION")}>Donation Projects</MenuItem>
-                <MenuItem onClick={() => handleClose("VOLUNTEER")}>Volunteer Projects</MenuItem>
+                <MenuItem onClick={() => handleClose("PARTICIPATION")}>Participation Projects</MenuItem>
             </StyledMenu>
         </>
     )
