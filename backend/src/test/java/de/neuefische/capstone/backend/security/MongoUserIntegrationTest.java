@@ -39,7 +39,7 @@ class MongoUserIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("username").value("anonymousUser"))
                 .andExpect(MockMvcResultMatchers.jsonPath("id").value("unknown"))
                 .andExpect(MockMvcResultMatchers.jsonPath("donations").isEmpty())
-                .andExpect(MockMvcResultMatchers.jsonPath("volunteers").isEmpty());
+                .andExpect(MockMvcResultMatchers.jsonPath("participations").isEmpty());
     }
 
     @Test

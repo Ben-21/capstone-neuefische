@@ -53,6 +53,6 @@ export type Image = {
 export type Demand = "MONEYDONATION" | "DONATIONINKIND" | "FOODDONATION" | "DRUGDONATION";
 export type Donation = {id: string, projectId: string, projectName: string, donorName: string, amount: string, userId: string};
 export type DonationCreation = {projectId: string, projectName: string, amount: string};
-export type Participation = {id: string, projectId: string, projectName: string, volunteerName: string, userId: string};
+export type Participation = {id: string, projectId: string, projectName: string, participationName: string, userId: string};
 export type ParticipationCreation = {projectId: string, projectName: string};
 export type ImageCreation = {name: string};

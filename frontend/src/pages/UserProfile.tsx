@@ -54,7 +54,7 @@ export default function UserProfile() {
                     >
                         <MenuItem value={"My Projects"}>My Projects</MenuItem>
                         <MenuItem value={"My Donations"}>My Donations</MenuItem>
-                        <MenuItem value={"My Volunteers"}>My Volunteers</MenuItem>
+                        <MenuItem value={"My Participations"}>My Participations</MenuItem>
                     </Select>
                 </FormControl>
             </Box>

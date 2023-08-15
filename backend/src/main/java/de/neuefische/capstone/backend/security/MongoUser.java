@@ -14,6 +14,6 @@ public record MongoUser(
         String username,
         String password,
         List<Donation> donations,
-        List<Participation> volunteers
+        List<Participation> participations
 ) {
 }

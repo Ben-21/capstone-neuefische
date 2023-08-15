@@ -53,24 +53,24 @@ export default function ProjectCard(props: Props) {
                             {props.project.description}
                         </StyledDescription>
 
-                        <StyledDonationVolunteer>
+                        <StyledDonationParticipation>
                             {props.project.donations.map(donation => parseFloat(donation.amount)).reduce((a, b) => a + b, 0)} EUR
-                        </StyledDonationVolunteer>
+                        </StyledDonationParticipation>
                         {props.project.category === "DONATION" &&
-                            <StyledSubDonationVolunteer>
+                            <StyledSubDonationParticipation>
                                 of {props.project.goal} EUR collected
-                            </StyledSubDonationVolunteer>
+                            </StyledSubDonationParticipation>
                         }
                         {props.project.category === "DONATION" && <ProgressBar project={props.project}/>}
 
                         {props.project.category === "PARTICIPATION" &&
                             <>
-                                <StyledDonationVolunteer>
-                                    {props.project.participations.length} Volunteers
-                                </StyledDonationVolunteer>
-                                <StyledSubDonationVolunteer>
+                                <StyledDonationParticipation>
+                                    {props.project.participations.length} Participations
+                                </StyledDonationParticipation>
+                                <StyledSubDonationParticipation>
                                     of {props.project.goal} needed
-                                </StyledSubDonationVolunteer>
+                                </StyledSubDonationParticipation>
                                 {props.project.category === "PARTICIPATION" && <ProgressBar project={props.project}/>}
                             </>}
                         <StyledH2>
@@ -115,7 +115,7 @@ const StyledH2 = styled.h2`
   font-weight: 400;
 `;
 
-const StyledDonationVolunteer = styled.h2`
+const StyledDonationParticipation = styled.h2`
   padding-top: 10px;
   margin: 0;
   display: flex;
@@ -124,7 +124,7 @@ const StyledDonationVolunteer = styled.h2`
   font-weight: 600;
 `;
 
-const StyledSubDonationVolunteer = styled.div`
+const StyledSubDonationParticipation = styled.div`
   padding: 0;
   margin: 0;
   display: flex;

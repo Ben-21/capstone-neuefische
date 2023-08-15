@@ -7,7 +7,7 @@ import HomeButton from "./HomeButton.tsx";
 import DeleteButton from "./DeleteButton.tsx";
 import {useFetch} from "../hooks/useFetch.tsx";
 import DonationButton from "./DonationButton.tsx";
-import VolunteerButton from "./VolunteerButton.tsx";
+import ParticipationButton from "./ParticipationButton.tsx";
 import {Project} from "../models/models.tsx";
 import UserButton from "./UserButton.tsx";
 import FilterButton from "./FilterButton.tsx";
@@ -20,7 +20,7 @@ export default function NavigationBar() {
     const checkPage = useFetch(state => state.checkPage);
     const getProjectById = useFetch(state => state.getProjectById);
     const [project, setProject] = useState<Project | undefined>(undefined);
-    const [volunteerVisible, setVolunteerVisible] = useState(false);
+    const [participationVisible, setParticipationVisible] = useState(false);
 
 
     useEffect(() => {
@@ -42,9 +42,9 @@ export default function NavigationBar() {
 
     useEffect(() => {
         if (project && project.category === "PARTICIPATION") {
-            setVolunteerVisible(true);
+            setParticipationVisible(true);
         } else {
-            setVolunteerVisible(false);
+            setParticipationVisible(false);
         }
     }, [project, project?.category]);
 
@@ -57,7 +57,7 @@ export default function NavigationBar() {
                 {page === "details" && <EditButton projectId={id}/>}
                 {page === "edit" && <DeleteButton projectId={id}/>}
                 {page === "details" && <DonationButton projectId={id}/>}
-                {page === "details" && volunteerVisible && <VolunteerButton projectId={id}/>}
+                {page === "details" && participationVisible && <ParticipationButton projectId={id}/>}
                 {(page === "/" || page === "filter" || page === "filter-all" || page === "filter-donation" || page === "filter-participation") &&
                     <FilterButton/>}
                 <UserButton/>

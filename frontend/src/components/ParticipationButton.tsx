@@ -7,13 +7,13 @@ import styled from "@emotion/styled";
 type Props = {
     projectId: string;
 }
-export default function VolunteerButton(props: Props) {
+export default function ParticipationButton(props: Props) {
 
     const navigate = useNavigate();
 
 
     function handleClick() {
-        navigate(`/volunteer/${props.projectId}`)
+        navigate(`/participate/${props.projectId}`)
     }
 
 

@@ -27,7 +27,7 @@ type State = {
     mapDemandsToUserFriendly: (demands: Demand[]) => string[],
     mapDemandsToEnum: (string: string[]) => Demand[],
     postDonation: (projectId: string, donationCreation: DonationCreation) => Promise<string | number | void>,
-    postVolunteer: (projectId: string, volunteerCreation: ParticipationCreation) => Promise<string | number | void>,
+    postParticipation: (projectId: string, participationCreation: ParticipationCreation) => Promise<string | number | void>,
     userName: string,
     login: (username: string, password: string, navigate: NavigateFunction) => void,
     me: () => void,
@@ -146,8 +146,8 @@ export const useFetch = create<State>((set, get) => ({
                 set({page: "add"})
             } else if ((path.split("/")[1]) === "donate") {
                 set({page: "donate"})
-            } else if ((path.split("/")[1]) === "volunteer") {
-                set({page: "volunteer"})
+            } else if ((path.split("/")[1]) === "participate") {
+                set({page: "participate"})
             } else if ((path.split("/")[1]) === "login") {
                 set({page: "login"})
             } else if ((path.split("/")[1]) === "register") {
@@ -223,11 +223,11 @@ export const useFetch = create<State>((set, get) => ({
                 })
         },
 
-        postVolunteer: (projectId: string, requestBody: ParticipationCreation) => {
+        postParticipation: (projectId: string, requestBody: ParticipationCreation) => {
             const {fetchProjects} = get();
-            return axios.post(`/api/projects/volunteer/${projectId}`, requestBody)
+            return axios.post(`/api/projects/participate/${projectId}`, requestBody)
                 .then(fetchProjects)
-                .then(() => toast.success("Volunteer successfully added"))
+                .then(() => toast.success("Participation successfully added"))
                 .catch((error) => {
                     toast.error("Something went wrong");
                     console.error(error);
@@ -280,7 +280,11 @@ export const useFetch = create<State>((set, get) => ({
                     .then(() => toast.success("Registration successful"))
                     .catch((error) => {
                         console.error(error);
+                        if(error.response.data.errors){
                         toast.error(error.response.data.errors[0].defaultMessage);
+                        } else {
+                        toast.error(error.response.data.message);
+                        }
                     })
 
             } else {
@@ -289,6 +293,7 @@ export const useFetch = create<State>((set, get) => ({
                 setRepeatedPassword("");
             }
         },
+
         addImage: (data: FormData) => {
             set({addedImage: {id: "", name: "", url: ""}})
             return axios

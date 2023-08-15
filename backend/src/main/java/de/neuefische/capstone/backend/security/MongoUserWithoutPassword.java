@@ -11,6 +11,6 @@ public record MongoUserWithoutPassword(
         String id,
         String username,
         List<Donation> donations,
-        List<Participation> volunteers
+        List<Participation> participations
 ) {
 }

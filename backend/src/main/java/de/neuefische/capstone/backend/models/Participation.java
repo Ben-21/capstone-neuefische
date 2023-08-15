@@ -4,7 +4,7 @@ public record Participation(
         String id,
         String projectId,
         String projectName,
-        String volunteerName,
+        String participationName,
         String userId
 ) {
 }

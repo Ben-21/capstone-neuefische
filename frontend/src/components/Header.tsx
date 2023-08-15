@@ -33,7 +33,7 @@ export default function Header() {
             {page === "edit" && <StyledP>Edit Project</StyledP>}
             {page === "add" && <StyledP>Add Project</StyledP>}
             {page === "donate" && <StyledP>Donate</StyledP>}
-            {page === "volunteer" && <StyledP>Volunteer</StyledP>}
+            {page === "participate" && <StyledP>Participate</StyledP>}
             {page === "login" && <StyledP>Login</StyledP>}
             {page === "register" && <StyledP>Registration</StyledP>}
             {page === "profile" && <StyledP>Profile</StyledP>}

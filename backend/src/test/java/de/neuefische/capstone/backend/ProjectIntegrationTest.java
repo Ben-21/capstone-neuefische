@@ -389,9 +389,9 @@ class ProjectIntegrationTest {
     @DirtiesContext
     @WithMockUser(username = "testUser")
     @Test
-    void whenAddVolunteer_thenReturnProjectWithVolunteer() throws Exception {
+    void whenAddParticipation_thenReturnProjectWithParticipation() throws Exception {
         //Given
-        ProjectCreation projectToAddVolunteer = new ProjectCreation(
+        ProjectCreation projectToAddParticipation = new ProjectCreation(
                 "Earthquake Turkey",
                 "Help for the people in Turkey",
                 Category.PARTICIPATION,
@@ -400,7 +400,7 @@ class ProjectIntegrationTest {
                 1000,
                 new Image("", "", ""));
 
-        String projectToAddVolunteerJson = objectMapper.writeValueAsString(projectToAddVolunteer);
+        String projectToAddParticipationJson = objectMapper.writeValueAsString(projectToAddParticipation);
 
         MongoUser user = new MongoUser("userId123", "testUser", "testPassword", new ArrayList<>(), new ArrayList<>());
         mongoRepository.save(user);
@@ -408,25 +408,25 @@ class ProjectIntegrationTest {
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/projects")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(projectToAddVolunteerJson)
+                        .content(projectToAddParticipationJson)
                         .with(csrf())
         );
 
         String projectId = projectService.getAllProjects().get(0).id();
 
-        ParticipationCreation volunteerToAdd = new ParticipationCreation(
+        ParticipationCreation participationToAdd = new ParticipationCreation(
                 projectId,
                 "Earthquake Turkey"
         );
 
-        String volunteerToAddJson = objectMapper.writeValueAsString(volunteerToAdd);
+        String participationToAddJson = objectMapper.writeValueAsString(participationToAdd);
 
 
         //When
         mockMvc.perform(
-                        MockMvcRequestBuilders.post("/api/projects/volunteer/" + projectId)
+                        MockMvcRequestBuilders.post("/api/projects/participate/" + projectId)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(volunteerToAddJson)
+                                .content(participationToAddJson)
                                 .with(csrf())
                 )
 
@@ -441,10 +441,10 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("progress").value(0))
                 .andExpect(jsonPath("location").value("Turkey"))
                 .andExpect(jsonPath("goal").value(1000))
-                .andExpect(jsonPath("volunteers", hasSize(1)))
-                .andExpect(jsonPath("volunteers[0].id").exists())
-                .andExpect(jsonPath("volunteers[0].projectId").value(projectId))
-                .andExpect(jsonPath("volunteers[0].projectName").value("Earthquake Turkey"))
-                .andExpect(jsonPath("volunteers[0].volunteerName").value("testUser"));
+                .andExpect(jsonPath("participations", hasSize(1)))
+                .andExpect(jsonPath("participations[0].id").exists())
+                .andExpect(jsonPath("participations[0].projectId").value(projectId))
+                .andExpect(jsonPath("participations[0].projectName").value("Earthquake Turkey"))
+                .andExpect(jsonPath("participations[0].participationName").value("testUser"));
     }
 }
