@@ -6,6 +6,7 @@ import * as React from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
+
 export default function FilterButton() {
 
     const navigate = useNavigate();
@@ -38,7 +39,7 @@ export default function FilterButton() {
                 onClick={handleClick}>
                 <FilterAltIcon/>
             </StyledIconButton>
-            <Menu
+            <StyledMenu
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
@@ -50,7 +51,7 @@ export default function FilterButton() {
                 <MenuItem onClick={() => handleClose("all")}>All Projects</MenuItem>
                 <MenuItem onClick={() => handleClose("DONATION")}>Donation Projects</MenuItem>
                 <MenuItem onClick={() => handleClose("VOLUNTEER")}>Volunteer Projects</MenuItem>
-            </Menu>
+            </StyledMenu>
         </>
     )
 }
@@ -72,3 +73,9 @@ const StyledIconButton = styled(IconButton)`
   place-items: center;
   cursor: pointer;
 `;
+
+const StyledMenu = styled(Menu)({
+    "& .MuiPaper-root": {
+        backgroundColor: "#EBE7D8",
+    },
+});

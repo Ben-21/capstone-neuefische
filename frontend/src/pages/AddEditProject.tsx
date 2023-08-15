@@ -158,18 +158,6 @@ export default function AddEditProject() {
         window.scrollTo(0, 0);
     }
 
-
-    const ITEM_HEIGHT = 48;
-    const ITEM_PADDING_TOP = 8;
-    const MenuProps = {
-        PaperProps: {
-            style: {
-                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-                width: 250,
-            },
-        },
-    };
-
     function getStyles(name: string, personName: readonly string[], theme: Theme) {
         return {
             fontWeight:
@@ -371,3 +359,15 @@ const StyledH3 = styled.h3`
   font-weight: 400;
   color: #163E56;
 `;
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+            backgroundColor: '#EBE7D8',
+        },
+    },
+};

@@ -44,6 +44,8 @@ export default function UserProfile() {
                 <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">Filter</InputLabel>
                     <Select
+                        // inputProps={{MenuProps: {MenuListProps: {sx: {backgroundColor: '#EBE7D8'}}}}}
+                        MenuProps={MenuProps}
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={filter}
@@ -92,3 +94,11 @@ const StyledButton = styled(Button)`
   color: #163E56;
   border-color: #163E56;
 `;
+
+const MenuProps = {
+    PaperProps: {
+        style: {
+            backgroundColor: '#EBE7D8',
+        },
+    },
+};
