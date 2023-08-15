@@ -58,7 +58,8 @@ export default function NavigationBar() {
                 {page === "edit" && <DeleteButton projectId={id}/>}
                 {page === "details" && <DonationButton projectId={id}/>}
                 {page === "details" && volunteerVisible && <VolunteerButton projectId={id}/>}
-                {(page === "/" || page === "filter") && <FilterButton/>}
+                {(page === "/" || page === "filter" || page === "filter-all" || page === "filter-donation" || page === "filter-volunteer") &&
+                    <FilterButton/>}
                 <UserButton/>
             </StyledNavigationBar>
         </StyledNavigationWrapper>

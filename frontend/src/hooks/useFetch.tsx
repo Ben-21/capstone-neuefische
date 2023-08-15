@@ -43,7 +43,7 @@ type State = {
     addImage: (data: FormData) => Promise<Image | void>,
     addedImage: Image,
     setAddedImage: (image: Image) => void,
-    resetAddedImage: () => void
+    resetAddedImage: () => void,
 
 };
 
@@ -135,6 +135,9 @@ export const useFetch = create<State>((set, get) => ({
         },
 
         checkPage: (path) => {
+            const queryParams = new URLSearchParams(window.location.search);
+            const filterQueryParam = queryParams.get('filter');
+
             if ((path.split("/")[1]) === "details") {
                 set({page: "details"})
             } else if ((path.split("/")[1]) === "edit") {
@@ -152,7 +155,15 @@ export const useFetch = create<State>((set, get) => ({
             } else if ((path.split("/")[1]) === "profile") {
                 set({page: "profile"})
             } else if ((path.split("/")[1]) === "filter") {
-                set({page: "filter"})
+                if (filterQueryParam === "all") {
+                    set({page: "filter-all"})
+                } else if (filterQueryParam === "DONATION") {
+                    set({page: "filter-donation"})
+                } else if (filterQueryParam === "PARTICIPATION") {
+                    set({page: "filter-participation"})
+                } else {
+                    set({page: "filter"})
+                }
             } else {
                 set({page: path})
             }
