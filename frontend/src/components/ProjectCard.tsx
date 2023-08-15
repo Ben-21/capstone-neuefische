@@ -82,7 +82,7 @@ export default function ProjectCard(props: Props) {
                                 key={demand}>{demand}</StyledDemands>)}
                         </StyledDemandsWrapper>
                     </>}
-                        <TopDonaters project={props.project}/>
+                {page === "details" && <TopDonaters project={props.project}/>}
                 <StyledH2>
                     Location:
                 </StyledH2>
