@@ -2,7 +2,7 @@ import {useFetch} from "../hooks/useFetch.tsx";
 import styled from "@emotion/styled";
 import {Project} from "../models/models.tsx";
 import React, {useEffect, useState} from "react";
-import {Autocomplete, Stack, TextField} from "@mui/material";
+import {Autocomplete, createTheme, ThemeProvider, Stack, TextField} from "@mui/material";
 import ProjectCard from "../components/ProjectCard.tsx";
 
 
@@ -52,30 +52,33 @@ export default function SearchGallery() {
 
 
     return (
-        <StyledBody>
-            <StyledDiv>
-                <StyledSearchBar>
-                    <Stack spacing={2}>
-                        <Autocomplete
-                            id="free-solo-demo"
-                            freeSolo
-                            value={searchTerm}
-                            onChange={handleAutoCompleteChange}
-                            options={filteredProjects.map((option) => option.name)}
-                            renderInput={(params) => <StyledTextField {...params} label="Search" value={searchTerm}
-                                                                      onChange={handleChange}/>}
-                        />
-                    </Stack>
-                </StyledSearchBar>
-            </StyledDiv>
-            <Main>
-                <StyledGallery>
-                    {filteredProjects.map((project) => (
-                        <ProjectCard project={project} key={project.id}/>
-                    ))}
-                </StyledGallery>
-            </Main>
-        </StyledBody>
+        <ThemeProvider theme={StyledTheme}>
+            <StyledBody>
+                <StyledDiv>
+                    <StyledSearchBar>
+                        <Stack spacing={2}>
+                            <Autocomplete
+                                id="free-solo-demo"
+                                freeSolo
+                                value={searchTerm}
+                                onChange={handleAutoCompleteChange}
+                                options={filteredProjects.map((option) => option.name)}
+                                renderInput={(params) => <StyledTextField {...params} label="Search" value={searchTerm}
+                                                                          onChange={handleChange}/>}
+                            />
+
+                        </Stack>
+                    </StyledSearchBar>
+                </StyledDiv>
+                <Main>
+                    <StyledGallery>
+                        {filteredProjects.map((project) => (
+                            <ProjectCard project={project} key={project.id}/>
+                        ))}
+                    </StyledGallery>
+                </Main>
+            </StyledBody>
+        </ThemeProvider>
     )
 }
 
@@ -127,3 +130,15 @@ const StyledDiv = styled.div`
   height: 125px;
   background-color: #FF644A;
 `;
+
+const StyledTheme = createTheme({
+    components: {
+        MuiPaper: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: "#EBE7D8"
+                }
+            }
+        }
+    }
+});
