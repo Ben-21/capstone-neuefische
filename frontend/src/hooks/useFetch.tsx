@@ -323,7 +323,6 @@ export const useFetch = create<State>((set, get) => ({
                 url: ""
             }
             set({addedImage: resettedImage})
-        }
-
+        },
     }))
 ;
