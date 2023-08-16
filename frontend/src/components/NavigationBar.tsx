@@ -11,6 +11,7 @@ import ParticipationButton from "./ParticipationButton.tsx";
 import {Project} from "../models/models.tsx";
 import UserButton from "./UserButton.tsx";
 import FilterButton from "./FilterButton.tsx";
+import SearchButton from "./SearchButton.tsx";
 
 
 export default function NavigationBar() {
@@ -58,6 +59,7 @@ export default function NavigationBar() {
                 {page === "edit" && <DeleteButton projectId={id}/>}
                 {page === "details" && <DonationButton projectId={id}/>}
                 {page === "details" && participationVisible && <ParticipationButton projectId={id}/>}
+                {page === "/" && <SearchButton/>}
                 {(page === "/" || page === "filter" || page === "filter-all" || page === "filter-donation" || page === "filter-participation") &&
                     <FilterButton/>}
                 <UserButton/>
