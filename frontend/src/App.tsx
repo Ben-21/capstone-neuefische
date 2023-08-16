@@ -15,6 +15,8 @@ import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
 import Home from "./pages/Home.tsx";
 import FilteredGallery from "./pages/FilteredGallery.tsx";
 import SearchGallery from "./pages/SearchGallary.tsx";
+import {ThemeProvider} from "@mui/material";
+import {StyledTheme} from "./GlobalStyles.tsx";
 
 
 export default function App() {
@@ -41,6 +43,7 @@ export default function App() {
 
     return (
         <>
+            <ThemeProvider theme={StyledTheme}>
             <Header/>
             <ToastContainer/>
             <Routes>
@@ -59,6 +62,7 @@ export default function App() {
                 <Route path="/search" element={<SearchGallery/>}/>
             </Routes>
             <NavigationBar/>
+            </ThemeProvider>
         </>
     )
 }

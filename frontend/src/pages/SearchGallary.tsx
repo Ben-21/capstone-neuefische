@@ -2,7 +2,7 @@ import {useFetch} from "../hooks/useFetch.tsx";
 import styled from "@emotion/styled";
 import {Project} from "../models/models.tsx";
 import React, {useEffect, useState} from "react";
-import {Autocomplete, createTheme, ThemeProvider, Stack, TextField} from "@mui/material";
+import {Autocomplete, Stack, TextField} from "@mui/material";
 import ProjectCard from "../components/ProjectCard.tsx";
 
 
@@ -52,7 +52,6 @@ export default function SearchGallery() {
 
 
     return (
-        <ThemeProvider theme={StyledTheme}>
             <StyledBody>
                 <StyledDiv>
                     <StyledSearchBar>
@@ -78,7 +77,6 @@ export default function SearchGallery() {
                     </StyledGallery>
                 </Main>
             </StyledBody>
-        </ThemeProvider>
     )
 }
 
@@ -130,15 +128,3 @@ const StyledDiv = styled.div`
   height: 125px;
   background-color: #FF644A;
 `;
-
-const StyledTheme = createTheme({
-    components: {
-        MuiPaper: {
-            styleOverrides: {
-                root: {
-                    backgroundColor: "#EBE7D8"
-                }
-            }
-        }
-    }
-});
