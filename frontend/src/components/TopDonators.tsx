@@ -6,7 +6,7 @@ type Props = {
     project: Project;
 }
 
-export default function TopDonaters(props: Props) {
+export default function TopDonators(props: Props) {
 
     const maxDonation = Math.max(...props.project.donations.map(donation => parseFloat(donation.amount)));
     const sortedDonations = props.project.donations.slice().sort((a, b) => parseFloat(b.amount) - parseFloat(a.amount));
@@ -39,7 +39,7 @@ export default function TopDonaters(props: Props) {
 
 
     return (
-        <StyledTopDonaters>
+        <StyledTopDonators>
             <StyledH2>Top Donations</StyledH2>
             <StyledDonationChart>
                 {topDonations.map(donation =>
@@ -51,11 +51,11 @@ export default function TopDonaters(props: Props) {
                     </StyledDonationItem>
                 )}
             </StyledDonationChart>
-        </StyledTopDonaters>
+        </StyledTopDonators>
     )
 }
 
-const StyledTopDonaters = styled.div`
+const StyledTopDonators = styled.div`
   margin: 30px 0 10px 0;
 `;
 

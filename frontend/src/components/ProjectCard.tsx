@@ -8,7 +8,7 @@ import {useEffect, useState} from "react";
 import {useFetch} from "../hooks/useFetch.tsx";
 import ProgressBar from "./ProgressBar.tsx";
 import ProgressBarGalleryView from "./ProgressBarGalleryView.tsx";
-import TopDonaters from "./TopDonaters.tsx";
+import TopDonators from "./TopDonators.tsx";
 
 
 type Props = {
@@ -82,7 +82,7 @@ export default function ProjectCard(props: Props) {
                                 key={demand}>{demand}</StyledDemands>)}
                         </StyledDemandsWrapper>
                     </>}
-                {page === "details" && <TopDonaters project={props.project}/>}
+                {page === "details" && <TopDonators project={props.project}/>}
                 <StyledH2>
                     Location:
                 </StyledH2>
