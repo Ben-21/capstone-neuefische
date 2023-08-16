@@ -41,6 +41,7 @@ export default function Header() {
             {page === "filter-all" && <StyledP>All Projects</StyledP>}
             {page === "filter-donation" && <StyledP>Donation-Projects</StyledP>}
             {page === "filter-participation" && <StyledP>Participation-Projects</StyledP>}
+            {page === "search" && <StyledP>Search</StyledP>}
         </StyledSubHeader>}
             </>
     )
@@ -78,7 +79,7 @@ const StyledP = styled.p`
 
 const StyledHeader = styled.div`
   position: fixed;
-  z-index: 2;
+  z-index: 20;
   top: 0;
   left: 0;
   width: 100%;
@@ -90,7 +91,7 @@ const StyledHeader = styled.div`
 
 const StyledSubHeader = styled.div`
   position: fixed;
-  z-index: 1;
+  z-index: 10;
   width: 200px;
   height: 21px;
   top: 60px;
