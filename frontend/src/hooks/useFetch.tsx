@@ -164,6 +164,8 @@ export const useFetch = create<State>((set, get) => ({
                 } else {
                     set({page: "filter"})
                 }
+            } else if ((path.split("/")[1]) === "search") {
+                set({page: "search"})
             } else {
                 set({page: path})
             }
@@ -280,10 +282,10 @@ export const useFetch = create<State>((set, get) => ({
                     .then(() => toast.success("Registration successful"))
                     .catch((error) => {
                         console.error(error);
-                        if(error.response.data.errors){
-                        toast.error(error.response.data.errors[0].defaultMessage);
+                        if (error.response.data.errors) {
+                            toast.error(error.response.data.errors[0].defaultMessage);
                         } else {
-                        toast.error(error.response.data.message);
+                            toast.error(error.response.data.message);
                         }
                     })
 
@@ -317,12 +319,12 @@ export const useFetch = create<State>((set, get) => ({
         },
 
         resetAddedImage: () => {
-            const resettedImage: Image = {
+            const resetImage: Image = {
                 id: "",
                 name: "",
                 url: ""
             }
-            set({addedImage: resettedImage})
+            set({addedImage: resetImage})
         },
     }))
 ;
