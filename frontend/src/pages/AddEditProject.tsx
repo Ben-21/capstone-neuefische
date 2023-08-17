@@ -21,11 +21,12 @@ import CardMedia from "@mui/material/CardMedia";
 import {
     StyledBody,
     StyledButton, StyledChipFormControl,
-    StyledForm, StyledH3,
+    StyledForm,
     StyledTextField,
     StyledToggleButton,
     StyledToggleGroup
 } from "../GlobalStyles.tsx";
+import styled from "@emotion/styled";
 
 
 export default function AddEditProject() {
@@ -286,7 +287,7 @@ export default function AddEditProject() {
                     UPLOAD</StyledButton>
                 {showImage &&
                     <>
-                        <StyledH3>IMAGE PREVIEW</StyledH3>
+                        <StyledHeadLine>IMAGE PREVIEW</StyledHeadLine>
                         <CardMedia
                             sx={{borderRadius: '5px', objectFit: 'contain'}}
                             component="img"
@@ -303,9 +304,6 @@ export default function AddEditProject() {
     )
 }
 
-
-
-
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -317,3 +315,11 @@ const MenuProps = {
         },
     },
 };
+
+const StyledHeadLine = styled.h3`
+  padding: 0;
+  margin: 0;
+  font-family: "Robot", sans-serif;
+  font-weight: 400;
+  color: #163E56;
+`;

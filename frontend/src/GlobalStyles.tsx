@@ -106,14 +106,6 @@ export const StyledChipFormControl = styled(FormControl)`
   border-radius: 4px;
 `;
 
-export const StyledH3 = styled.h3`
-  padding: 0;
-  margin: 0;
-  font-family: "Robot", sans-serif;
-  font-weight: 400;
-  color: #163E56;
-`;
-
 export const StyledMain = styled.main`
   display: flex;
   flex-direction: column;

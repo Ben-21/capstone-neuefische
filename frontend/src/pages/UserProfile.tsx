@@ -33,7 +33,7 @@ export default function UserProfile() {
     return (
         <StyledProfile>
             <StyledBody>
-                <StyledH2>Personal Data</StyledH2>
+                <StyledHeadLine>Personal Data</StyledHeadLine>
                 <StyledTextField required id="username" name="username" value={user.username}
                                  label="Username"
                                  variant="outlined"
@@ -41,7 +41,7 @@ export default function UserProfile() {
                 <StyledButton type={"submit"} variant="outlined"
                               endIcon={<EditIcon/>}>EDIT USERDATA</StyledButton>
                 <LogoutButton/>
-                <StyledH2>Project Data</StyledH2>
+                <StyledHeadLine>Project Data</StyledHeadLine>
                 <Box sx={{minWidth: 120}}>
                     <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Filter</InputLabel>
@@ -71,7 +71,7 @@ const StyledProfile = styled.div`
   padding: 0 10px 10px 10px;
 `;
 
-const StyledH2 = styled.h2`
+const StyledHeadLine = styled.h2`
   padding-left: 0;
   margin-top: 10px;
   margin-bottom: 6px;
