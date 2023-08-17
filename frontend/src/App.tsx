@@ -16,7 +16,7 @@ import Home from "./pages/Home.tsx";
 import FilteredGallery from "./pages/FilteredGallery.tsx";
 import SearchGallery from "./pages/SearchGallary.tsx";
 import {ThemeProvider} from "@mui/material";
-import {StyledTheme} from "./GlobalStyles.tsx";
+import GlobalStyles, {StyledTheme} from "./GlobalStyles.tsx";
 
 
 export default function App() {
@@ -43,6 +43,7 @@ export default function App() {
 
     return (
         <>
+            <GlobalStyles/>
             <ThemeProvider theme={StyledTheme}>
             <Header/>
             <ToastContainer/>
