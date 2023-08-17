@@ -2,9 +2,9 @@ import {useFetch} from "../hooks/useFetch.tsx";
 import styled from "@emotion/styled";
 import {Project} from "../models/models.tsx";
 import React, {useEffect, useState} from "react";
-import {Autocomplete, Stack, TextField} from "@mui/material";
+import {Autocomplete, Stack} from "@mui/material";
 import ProjectCard from "../components/ProjectCard.tsx";
-import {StyledBody} from "../GlobalStyles.tsx";
+import {StyledBody, StyledTextField} from "../GlobalStyles.tsx";
 
 
 export default function SearchGallery() {
@@ -94,12 +94,6 @@ const Main = styled.main`
   flex-direction: column;
   justify-content: center;
   gap: 20px;
-`;
-
-const StyledTextField = styled(TextField)`
-  width: 100%;
-  font-family: "Roboto", sans-serif;
-  border-radius: 4px;
 `;
 
 const StyledSearchBar = styled.div`

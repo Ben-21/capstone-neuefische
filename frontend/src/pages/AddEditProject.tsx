@@ -8,7 +8,7 @@ import {
     InputLabel, MenuItem,
     OutlinedInput,
     Select, SelectChangeEvent,
-    TextField, Theme,
+    Theme,
     ToggleButton,
     ToggleButtonGroup, useTheme
 } from "@mui/material";
@@ -18,7 +18,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {toast} from "react-toastify";
 import CardMedia from "@mui/material/CardMedia";
-import {StyledBody, StyledForm} from "../GlobalStyles.tsx";
+import {StyledBody, StyledForm, StyledTextField} from "../GlobalStyles.tsx";
 
 
 export default function AddEditProject() {
@@ -313,12 +313,6 @@ const StyledToggleButton = styled(ToggleButton)`
   &.Mui-selected {
     color: #163E56;
   }
-`;
-
-const StyledTextField = styled(TextField)`
-  width: 100%;
-  font-family: "Roboto", sans-serif;
-  border-radius: 4px;
 `;
 
 const StyledButton = styled(Button)`

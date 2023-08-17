@@ -1,5 +1,5 @@
 import {createGlobalStyle} from "styled-components";
-import {createTheme} from "@mui/material";
+import {createTheme, TextField} from "@mui/material";
 import styled from "@emotion/styled";
 
 
@@ -44,4 +44,10 @@ export const StyledForm = styled.form`
   background-color: #EBE7D8;
   border-radius: 4px;
   padding: 10px;
+`;
+
+export const StyledTextField = styled(TextField)`
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+  border-radius: 4px;
 `;

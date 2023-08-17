@@ -2,10 +2,10 @@ import {ChangeEvent, FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import styled from "@emotion/styled";
 import {useFetch} from "../hooks/useFetch.tsx";
-import {Button, TextField} from "@mui/material";
+import {Button} from "@mui/material";
 import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import {StyledBody, StyledForm} from "../GlobalStyles.tsx";
+import {StyledBody, StyledForm, StyledTextField} from "../GlobalStyles.tsx";
 
 export default function LoginPage() {
 
@@ -48,12 +48,6 @@ export default function LoginPage() {
         </StyledBody>
     );
 }
-
-const StyledTextField = styled(TextField)`
-  width: 100%;
-  font-family: "Roboto", sans-serif;
-  border-radius: 4px;
-`;
 
 const StyledButton = styled(Button)`
   width: 100%;
