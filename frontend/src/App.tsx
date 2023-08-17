@@ -14,6 +14,7 @@ import UserProfile from "./pages/UserProfile.tsx";
 import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
 import Home from "./pages/Home.tsx";
 import FilteredGallery from "./pages/FilteredGallery.tsx";
+import SearchGallery from "./pages/SearchGallary.tsx";
 
 
 export default function App() {
@@ -55,6 +56,7 @@ export default function App() {
                 <Route path="/details/:id" element={<ShowProject/>}/>
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
+                <Route path="/search" element={<SearchGallery/>}/>
             </Routes>
             <NavigationBar/>
         </>

@@ -137,37 +137,35 @@ export const useFetch = create<State>((set, get) => ({
         checkPage: (path) => {
             const queryParams = new URLSearchParams(window.location.search);
             const filterQueryParam = queryParams.get('filter');
+            const pathSegments = path.split("/");
 
-            if ((path.split("/")[1]) === "details") {
-                set({page: "details"})
-            } else if ((path.split("/")[1]) === "edit") {
-                set({page: "edit"})
-            } else if ((path.split("/")[1]) === "add") {
-                set({page: "add"})
-            } else if ((path.split("/")[1]) === "donate") {
-                set({page: "donate"})
-            } else if ((path.split("/")[1]) === "participate") {
-                set({page: "participate"})
-            } else if ((path.split("/")[1]) === "login") {
-                set({page: "login"})
-            } else if ((path.split("/")[1]) === "register") {
-                set({page: "register"})
-            } else if ((path.split("/")[1]) === "profile") {
-                set({page: "profile"})
-            } else if ((path.split("/")[1]) === "filter") {
+            if (pathSegments[1] === "filter") {
                 if (filterQueryParam === "all") {
-                    set({page: "filter-all"})
+                    set({page: "filter-all"});
                 } else if (filterQueryParam === "DONATION") {
-                    set({page: "filter-donation"})
+                    set({page: "filter-donation"});
                 } else if (filterQueryParam === "PARTICIPATION") {
-                    set({page: "filter-participation"})
+                    set({page: "filter-participation"});
                 } else {
-                    set({page: "filter"})
+                    set({page: "filter"});
                 }
             } else {
-                set({page: path})
+                const pages: { [key: string]: string } = {
+                    "": "/",
+                    details: "details",
+                    edit: "edit",
+                    add: "add",
+                    donate: "donate",
+                    participate: "participate",
+                    login: "login",
+                    register: "register",
+                    profile: "profile",
+                    search: "search"
+                };
+                const page = pathSegments[1];
+                set({page: pages[page] || page});
             }
-            return get().page
+            return get().page;
         },
 
         mapDemandsToUserFriendly: (demands: Demand[]) => {
@@ -280,10 +278,10 @@ export const useFetch = create<State>((set, get) => ({
                     .then(() => toast.success("Registration successful"))
                     .catch((error) => {
                         console.error(error);
-                        if(error.response.data.errors){
-                        toast.error(error.response.data.errors[0].defaultMessage);
+                        if (error.response.data.errors) {
+                            toast.error(error.response.data.errors[0].defaultMessage);
                         } else {
-                        toast.error(error.response.data.message);
+                            toast.error(error.response.data.message);
                         }
                     })
 
@@ -317,12 +315,12 @@ export const useFetch = create<State>((set, get) => ({
         },
 
         resetAddedImage: () => {
-            const resettedImage: Image = {
+            const resetImage: Image = {
                 id: "",
                 name: "",
                 url: ""
             }
-            set({addedImage: resettedImage})
+            set({addedImage: resetImage})
         },
     }))
 ;
