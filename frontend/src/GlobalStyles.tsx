@@ -64,3 +64,11 @@ export const StyledSpan = styled.span`
   font-size: 0.8em;
   color: #163E56;
 `;
+
+export const StyledGallery = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1em;
+`;

@@ -4,7 +4,7 @@ import {Project} from "../models/models.tsx";
 import React, {useEffect, useState} from "react";
 import {Autocomplete, Stack} from "@mui/material";
 import ProjectCard from "../components/ProjectCard.tsx";
-import {StyledBody, StyledTextField} from "../GlobalStyles.tsx";
+import {StyledBody, StyledGallery, StyledTextField} from "../GlobalStyles.tsx";
 
 
 export default function SearchGallery() {
@@ -80,14 +80,6 @@ export default function SearchGallery() {
         </StyledBody>
     )
 }
-
-const StyledGallery = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1em;
-`;
 
 const StyledSearchResultsDiv = styled.div`
   margin-top: 80px;
