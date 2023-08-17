@@ -30,7 +30,7 @@ export const StyledBody = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 20px;
+  gap: 1.1em;
   margin-bottom: 100px;
   margin-top: 101px;
 `;

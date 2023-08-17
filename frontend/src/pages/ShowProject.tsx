@@ -1,9 +1,9 @@
 import ProjectCard from "../components/ProjectCard.tsx";
 import {useFetch} from "../hooks/useFetch.tsx";
 import {useParams} from "react-router-dom";
-import styled from "@emotion/styled";
 import {useEffect, useState} from "react";
 import {Project} from "../models/models.tsx";
+import {StyledBody} from "../GlobalStyles.tsx";
 
 
 export default function ShowProject() {
@@ -32,22 +32,8 @@ export default function ShowProject() {
     }
 
     return (
-        <>
-            <StyledApp>
-                <ProjectCard project={project} key={project.id}/>
-            </StyledApp>
-        </>
+        <StyledBody>
+            <ProjectCard project={project} key={project.id}/>
+        </StyledBody>
     )
 }
-
-const StyledApp = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1em;
-  margin-top: 101px;
-  margin-bottom: 101px;
-`;
-
-
