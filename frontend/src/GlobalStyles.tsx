@@ -113,3 +113,10 @@ export const StyledH3 = styled.h3`
   font-weight: 400;
   color: #163E56;
 `;
+
+export const StyledMain = styled.main`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+`;

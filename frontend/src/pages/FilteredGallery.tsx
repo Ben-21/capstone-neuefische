@@ -1,10 +1,9 @@
 import ProjectCard from "../components/ProjectCard.tsx";
 import {useFetch} from "../hooks/useFetch.tsx";
-import styled from "@emotion/styled";
 import {Project} from "../models/models.tsx";
 import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {StyledBody, StyledGallery} from "../GlobalStyles.tsx";
+import {StyledBody, StyledGallery, StyledMain} from "../GlobalStyles.tsx";
 
 
 export default function FilteredGallery() {
@@ -32,20 +31,14 @@ export default function FilteredGallery() {
 
     return (
         <StyledBody>
-            <Main>
+            <StyledMain>
                 <StyledGallery>
                     {filteredProjects.map((project) => (
                         <ProjectCard project={project} key={project.id}/>
                     ))}
                 </StyledGallery>
-            </Main>
+            </StyledMain>
         </StyledBody>
     )
 }
 
-const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-`;
