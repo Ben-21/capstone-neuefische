@@ -3,7 +3,7 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import {ImageCreation, Project, ProjectCreation} from "../models/models.tsx";
 import {
     Box,
-    Button, Chip,
+    Chip,
     FormControl, Input,
     InputLabel, MenuItem,
     OutlinedInput,
@@ -18,7 +18,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {toast} from "react-toastify";
 import CardMedia from "@mui/material/CardMedia";
-import {StyledBody, StyledForm, StyledTextField} from "../GlobalStyles.tsx";
+import {StyledBody, StyledButton, StyledForm, StyledTextField} from "../GlobalStyles.tsx";
 
 
 export default function AddEditProject() {
@@ -313,13 +313,6 @@ const StyledToggleButton = styled(ToggleButton)`
   &.Mui-selected {
     color: #163E56;
   }
-`;
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  height: 56px;
-  color: #163E56;
-  border-color: #163E56;
 `;
 
 const StyledChipFormControl = styled(FormControl)`

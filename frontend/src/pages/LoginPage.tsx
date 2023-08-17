@@ -1,11 +1,9 @@
 import {ChangeEvent, FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import styled from "@emotion/styled";
 import {useFetch} from "../hooks/useFetch.tsx";
-import {Button} from "@mui/material";
 import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import {StyledBody, StyledForm, StyledTextField} from "../GlobalStyles.tsx";
+import {StyledBody, StyledButton, StyledForm, StyledSpan, StyledTextField} from "../GlobalStyles.tsx";
 
 export default function LoginPage() {
 
@@ -48,16 +46,3 @@ export default function LoginPage() {
         </StyledBody>
     );
 }
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  height: 56px;
-  color: #163E56;
-  border-color: #163E56;
-`;
-
-const StyledSpan = styled.span`
-  font-family: "Roboto Light", sans-serif;
-  font-size: 28px;
-  color: #163E56;
-`;

@@ -53,31 +53,31 @@ export default function SearchGallery() {
 
 
     return (
-            <StyledBody>
-                <StyledDiv>
-                    <StyledSearchBar>
-                        <Stack spacing={2}>
-                            <Autocomplete
-                                sx={{backgroundColor: "#EBE7D8", borderRadius: "4px"}}
-                                id="free-solo-demo"
-                                freeSolo
-                                value={searchTerm}
-                                onChange={handleAutoCompleteChange}
-                                options={filteredProjects.map((option) => option.name)}
-                                renderInput={(params) => <StyledTextField {...params} label="Search" value={searchTerm}
-                                                                          onChange={handleChange}/>}
-                            />
-                        </Stack>
-                    </StyledSearchBar>
-                </StyledDiv>
-                <Main>
-                    <StyledGallery>
-                        {filteredProjects.map((project) => (
-                            <ProjectCard project={project} key={project.id}/>
-                        ))}
-                    </StyledGallery>
-                </Main>
-            </StyledBody>
+        <StyledBody>
+            <StyledDiv>
+                <StyledSearchBar>
+                    <Stack spacing={2}>
+                        <Autocomplete
+                            sx={{backgroundColor: "#EBE7D8", borderRadius: "4px"}}
+                            id="free-solo-demo"
+                            freeSolo
+                            value={searchTerm}
+                            onChange={handleAutoCompleteChange}
+                            options={filteredProjects.map((option) => option.name)}
+                            renderInput={(params) => <StyledTextField {...params} label="Search" value={searchTerm}
+                                                                      onChange={handleChange}/>}
+                        />
+                    </Stack>
+                </StyledSearchBar>
+            </StyledDiv>
+            <StyledSearchResultsDiv>
+                <StyledGallery>
+                    {filteredProjects.map((project) => (
+                        <ProjectCard project={project} key={project.id}/>
+                    ))}
+                </StyledGallery>
+            </StyledSearchResultsDiv>
+        </StyledBody>
     )
 }
 
@@ -89,11 +89,8 @@ const StyledGallery = styled.div`
   gap: 1.1em;
 `;
 
-const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
+const StyledSearchResultsDiv = styled.div`
+  margin-top: 80px;
 `;
 
 const StyledSearchBar = styled.div`

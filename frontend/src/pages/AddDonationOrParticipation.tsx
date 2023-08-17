@@ -1,6 +1,5 @@
 import {useFetch} from "../hooks/useFetch.tsx";
 import React, {useEffect, useState} from "react";
-import {Button} from "@mui/material";
 import styled from "@emotion/styled";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -9,7 +8,7 @@ import {DonationCreation, Project, ParticipationCreation} from "../models/models
 import ProjectCard from "../components/ProjectCard.tsx";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
-import {StyledBody, StyledTextField} from "../GlobalStyles.tsx";
+import {StyledBody, StyledButton, StyledTextField} from "../GlobalStyles.tsx";
 
 
 export default function AddDonationOrParticipation() {
@@ -123,11 +122,3 @@ const StyledDonationParticipationForm = styled.form`
   padding: 20px 10px 10px 10px;
   margin-top: -30px;
 `;
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  height: 56px;
-  color: #163E56;
-  border-color: #163E56;
-`;
-

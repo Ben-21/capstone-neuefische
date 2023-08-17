@@ -1,11 +1,9 @@
-import styled from "@emotion/styled";
-import {Button} from "@mui/material";
 import {ChangeEvent, FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useFetch} from "../hooks/useFetch.tsx";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import {StyledBody, StyledForm, StyledTextField} from "../GlobalStyles.tsx";
+import {StyledBody, StyledButton, StyledForm, StyledSpan, StyledTextField} from "../GlobalStyles.tsx";
 
 
 export default function RegisterPage() {
@@ -66,18 +64,3 @@ export default function RegisterPage() {
         </StyledBody>
     )
 }
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  height: 56px;
-  color: #163E56;
-  border-color: #163E56;
-`;
-
-const StyledSpan = styled.span`
-  font-family: "Roboto Light", sans-serif;
-  font-size: 0.8em;
-  color: #163E56;
-  padding: 0;
-    margin: 0;
-`;

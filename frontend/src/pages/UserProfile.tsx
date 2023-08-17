@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import {Button, SelectChangeEvent} from "@mui/material";
+import {SelectChangeEvent} from "@mui/material";
 import {useFetch} from "../hooks/useFetch.tsx";
 import EditIcon from "@mui/icons-material/Edit";
 import {useEffect, useState} from "react";
@@ -10,7 +10,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import {StyledBody, StyledTextField} from "../GlobalStyles.tsx";
+import {StyledBody, StyledButton, StyledTextField} from "../GlobalStyles.tsx";
 
 
 export default function UserProfile() {
@@ -75,11 +75,4 @@ const StyledH2 = styled.h2`
   padding-left: 0;
   margin-top: 10px;
   margin-bottom: 6px;
-`;
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  height: 56px;
-  color: #163E56;
-  border-color: #163E56;
 `;

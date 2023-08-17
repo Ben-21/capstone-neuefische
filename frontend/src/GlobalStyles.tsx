@@ -1,5 +1,5 @@
 import {createGlobalStyle} from "styled-components";
-import {createTheme, TextField} from "@mui/material";
+import {Button, createTheme, TextField} from "@mui/material";
 import styled from "@emotion/styled";
 
 
@@ -50,4 +50,17 @@ export const StyledTextField = styled(TextField)`
   width: 100%;
   font-family: "Roboto", sans-serif;
   border-radius: 4px;
+`;
+
+export const StyledButton = styled(Button)`
+  width: 100%;
+  height: 56px;
+  color: #163E56;
+  border-color: #163E56;
+`;
+
+export const StyledSpan = styled.span`
+  font-family: "Roboto Light", sans-serif;
+  font-size: 0.8em;
+  color: #163E56;
 `;
