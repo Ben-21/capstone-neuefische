@@ -4,7 +4,7 @@ import {Project} from "../models/models.tsx";
 import React, {useEffect, useState} from "react";
 import {Autocomplete, Stack} from "@mui/material";
 import ProjectCard from "../components/ProjectCard.tsx";
-import {StyledBody, StyledGallery, StyledTextField} from "../GlobalStyles.tsx";
+import {StyledBody, StyledGallery, StyledSearchBar, StyledTextField} from "../GlobalStyles.tsx";
 
 
 export default function SearchGallery() {
@@ -54,7 +54,7 @@ export default function SearchGallery() {
 
     return (
         <StyledBody>
-            <StyledDiv>
+            <StyledFixedSearchBarDiv>
                 <StyledSearchBar>
                     <Stack spacing={2}>
                         <Autocomplete
@@ -69,7 +69,7 @@ export default function SearchGallery() {
                         />
                     </Stack>
                 </StyledSearchBar>
-            </StyledDiv>
+            </StyledFixedSearchBarDiv>
             <StyledSearchResultsDiv>
                 <StyledGallery>
                     {filteredProjects.map((project) => (
@@ -85,16 +85,7 @@ const StyledSearchResultsDiv = styled.div`
   margin-top: 80px;
 `;
 
-const StyledSearchBar = styled.div`
-  position: fixed;
-  transform: translateX(-50%);
-  left: 50%;
-  top: 100px;
-  width: 90%;
-  border-radius: 4px;
-`;
-
-const StyledDiv = styled.div`
+const StyledFixedSearchBarDiv = styled.div`
   position: fixed;
   z-index: 1;
   top: 50px;

@@ -72,3 +72,12 @@ export const StyledGallery = styled.div`
   justify-content: center;
   gap: 1.1em;
 `;
+
+export const StyledSearchBar = styled.div`
+  position: fixed;
+  transform: translateX(-50%);
+  left: 50%;
+  top: 100px;
+  width: 90%;
+  border-radius: 4px;
+`;
