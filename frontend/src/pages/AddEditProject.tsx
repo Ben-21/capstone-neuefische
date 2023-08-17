@@ -4,21 +4,28 @@ import {ImageCreation, Project, ProjectCreation} from "../models/models.tsx";
 import {
     Box,
     Chip,
-    FormControl, Input,
-    InputLabel, MenuItem,
+    Input,
+    InputLabel,
+    MenuItem,
     OutlinedInput,
-    Select, SelectChangeEvent,
+    Select,
+    SelectChangeEvent,
     Theme,
-    ToggleButton,
-    ToggleButtonGroup, useTheme
+    useTheme
 } from "@mui/material";
-import styled from "@emotion/styled";
 import {useNavigate, useParams} from "react-router-dom";
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {toast} from "react-toastify";
 import CardMedia from "@mui/material/CardMedia";
-import {StyledBody, StyledButton, StyledForm, StyledTextField} from "../GlobalStyles.tsx";
+import {
+    StyledBody,
+    StyledButton, StyledChipFormControl,
+    StyledForm, StyledH3,
+    StyledTextField,
+    StyledToggleButton,
+    StyledToggleGroup
+} from "../GlobalStyles.tsx";
 
 
 export default function AddEditProject() {
@@ -296,37 +303,8 @@ export default function AddEditProject() {
     )
 }
 
-const StyledToggleGroup = styled(ToggleButtonGroup)`
-  font-family: "Roboto Light", sans-serif;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-`;
 
-const StyledToggleButton = styled(ToggleButton)`
-  font-family: "Roboto", sans-serif;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 56px;
 
-  &.Mui-selected {
-    color: #163E56;
-  }
-`;
-
-const StyledChipFormControl = styled(FormControl)`
-  width: 100%;
-  border-radius: 4px;
-`;
-
-const StyledH3 = styled.h3`
-  padding: 0;
-  margin: 0;
-  font-family: "Robot", sans-serif;
-  font-weight: 400;
-  color: #163E56;
-`;
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

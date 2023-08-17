@@ -1,5 +1,5 @@
 import {createGlobalStyle} from "styled-components";
-import {Button, createTheme, TextField} from "@mui/material";
+import {Button, createTheme, FormControl, TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import styled from "@emotion/styled";
 
 
@@ -80,4 +80,36 @@ export const StyledSearchBar = styled.div`
   top: 100px;
   width: 90%;
   border-radius: 4px;
+`;
+
+export const StyledToggleGroup = styled(ToggleButtonGroup)`
+  font-family: "Roboto Light", sans-serif;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const StyledToggleButton = styled(ToggleButton)`
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 56px;
+
+  &.Mui-selected {
+    color: #163E56;
+  }
+`;
+
+export const StyledChipFormControl = styled(FormControl)`
+  width: 100%;
+  border-radius: 4px;
+`;
+
+export const StyledH3 = styled.h3`
+  padding: 0;
+  margin: 0;
+  font-family: "Robot", sans-serif;
+  font-weight: 400;
+  color: #163E56;
 `;
