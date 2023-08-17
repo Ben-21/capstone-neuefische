@@ -10,6 +10,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import {StyledBody} from "../GlobalStyles.tsx";
 
 
 export default function UserProfile() {
@@ -25,49 +26,45 @@ export default function UserProfile() {
 
 
     const handleFilterChange = (event: SelectChangeEvent) => {
-        setFilter(event.target.value as string);
+        setFilter(event.target.value);
     };
 
 
     return (
-        <StyledBody>
-            <StyledH2>Personal Data</StyledH2>
-            <StyledTextField required id="username" name="username" value={user.username}
-                             label="Username"
-                             variant="outlined"
-                             disabled/>
-            <StyledButton type={"submit"} variant="outlined"
-                          endIcon={<EditIcon/>}>EDIT USERDATA</StyledButton>
-            <LogoutButton/>
-            <StyledH2>Project Data</StyledH2>
-            <Box sx={{minWidth: 120}}>
-                <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">Filter</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={filter}
-                        label="Filter"
-                        onChange={handleFilterChange}
-                    >
-                        <MenuItem value={"My Projects"}>My Projects</MenuItem>
-                        <MenuItem value={"My Donations"}>My Donations</MenuItem>
-                        <MenuItem value={"My Participations"}>My Participations</MenuItem>
-                    </Select>
-                </FormControl>
-            </Box>
-            <FilterUserData user={user} filterArgument={filter}/>
-        </StyledBody>
+        <StyledProfile>
+            <StyledBody>
+                <StyledH2>Personal Data</StyledH2>
+                <StyledTextField required id="username" name="username" value={user.username}
+                                 label="Username"
+                                 variant="outlined"
+                                 disabled/>
+                <StyledButton type={"submit"} variant="outlined"
+                              endIcon={<EditIcon/>}>EDIT USERDATA</StyledButton>
+                <LogoutButton/>
+                <StyledH2>Project Data</StyledH2>
+                <Box sx={{minWidth: 120}}>
+                    <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Filter</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={filter}
+                            label="Filter"
+                            onChange={handleFilterChange}
+                        >
+                            <MenuItem value={"My Projects"}>My Projects</MenuItem>
+                            <MenuItem value={"My Donations"}>My Donations</MenuItem>
+                            <MenuItem value={"My Participations"}>My Participations</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Box>
+                <FilterUserData user={user} filterArgument={filter}/>
+            </StyledBody>
+        </StyledProfile>
     )
 }
 
-const StyledBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-bottom: 100px;
-  margin-top: 101px;
+const StyledProfile = styled.div`
   font-family: "Roboto", sans-serif;
   background-color: #EBE7D8;
   border-radius: 4px;

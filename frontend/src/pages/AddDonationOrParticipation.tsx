@@ -9,6 +9,7 @@ import {DonationCreation, Project, ParticipationCreation} from "../models/models
 import ProjectCard from "../components/ProjectCard.tsx";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
+import {StyledBody} from "../GlobalStyles.tsx";
 
 
 export default function AddDonationOrParticipation() {
@@ -90,11 +91,9 @@ export default function AddDonationOrParticipation() {
 
 
     return (
-
-
         <StyledBody>
             {project && <ProjectCard project={project}/>}
-            <StyledForm onSubmit={handleSubmit}>
+            <StyledDonationParticipationForm onSubmit={handleSubmit}>
 
                 {page === "donate" &&
                     <StyledTextField required id="project-donation" name="donation" value={amount}
@@ -108,22 +107,12 @@ export default function AddDonationOrParticipation() {
                                   endIcon={<VolunteerActivismIcon/>}>PARTICIPATE</StyledButton>}
                 <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined"
                               endIcon={<CancelIcon/>}>CANCEL</StyledButton>
-            </StyledForm>
+            </StyledDonationParticipationForm>
         </StyledBody>
-
     )
 }
 
-const StyledBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-bottom: 100px;
-  margin-top: 101px;
-`;
-
-const StyledForm = styled.form`
+const StyledDonationParticipationForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -137,7 +126,7 @@ const StyledForm = styled.form`
 
 const StyledTextField = styled(TextField)`
   width: 100%;
-  font-family: "Roboto Light", sans-serif;
+  font-family: "Roboto", sans-serif;
   border-radius: 4px;
 `;
 

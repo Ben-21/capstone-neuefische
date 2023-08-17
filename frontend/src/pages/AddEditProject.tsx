@@ -18,6 +18,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {toast} from "react-toastify";
 import CardMedia from "@mui/material/CardMedia";
+import {StyledBody, StyledForm} from "../GlobalStyles.tsx";
 
 
 export default function AddEditProject() {
@@ -295,26 +296,6 @@ export default function AddEditProject() {
     )
 }
 
-const StyledBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-bottom: 100px;
-  margin-top: 101px;
-`;
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1em;
-  background-color: #EBE7D8;
-  border-radius: 4px;
-  padding: 10px;
-`;
-
 const StyledToggleGroup = styled(ToggleButtonGroup)`
   font-family: "Roboto Light", sans-serif;
   display: flex;
@@ -336,7 +317,7 @@ const StyledToggleButton = styled(ToggleButton)`
 
 const StyledTextField = styled(TextField)`
   width: 100%;
-  font-family: "Roboto Light", sans-serif;
+  font-family: "Roboto", sans-serif;
   border-radius: 4px;
 `;
 

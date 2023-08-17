@@ -4,6 +4,7 @@ import {Project} from "../models/models.tsx";
 import React, {useEffect, useState} from "react";
 import {Autocomplete, Stack, TextField} from "@mui/material";
 import ProjectCard from "../components/ProjectCard.tsx";
+import {StyledBody} from "../GlobalStyles.tsx";
 
 
 export default function SearchGallery() {
@@ -57,6 +58,7 @@ export default function SearchGallery() {
                     <StyledSearchBar>
                         <Stack spacing={2}>
                             <Autocomplete
+                                sx={{backgroundColor: "#EBE7D8", borderRadius: "4px"}}
                                 id="free-solo-demo"
                                 freeSolo
                                 value={searchTerm}
@@ -65,7 +67,6 @@ export default function SearchGallery() {
                                 renderInput={(params) => <StyledTextField {...params} label="Search" value={searchTerm}
                                                                           onChange={handleChange}/>}
                             />
-
                         </Stack>
                     </StyledSearchBar>
                 </StyledDiv>
@@ -88,15 +89,6 @@ const StyledGallery = styled.div`
   gap: 1.1em;
 `;
 
-const StyledBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-bottom: 100px;
-  margin-top: 180px;
-`;
-
 const Main = styled.main`
   display: flex;
   flex-direction: column;
@@ -106,9 +98,8 @@ const Main = styled.main`
 
 const StyledTextField = styled(TextField)`
   width: 100%;
-  font-family: "Roboto Light", sans-serif;
+  font-family: "Roboto", sans-serif;
   border-radius: 4px;
-  background-color: #EBE7D8;
 `;
 
 const StyledSearchBar = styled.div`

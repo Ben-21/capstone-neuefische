@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import {Project} from "../models/models.tsx";
 import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
+import {StyledBody} from "../GlobalStyles.tsx";
 
 
 export default function FilteredGallery() {
@@ -48,15 +49,6 @@ const StyledGallery = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1.1em;
-`;
-
-const StyledBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-bottom: 100px;
-  margin-top: 101px;
 `;
 
 const Main = styled.main`

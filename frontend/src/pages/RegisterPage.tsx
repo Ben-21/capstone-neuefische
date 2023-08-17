@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {useFetch} from "../hooks/useFetch.tsx";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import {StyledBody, StyledForm} from "../GlobalStyles.tsx";
 
 
 export default function RegisterPage() {
@@ -35,7 +36,6 @@ export default function RegisterPage() {
     }
 
     return (
-
         <StyledBody>
             <StyledForm onSubmit={handleRegistration}>
                 <StyledTextField required id="username" name="username" value={username}
@@ -64,36 +64,12 @@ export default function RegisterPage() {
                               endIcon={<AppRegistrationIcon/>}>REGISTER</StyledButton>
             </StyledForm>
         </StyledBody>
-
-
     )
-
-
 }
-
-const StyledBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-bottom: 100px;
-  margin-top: 101px;
-`;
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1em;
-  background-color: #EBE7D8;
-  border-radius: 4px;
-  padding: 20px 10px 10px 10px;
-`;
 
 const StyledTextField = styled(TextField)`
   width: 100%;
-  font-family: "Roboto Light", sans-serif;
+  font-family: "Roboto", sans-serif;
   border-radius: 4px;
 `;
 
