@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
-
 @Service
 @RequiredArgsConstructor
 public class CloudinaryService {

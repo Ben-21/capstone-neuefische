@@ -87,7 +87,6 @@ class ProjectCalculationsTest {
                 new Image("", "", "")
         );
 
-
         //When
         Project actualProject = projectCalculations.calculateProgressForParticipations(project);
 

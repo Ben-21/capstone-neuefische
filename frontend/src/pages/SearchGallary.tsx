@@ -6,13 +6,11 @@ import {Autocomplete, Stack} from "@mui/material";
 import ProjectCard from "../components/ProjectCard.tsx";
 import {StyledBody, StyledGallery, StyledSearchBar, StyledTextField} from "../GlobalStyles.tsx";
 
-
 export default function SearchGallery() {
 
     const projects = useFetch((state) => state.projects);
     const fetchProjects = useFetch((state) => state.fetchProjects);
     const [searchTerm, setSearchTerm] = useState("");
-
 
     useEffect(() => {
         fetchProjects();
@@ -51,7 +49,6 @@ export default function SearchGallery() {
 
     const filteredProjects = searchProjects(projects, searchTerm);
 
-
     return (
         <StyledBody>
             <StyledFixedSearchBarDiv>
@@ -65,8 +62,7 @@ export default function SearchGallery() {
                             onChange={handleAutoCompleteChange}
                             options={filteredProjects.map((option) => option.name)}
                             renderInput={(params) => <StyledTextField {...params} label="Search" value={searchTerm}
-                                                                      onChange={handleChange}/>}
-                        />
+                                                                      onChange={handleChange}/>}/>
                     </Stack>
                 </StyledSearchBar>
             </StyledFixedSearchBarDiv>

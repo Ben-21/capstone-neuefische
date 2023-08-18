@@ -10,7 +10,6 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import {StyledBody, StyledButton, StyledTextField} from "../GlobalStyles.tsx";
 
-
 export default function AddDonationOrParticipation() {
 
     const getProjectById = useFetch(state => state.getProjectById);
@@ -24,7 +23,6 @@ export default function AddDonationOrParticipation() {
     const postDonation = useFetch(state => state.postDonation);
     const postParticipation = useFetch(state => state.postParticipation);
 
-
     useEffect(() => {
         if (id) {
             getProjectById(id)
@@ -34,8 +32,6 @@ export default function AddDonationOrParticipation() {
                 .catch(error => {
                     console.error(error);
                 });
-
-
         } else {
             toast.error("Something went wrong");
             navigate("/");
@@ -45,7 +41,6 @@ export default function AddDonationOrParticipation() {
     useEffect(() => {
         setPAge(checkPage(location.pathname));
     }, [location, checkPage]);
-
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         setAmount(event.target.value);
@@ -78,7 +73,6 @@ export default function AddDonationOrParticipation() {
     }
 
     function handleCancelButton() {
-
         if (project) {
             navigate(`/details/${project.id}`)
             window.scrollTo(0, 0);
@@ -87,7 +81,6 @@ export default function AddDonationOrParticipation() {
             navigate("/");
         }
     }
-
 
     return (
         <StyledBody>

@@ -18,7 +18,6 @@ export default function ProgressBarGalleryView(props: Props) {
         );
     }
 
-
     return (
         <StyledBox>
             {props.project.progress > 0 &&
@@ -33,4 +32,3 @@ const StyledBox = styled.div`
   padding-left: 0;
   width: 100%;
 `;
-

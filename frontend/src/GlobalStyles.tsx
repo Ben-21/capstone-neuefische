@@ -2,15 +2,11 @@ import {createGlobalStyle} from "styled-components";
 import {Button, createTheme, FormControl, TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import styled from "@emotion/styled";
 
-
-
 const GlobalStyles = createGlobalStyle`
   body {
     background-color: #FF644A;
   }
-
 `;
-
 export default GlobalStyles;
 
 

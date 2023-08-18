@@ -18,7 +18,6 @@ export default function DeleteButton(props: Props) {
         navigate("/")
     }
 
-
     return (
         <StyledIconButton aria-label="Delete" onClick={handleClick}>
             <DeleteIcon/>

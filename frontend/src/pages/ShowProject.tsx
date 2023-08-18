@@ -5,7 +5,6 @@ import {useEffect, useState} from "react";
 import {Project} from "../models/models.tsx";
 import {StyledBody} from "../GlobalStyles.tsx";
 
-
 export default function ShowProject() {
 
     const {id} = useParams();
@@ -23,8 +22,6 @@ export default function ShowProject() {
             .catch(error => {
                 console.error(error);
             });
-
-
     }, [id, getProjectById]);
 
     if (!project) {

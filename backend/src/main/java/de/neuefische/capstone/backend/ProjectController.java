@@ -8,14 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/projects")
 public class ProjectController {
 
     private final ProjectService projectService;
-
 
     @PostMapping
     public Project addProject(@RequestBody ProjectCreation projectCreation) {

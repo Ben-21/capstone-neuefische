@@ -5,7 +5,6 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import {StyledBody, StyledButton, StyledForm, StyledSpan, StyledTextField} from "../GlobalStyles.tsx";
 
-
 export default function RegisterPage() {
 
     const [username, setUsername] = useState("");
@@ -14,7 +13,6 @@ export default function RegisterPage() {
     const navigate = useNavigate();
     const register = useFetch((state) => state.register);
     const regex = /^(?=.*[a-zA-Z])(?=.*\d).{6,20}$/;
-
 
     function handleUsernameInput(event: ChangeEvent<HTMLInputElement>) {
         setUsername(event.currentTarget.value);

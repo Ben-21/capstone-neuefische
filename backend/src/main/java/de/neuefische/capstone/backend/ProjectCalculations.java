@@ -12,7 +12,7 @@ import java.math.RoundingMode;
 public class ProjectCalculations {
 
     public Project calculateProgressForDonations(Project project) {
-        if(project.category() == Category.DONATION) {
+        if (project.category() == Category.DONATION) {
             BigDecimal sumOfDonations = project.donations().stream().reduce(BigDecimal.ZERO, (sum, donation) -> sum.add(donation.amount()), BigDecimal::add);
             int newProgress = sumOfDonations.divide(BigDecimal.valueOf(project.goal()), 2, RoundingMode.DOWN).multiply(BigDecimal.valueOf(100)).intValue();
             return new Project(
@@ -34,7 +34,7 @@ public class ProjectCalculations {
     }
 
     public Project calculateProgressForParticipations(Project project) {
-        if(project.category() == Category.PARTICIPATION) {
+        if (project.category() == Category.PARTICIPATION) {
             int newParticipations = project.participations().size();
             int newProgress = (int) ((double) newParticipations / project.goal() * 100);
 

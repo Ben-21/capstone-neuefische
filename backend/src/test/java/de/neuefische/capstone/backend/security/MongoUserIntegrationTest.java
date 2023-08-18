@@ -88,5 +88,4 @@ class MongoUserIntegrationTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("registered"));
     }
-
 }

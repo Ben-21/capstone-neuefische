@@ -3,19 +3,17 @@ import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import {IconButton} from "@mui/material";
 import styled from "@emotion/styled";
 
-
 type Props = {
     projectId: string;
 }
+
 export default function ParticipationButton(props: Props) {
 
     const navigate = useNavigate();
 
-
     function handleClick() {
         navigate(`/participate/${props.projectId}`)
     }
-
 
     return (
         <StyledIconButton aria-label="Donate" onClick={handleClick}>

@@ -15,7 +15,6 @@ type Props = {
     project: Project;
 }
 
-
 export default function ProjectCard(props: Props) {
     const navigate = useNavigate();
     const [demandsUserFriendly, setDemandsUserFriendly] = useState<string[]>([]);
@@ -24,16 +23,13 @@ export default function ProjectCard(props: Props) {
     const [page, setPage] = useState("");
     const mapDemandsToUserFriendly = useFetch(state => state.mapDemandsToUserFriendly);
 
-
     useEffect(() => {
         setDemandsUserFriendly(mapDemandsToUserFriendly(props.project.demands));
     }, [props.project, mapDemandsToUserFriendly]);
 
-
     useEffect(() => {
         setPage(checkPage(location.pathname));
     }, [location, checkPage]);
-
 
     return (
         <StyledCard onClick={() => navigate(`/details/${props.project.id}`)}>
@@ -92,8 +88,7 @@ export default function ProjectCard(props: Props) {
                 {(page === "/" || page === "filter") && <ProgressBarGalleryView project={props.project}/>}
             </CardActionArea>
         </StyledCard>
-    )
-        ;
+    );
 }
 
 const StyledCard = styled(Card)`
@@ -103,6 +98,7 @@ const StyledCard = styled(Card)`
   padding: 0;
   border-radius: 4px;
 `;
+
 const StyledHeadLine = styled.h1`
   padding-left: 10px;
   margin-top: 10px;
@@ -164,4 +160,3 @@ const StyledDemands = styled.div`
   font-size: 1em;
   margin: 10px;
 `;
-

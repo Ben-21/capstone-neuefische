@@ -94,7 +94,6 @@ class ProjectIntegrationTest {
     @Test
     void whenGetAllProjects_ThenReturnAllProjects() throws Exception {
         //When
-
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/projects")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -118,9 +117,9 @@ class ProjectIntegrationTest {
                 )
 
                 //Then
-                .andExpect(status().isOk()) // Expect HTTP 200 OK
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].id").exists()) // Assuming the id is auto-generated
+                .andExpect(jsonPath("$[0].id").exists())
                 .andExpect(jsonPath("$[0].name").value("Earthquake Turkey"))
                 .andExpect(jsonPath("$[0].description").value("Help for the people in Turkey"))
                 .andExpect(jsonPath("$[0].category").value("PARTICIPATION"))
@@ -384,7 +383,6 @@ class ProjectIntegrationTest {
                 .andExpect(jsonPath("donations[0].amount").value(100))
                 .andExpect(jsonPath("donations[0].userId").value("userId123"));
     }
-
 
     @DirtiesContext
     @WithMockUser(username = "testUser")

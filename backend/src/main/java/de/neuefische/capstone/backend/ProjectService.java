@@ -63,9 +63,8 @@ public class ProjectService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         MongoUserWithoutPassword user = mongoUserService.findByUsername(username);
 
-        if(!user.id().equals(projectNoId.userId()))
+        if (!user.id().equals(projectNoId.userId()))
             throw new MethodNotAllowedException("You are not allowed to edit this project", null);
-
 
         Project updatedProject = new Project(
                 id,
@@ -80,7 +79,6 @@ public class ProjectService {
                 projectNoId.participations(),
                 projectNoId.userId(),
                 projectNoId.image());
-
 
         return projectRepo.save(updatedProject);
     }

@@ -28,7 +28,6 @@ import {
 } from "../GlobalStyles.tsx";
 import styled from "@emotion/styled";
 
-
 export default function AddEditProject() {
 
     const navigate = useNavigate();
@@ -71,7 +70,6 @@ export default function AddEditProject() {
         }
     }, [id, getProjectById]);
 
-
     useEffect(() => {
         if (project) {
             setFormData({
@@ -85,7 +83,6 @@ export default function AddEditProject() {
             setAddedImage(project.image);
         }
     }, [setAddedImage, id, project, mapDemandsToUserFriendly])
-
 
     function initialiseAllFields() {
         setFormData({
@@ -117,7 +114,6 @@ export default function AddEditProject() {
                 .then(() => {
                     initialiseAllFields();
                 });
-
         }
 
         if (project) {
@@ -142,7 +138,6 @@ export default function AddEditProject() {
                 });
         }
     }
-
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
         const {name, value} = event.target;
@@ -184,7 +179,6 @@ export default function AddEditProject() {
             typeof value === 'string' ? value.split(',') : value,
         );
     };
-
 
     function handleImageNameChange(event: ChangeEvent<HTMLInputElement>) {
         setImageName(event.target.value);
@@ -239,7 +233,6 @@ export default function AddEditProject() {
                                  onChange={handleChange}
                                  label="Location"
                                  variant="outlined"/>
-
                 <StyledToggleGroup id="category" color="primary" value={category} exclusive
                                    onChange={handleCategoryChange}
                                    aria-label="Platform">
@@ -265,14 +258,12 @@ export default function AddEditProject() {
                                 ))}
                             </Box>
                         )}
-                        MenuProps={MenuProps}
-                    >
+                        MenuProps={MenuProps}>
                         {possibleDemands.map((name) => (
                             <MenuItem
                                 key={name}
                                 value={name}
-                                style={getStyles(name, selectedDemands, chipTheme)}
-                            >
+                                style={getStyles(name, selectedDemands, chipTheme)}>
                                 {name}
                             </MenuItem>
                         ))}
@@ -293,8 +284,7 @@ export default function AddEditProject() {
                             component="img"
                             height="140"
                             src={addedImage.url}
-                            alt="Your Uploaded Image"
-                        />
+                            alt="Your Uploaded Image"/>
                     </>}
                 <StyledButton type={"submit"} variant="outlined" endIcon={<SaveIcon/>}>SAVE PROJECT</StyledButton>
                 <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined"

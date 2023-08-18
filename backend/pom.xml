@@ -73,7 +73,6 @@
             <version>1.34.0</version>
         </dependency>
     </dependencies>
-
     <build>
         <finalName>capstone</finalName>
         <plugins>
@@ -88,9 +87,7 @@
                         </exclude>
                     </excludes>
                 </configuration>
-
             </plugin>
-
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -113,5 +110,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

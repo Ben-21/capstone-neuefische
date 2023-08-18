@@ -16,7 +16,6 @@ public class MongoUserService {
     private final MongoUserRepository mongoUserRepository;
     private final IdService idService;
 
-
     public MongoUserWithoutPassword findByUsername(String username) {
         if (mongoUserRepository.findByUsername(username).isEmpty()) {
             return new MongoUserWithoutPassword("unknown", "anonymousUser", new ArrayList<>(), new ArrayList<>());
@@ -52,4 +51,3 @@ public class MongoUserService {
         return new MongoUserWithoutPassword(returnUser.id(), returnUser.username(), returnUser.donations(), returnUser.participations());
     }
 }
-

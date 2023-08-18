@@ -11,11 +11,9 @@ export default function DonationButton(props: Props) {
 
     const navigate = useNavigate();
 
-
     function handleClick() {
         navigate(`/donate/${props.projectId}`)
     }
-
 
     return (
         <StyledIconButton aria-label="Donate" onClick={handleClick}>

@@ -5,9 +5,7 @@ import de.neuefische.capstone.backend.models.Participation;
 
 import java.util.List;
 
-
 public record MongoUserWithoutPassword(
-
         String id,
         String username,
         List<Donation> donations,

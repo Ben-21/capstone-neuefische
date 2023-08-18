@@ -5,7 +5,6 @@ import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {StyledBody, StyledGallery, StyledMain} from "../GlobalStyles.tsx";
 
-
 export default function FilteredGallery() {
 
     const location = useLocation();
@@ -14,7 +13,6 @@ export default function FilteredGallery() {
     const projects = useFetch((state) => state.projects);
     const fetchProjects = useFetch((state) => state.fetchProjects);
     const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
-
 
     useEffect(() => {
         fetchProjects();
@@ -28,7 +26,6 @@ export default function FilteredGallery() {
         }
     }, [filter, projects]);
 
-
     return (
         <StyledBody>
             <StyledMain>
@@ -41,4 +38,3 @@ export default function FilteredGallery() {
         </StyledBody>
     )
 }
-
