@@ -1,5 +1,8 @@
 # Be Human - Capstone Project
-![Be_Human_week5_20230818_small](https://github.com/Ben-21/capstone-neuefische/assets/118177877/8bc02cf3-20f8-4028-8f2d-34d6cdee4d64)
+<p align="center">
+<img alt="Be Human" src="https://github.com/Ben-21/capstone-neuefische/assets/118177877/8bc02cf3-20f8-4028-8f2d-34d6cdee4d64"></img>
+</p>
+  
 > "Be Human" is my capstone project, developed during the neuefische Java Full Stack Bootcamp, showcasing skills in Java Fullstack Backend Development and Fullstack Development by implementing crud operations.  
 
 
