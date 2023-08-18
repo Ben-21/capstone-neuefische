@@ -45,9 +45,9 @@ export default function ProjectCard(props: Props) {
                                image={props.project.image.url}
                                alt="Project Image"
                     />}
-                <StyledH1>
+                <StyledHeadLine>
                     {props.project.name}
-                </StyledH1>
+                </StyledHeadLine>
                 {page === "details" &&
                     <>
                         <StyledDescription>
@@ -74,18 +74,18 @@ export default function ProjectCard(props: Props) {
                                 </StyledSubDonationParticipation>
                                 {props.project.category === "PARTICIPATION" && <ProgressBar project={props.project}/>}
                             </>}
-                        <StyledH2>
+                        <StyledSubHeadLine>
                             Demands:
-                        </StyledH2>
+                        </StyledSubHeadLine>
                         <StyledDemandsWrapper>
                             {demandsUserFriendly.map((demand) => <StyledDemands
                                 key={demand}>{demand}</StyledDemands>)}
                         </StyledDemandsWrapper>
                     </>}
                 {page === "details" && <TopDonators project={props.project}/>}
-                <StyledH2>
+                <StyledSubHeadLine>
                     Location:
-                </StyledH2>
+                </StyledSubHeadLine>
                 <StyledDescription>
                     {props.project.location}
                 </StyledDescription>
@@ -103,13 +103,13 @@ const StyledCard = styled(Card)`
   padding: 0;
   border-radius: 4px;
 `;
-const StyledH1 = styled.h1`
+const StyledHeadLine = styled.h1`
   padding-left: 10px;
   margin-top: 10px;
   margin-bottom: 6px;
 `;
 
-const StyledH2 = styled.h2`
+const StyledSubHeadLine = styled.h2`
   padding-top: 20px;
   padding-left: 10px;
   margin: 0;

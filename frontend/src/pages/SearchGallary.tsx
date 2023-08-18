@@ -2,8 +2,9 @@ import {useFetch} from "../hooks/useFetch.tsx";
 import styled from "@emotion/styled";
 import {Project} from "../models/models.tsx";
 import React, {useEffect, useState} from "react";
-import {Autocomplete, createTheme, ThemeProvider, Stack, TextField} from "@mui/material";
+import {Autocomplete, Stack} from "@mui/material";
 import ProjectCard from "../components/ProjectCard.tsx";
+import {StyledBody, StyledGallery, StyledSearchBar, StyledTextField} from "../GlobalStyles.tsx";
 
 
 export default function SearchGallery() {
@@ -52,77 +53,39 @@ export default function SearchGallery() {
 
 
     return (
-        <ThemeProvider theme={StyledTheme}>
-            <StyledBody>
-                <StyledDiv>
-                    <StyledSearchBar>
-                        <Stack spacing={2}>
-                            <Autocomplete
-                                id="free-solo-demo"
-                                freeSolo
-                                value={searchTerm}
-                                onChange={handleAutoCompleteChange}
-                                options={filteredProjects.map((option) => option.name)}
-                                renderInput={(params) => <StyledTextField {...params} label="Search" value={searchTerm}
-                                                                          onChange={handleChange}/>}
-                            />
-
-                        </Stack>
-                    </StyledSearchBar>
-                </StyledDiv>
-                <Main>
-                    <StyledGallery>
-                        {filteredProjects.map((project) => (
-                            <ProjectCard project={project} key={project.id}/>
-                        ))}
-                    </StyledGallery>
-                </Main>
-            </StyledBody>
-        </ThemeProvider>
+        <StyledBody>
+            <StyledFixedSearchBarDiv>
+                <StyledSearchBar>
+                    <Stack spacing={2}>
+                        <Autocomplete
+                            sx={{backgroundColor: "#EBE7D8", borderRadius: "4px"}}
+                            id="free-solo-demo"
+                            freeSolo
+                            value={searchTerm}
+                            onChange={handleAutoCompleteChange}
+                            options={filteredProjects.map((option) => option.name)}
+                            renderInput={(params) => <StyledTextField {...params} label="Search" value={searchTerm}
+                                                                      onChange={handleChange}/>}
+                        />
+                    </Stack>
+                </StyledSearchBar>
+            </StyledFixedSearchBarDiv>
+            <StyledSearchResultsDiv>
+                <StyledGallery>
+                    {filteredProjects.map((project) => (
+                        <ProjectCard project={project} key={project.id}/>
+                    ))}
+                </StyledGallery>
+            </StyledSearchResultsDiv>
+        </StyledBody>
     )
 }
 
-const StyledGallery = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1em;
+const StyledSearchResultsDiv = styled.div`
+  margin-top: 80px;
 `;
 
-const StyledBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-bottom: 100px;
-  margin-top: 180px;
-`;
-
-const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-`;
-
-const StyledTextField = styled(TextField)`
-  width: 100%;
-  font-family: "Roboto Light", sans-serif;
-  border-radius: 4px;
-  background-color: #EBE7D8;
-`;
-
-const StyledSearchBar = styled.div`
-  position: fixed;
-  transform: translateX(-50%);
-  left: 50%;
-  top: 100px;
-  width: 90%;
-  border-radius: 4px;
-`;
-
-const StyledDiv = styled.div`
+const StyledFixedSearchBarDiv = styled.div`
   position: fixed;
   z-index: 1;
   top: 50px;
@@ -130,15 +93,3 @@ const StyledDiv = styled.div`
   height: 125px;
   background-color: #FF644A;
 `;
-
-const StyledTheme = createTheme({
-    components: {
-        MuiPaper: {
-            styleOverrides: {
-                root: {
-                    backgroundColor: "#EBE7D8"
-                }
-            }
-        }
-    }
-});

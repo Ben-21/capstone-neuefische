@@ -1,10 +1,9 @@
 import {ChangeEvent, FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import styled from "@emotion/styled";
 import {useFetch} from "../hooks/useFetch.tsx";
-import {Button, TextField} from "@mui/material";
 import LoginIcon from '@mui/icons-material/Login';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import {StyledBody, StyledButton, StyledForm, StyledSpan, StyledTextField} from "../GlobalStyles.tsx";
 
 export default function LoginPage() {
 
@@ -27,7 +26,6 @@ export default function LoginPage() {
     }
 
     return (
-
         <StyledBody>
             <StyledForm onSubmit={handleSubmit}>
                 <StyledTextField required id="username" name="username" value={username}
@@ -48,42 +46,3 @@ export default function LoginPage() {
         </StyledBody>
     );
 }
-
-const StyledBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-bottom: 100px;
-  margin-top: 101px;
-`;
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1em;
-  background-color: #EBE7D8;
-  border-radius: 4px;
-  padding: 20px 10px 10px 10px;
-`;
-
-const StyledTextField = styled(TextField)`
-  width: 100%;
-  font-family: "Roboto Light", sans-serif;
-  border-radius: 4px;
-`;
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  height: 56px;
-  color: #163E56;
-  border-color: #163E56;
-`;
-
-const StyledSpan = styled.span`
-  font-family: "Roboto Light", sans-serif;
-  font-size: 28px;
-  color: #163E56;
-`;

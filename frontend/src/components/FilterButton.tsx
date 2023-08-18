@@ -40,7 +40,7 @@ export default function FilterButton() {
                 onClick={handleClick}>
                 <FilterAltIcon/>
             </StyledIconButton>
-            <StyledMenu
+            <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
@@ -52,7 +52,7 @@ export default function FilterButton() {
                 <MenuItem onClick={() => handleClose("all")}>All Projects</MenuItem>
                 <MenuItem onClick={() => handleClose("DONATION")}>Donation Projects</MenuItem>
                 <MenuItem onClick={() => handleClose("PARTICIPATION")}>Participation Projects</MenuItem>
-            </StyledMenu>
+            </Menu>
         </>
     )
 }
@@ -74,9 +74,3 @@ const StyledIconButton = styled(IconButton)`
   place-items: center;
   cursor: pointer;
 `;
-
-const StyledMenu = styled(Menu)({
-    "& .MuiPaper-root": {
-        backgroundColor: "#EBE7D8",
-    },
-});

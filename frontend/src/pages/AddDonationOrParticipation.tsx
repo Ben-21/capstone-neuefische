@@ -1,6 +1,5 @@
 import {useFetch} from "../hooks/useFetch.tsx";
 import React, {useEffect, useState} from "react";
-import {Button, TextField} from "@mui/material";
 import styled from "@emotion/styled";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -9,6 +8,7 @@ import {DonationCreation, Project, ParticipationCreation} from "../models/models
 import ProjectCard from "../components/ProjectCard.tsx";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
+import {StyledBody, StyledButton, StyledTextField} from "../GlobalStyles.tsx";
 
 
 export default function AddDonationOrParticipation() {
@@ -90,11 +90,9 @@ export default function AddDonationOrParticipation() {
 
 
     return (
-
-
         <StyledBody>
             {project && <ProjectCard project={project}/>}
-            <StyledForm onSubmit={handleSubmit}>
+            <StyledDonationParticipationForm onSubmit={handleSubmit}>
 
                 {page === "donate" &&
                     <StyledTextField required id="project-donation" name="donation" value={amount}
@@ -108,22 +106,12 @@ export default function AddDonationOrParticipation() {
                                   endIcon={<VolunteerActivismIcon/>}>PARTICIPATE</StyledButton>}
                 <StyledButton type={"button"} onClick={handleCancelButton} variant="outlined"
                               endIcon={<CancelIcon/>}>CANCEL</StyledButton>
-            </StyledForm>
+            </StyledDonationParticipationForm>
         </StyledBody>
-
     )
 }
 
-const StyledBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-bottom: 100px;
-  margin-top: 101px;
-`;
-
-const StyledForm = styled.form`
+const StyledDonationParticipationForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -134,17 +122,3 @@ const StyledForm = styled.form`
   padding: 20px 10px 10px 10px;
   margin-top: -30px;
 `;
-
-const StyledTextField = styled(TextField)`
-  width: 100%;
-  font-family: "Roboto Light", sans-serif;
-  border-radius: 4px;
-`;
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  height: 56px;
-  color: #163E56;
-  border-color: #163E56;
-`;
-

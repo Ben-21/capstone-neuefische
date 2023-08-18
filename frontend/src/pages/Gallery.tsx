@@ -1,6 +1,6 @@
 import ProjectCard from "../components/ProjectCard.tsx";
 import {useFetch} from "../hooks/useFetch.tsx";
-import styled from "@emotion/styled";
+import {StyledGallery} from "../GlobalStyles.tsx";
 
 
 export default function Gallery() {
@@ -17,11 +17,3 @@ export default function Gallery() {
         </>
     )
 }
-
-const StyledGallery = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1em;
-`;

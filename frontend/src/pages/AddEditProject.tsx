@@ -3,21 +3,30 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import {ImageCreation, Project, ProjectCreation} from "../models/models.tsx";
 import {
     Box,
-    Button, Chip,
-    FormControl, Input,
-    InputLabel, MenuItem,
+    Chip,
+    Input,
+    InputLabel,
+    MenuItem,
     OutlinedInput,
-    Select, SelectChangeEvent,
-    TextField, Theme,
-    ToggleButton,
-    ToggleButtonGroup, useTheme
+    Select,
+    SelectChangeEvent,
+    Theme,
+    useTheme
 } from "@mui/material";
-import styled from "@emotion/styled";
 import {useNavigate, useParams} from "react-router-dom";
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {toast} from "react-toastify";
 import CardMedia from "@mui/material/CardMedia";
+import {
+    StyledBody,
+    StyledButton, StyledChipFormControl,
+    StyledForm,
+    StyledTextField,
+    StyledToggleButton,
+    StyledToggleGroup
+} from "../GlobalStyles.tsx";
+import styled from "@emotion/styled";
 
 
 export default function AddEditProject() {
@@ -278,7 +287,7 @@ export default function AddEditProject() {
                     UPLOAD</StyledButton>
                 {showImage &&
                     <>
-                        <StyledH3>IMAGE PREVIEW</StyledH3>
+                        <StyledHeadLine>IMAGE PREVIEW</StyledHeadLine>
                         <CardMedia
                             sx={{borderRadius: '5px', objectFit: 'contain'}}
                             component="img"
@@ -295,71 +304,6 @@ export default function AddEditProject() {
     )
 }
 
-const StyledBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-bottom: 100px;
-  margin-top: 101px;
-`;
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1em;
-  background-color: #EBE7D8;
-  border-radius: 4px;
-  padding: 10px;
-`;
-
-const StyledToggleGroup = styled(ToggleButtonGroup)`
-  font-family: "Roboto Light", sans-serif;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-`;
-
-const StyledToggleButton = styled(ToggleButton)`
-  font-family: "Roboto", sans-serif;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 56px;
-
-  &.Mui-selected {
-    color: #163E56;
-  }
-`;
-
-const StyledTextField = styled(TextField)`
-  width: 100%;
-  font-family: "Roboto Light", sans-serif;
-  border-radius: 4px;
-`;
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  height: 56px;
-  color: #163E56;
-  border-color: #163E56;
-`;
-
-const StyledChipFormControl = styled(FormControl)`
-  width: 100%;
-  border-radius: 4px;
-`;
-
-const StyledH3 = styled.h3`
-  padding: 0;
-  margin: 0;
-  font-family: "Robot", sans-serif;
-  font-weight: 400;
-  color: #163E56;
-`;
-
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -371,3 +315,11 @@ const MenuProps = {
         },
     },
 };
+
+const StyledHeadLine = styled.h3`
+  padding: 0;
+  margin: 0;
+  font-family: "Robot", sans-serif;
+  font-weight: 400;
+  color: #163E56;
+`;

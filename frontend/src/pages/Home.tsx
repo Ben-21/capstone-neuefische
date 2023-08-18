@@ -1,30 +1,13 @@
 import Gallery from "./Gallery.tsx";
-import styled from "@emotion/styled";
+import {StyledBody, StyledMain} from "../GlobalStyles.tsx";
 
 
 export default function Home() {
     return (
         <StyledBody>
-            <Main>
+            <StyledMain>
                 <Gallery/>
-            </Main>
+            </StyledMain>
         </StyledBody>
     )
 }
-
-
-const StyledBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 20px;
-  margin-bottom: 100px;
-  margin-top: 101px;
-`;
-
-const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-`;

@@ -40,7 +40,7 @@ export default function TopDonators(props: Props) {
 
     return (
         <StyledTopDonators>
-            <StyledH2>Top Donations</StyledH2>
+                <StyledHeadLine>Top Donations</StyledHeadLine>
             <StyledDonationChart>
                 {topDonations.map(donation =>
                     <StyledDonationItem key={donation.id}>
@@ -82,7 +82,7 @@ const StyledDonationBar = styled.div`
   justify-content: flex-end;
 `;
 
-const StyledH2 = styled.h2`
+const StyledHeadLine = styled.h2`
   padding: 0 0 10px 10px;
   margin: 0;
   font-family: "Robot", sans-serif;

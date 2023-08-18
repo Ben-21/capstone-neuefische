@@ -1,9 +1,8 @@
 import axios from "axios";
-import styled from "@emotion/styled";
 import {useNavigate} from "react-router-dom";
 import LoginIcon from "@mui/icons-material/Login";
 import {useFetch} from "../hooks/useFetch.tsx";
-import {Button} from "@mui/material";
+import {StyledButton} from "../GlobalStyles.tsx";
 
 export default function LogoutButton() {
 
@@ -22,10 +21,3 @@ export default function LogoutButton() {
                       endIcon={<LoginIcon/>}>LOGOUT</StyledButton>
     )
 }
-
-const StyledButton = styled(Button)`
-  width: 100%;
-  height: 56px;
-  color: #163E56;
-  border-color: #163E56;
-`;
