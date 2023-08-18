@@ -14,11 +14,9 @@ export default function FilterUserData(props: Props) {
     const projects = useFetch(state => state.projects);
     const fetchProjects = useFetch(state => state.fetchProjects);
 
-
     useEffect(() => {
         fetchProjects();
     }, [fetchProjects]);
-
 
     const formatAmountToCurrency = (amount: string) => {
         return parseFloat(amount).toLocaleString("de-DE", {

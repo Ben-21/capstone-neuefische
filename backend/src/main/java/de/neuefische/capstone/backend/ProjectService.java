@@ -27,6 +27,9 @@ public class ProjectService {
         this.mongoUserService = mongoUserService;
     }
 
+    private static final String NOT_FOUND_MESSAGE1 = "No project with ";
+    private static final String NOT_FOUND_MESSAGE2 = " found";
+
     public List<Project> getAllProjects() {
         return projectRepo.findAll();
     }
@@ -53,19 +56,18 @@ public class ProjectService {
         return projectRepo.insert(newProject);
     }
 
-    public Project getProjectById(String id) {
-        return projectRepo.findById(id).orElseThrow(() -> new NoSuchElementException("No project with Id " + id + " found"));
+    public Project getProjectById(String projectId) {
+        return projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException(NOT_FOUND_MESSAGE1 + projectId + NOT_FOUND_MESSAGE2));
     }
 
     public Project updateProject(String id, ProjectNoId projectNoId) {
-        if (!projectRepo.existsById(id)) throw new NoSuchElementException("No project with Id " + id + " found");
+        if (!projectRepo.existsById(id)) throw new NoSuchElementException(NOT_FOUND_MESSAGE1 + id + NOT_FOUND_MESSAGE2);
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         MongoUserWithoutPassword user = mongoUserService.findByUsername(username);
 
-        if(!user.id().equals(projectNoId.userId()))
+        if (!user.id().equals(projectNoId.userId()))
             throw new MethodNotAllowedException("You are not allowed to edit this project", null);
-
 
         Project updatedProject = new Project(
                 id,
@@ -81,13 +83,12 @@ public class ProjectService {
                 projectNoId.userId(),
                 projectNoId.image());
 
-
         return projectRepo.save(updatedProject);
     }
 
-    public void deleteProject(String id) {
-        if (!projectRepo.existsById(id)) throw new NoSuchElementException("No project with Id " + id + " found");
-        projectRepo.deleteById(id);
+    public void deleteProject(String projectId) {
+        if (!projectRepo.existsById(projectId)) throw new NoSuchElementException(NOT_FOUND_MESSAGE1 + projectId + NOT_FOUND_MESSAGE2);
+        projectRepo.deleteById(projectId);
     }
 
     public Project addDonation(String projectId, DonationCreation donationCreation) {
@@ -107,7 +108,7 @@ public class ProjectService {
         user.donations().add(newDonation);
         mongoUserService.updateUser(user);
 
-        Project project = projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException("No project with Id " + projectId + " found"));
+        Project project = projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException(NOT_FOUND_MESSAGE1 + projectId + NOT_FOUND_MESSAGE2));
         project.donations().add(newDonation);
 
         return projectRepo.save(projectCalculations.calculateProgressForDonations(project));
@@ -128,7 +129,7 @@ public class ProjectService {
         user.participations().add(newParticipation);
         mongoUserService.updateUser(user);
 
-        Project project = projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException("No project with Id" + projectId + "found"));
+        Project project = projectRepo.findById(projectId).orElseThrow(() -> new NoSuchElementException(NOT_FOUND_MESSAGE1 + projectId + NOT_FOUND_MESSAGE2));
         project.participations().add(newParticipation);
 
         return projectRepo.save(projectCalculations.calculateProgressForParticipations(project));

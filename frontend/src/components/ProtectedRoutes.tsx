@@ -11,5 +11,4 @@ export default function ProtectedRoutes({user}: Props) {
     const isLoggedIn = user !== "anonymousUser";
 
     return <>{isLoggedIn ? <Outlet/> : <Navigate to="/login"/>}</>;
-
 }

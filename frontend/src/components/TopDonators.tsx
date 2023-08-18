@@ -37,10 +37,9 @@ export default function TopDonators(props: Props) {
         return color;
     }
 
-
     return (
         <StyledTopDonators>
-                <StyledHeadLine>Top Donations</StyledHeadLine>
+            <StyledHeadLine>Top Donations</StyledHeadLine>
             <StyledDonationChart>
                 {topDonations.map(donation =>
                     <StyledDonationItem key={donation.id}>

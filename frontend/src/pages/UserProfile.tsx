@@ -12,23 +12,19 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import {StyledBody, StyledButton, StyledTextField} from "../GlobalStyles.tsx";
 
-
 export default function UserProfile() {
 
     const user = useFetch(state => state.user);
     const meObject = useFetch(state => state.meObject);
     const [filter, setFilter] = useState("My Projects");
 
-
     useEffect(() => {
         meObject();
     }, [meObject]);
 
-
     const handleFilterChange = (event: SelectChangeEvent) => {
         setFilter(event.target.value);
     };
-
 
     return (
         <StyledProfile>
@@ -50,8 +46,7 @@ export default function UserProfile() {
                             id="demo-simple-select"
                             value={filter}
                             label="Filter"
-                            onChange={handleFilterChange}
-                        >
+                            onChange={handleFilterChange}>
                             <MenuItem value={"My Projects"}>My Projects</MenuItem>
                             <MenuItem value={"My Donations"}>My Donations</MenuItem>
                             <MenuItem value={"My Participations"}>My Participations</MenuItem>

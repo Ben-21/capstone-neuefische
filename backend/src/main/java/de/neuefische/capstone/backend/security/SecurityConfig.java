@@ -39,11 +39,9 @@ public class SecurityConfig {
                                 .requestMatchers("/api/users/me-object").permitAll()
                                 .requestMatchers("/api/users/register").permitAll()
                                 .requestMatchers("/api/users/profile").authenticated()
-
                                 .anyRequest().permitAll()
                 )
                 .build();
-
     }
 
     @Bean
@@ -51,12 +49,3 @@ public class SecurityConfig {
         return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
     }
 }
-
-
-
-
-
-
-
-
-

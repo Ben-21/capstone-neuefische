@@ -7,12 +7,10 @@ export default function HomeButton() {
 
     const navigate = useNavigate();
 
-
     function handleClick() {
         navigate("/")
         window.scrollTo(0, 0);
     }
-
 
     return (
         <StyledIconButton aria-label="Add" onClick={handleClick}>

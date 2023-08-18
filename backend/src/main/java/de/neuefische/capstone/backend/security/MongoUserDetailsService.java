@@ -13,8 +13,6 @@ public class MongoUserDetailsService implements UserDetailsService {
 
     private final MongoUserRepository mongoUserRepository;
 
-
-
     public MongoUserDetailsService(MongoUserRepository mongoUserRepository) {
         this.mongoUserRepository = mongoUserRepository;
     }
@@ -26,6 +24,4 @@ public class MongoUserDetailsService implements UserDetailsService {
 
         return new User(mongoUser.username(), mongoUser.password(), Collections.emptyList());
     }
-
-
 }

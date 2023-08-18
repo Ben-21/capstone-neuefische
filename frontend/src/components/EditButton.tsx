@@ -10,6 +10,7 @@ import {Project} from "../models/models.tsx";
 type Props = {
     projectId: string;
 }
+
 export default function EditButton(props: Props) {
 
     const navigate = useNavigate();

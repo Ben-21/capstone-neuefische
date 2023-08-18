@@ -13,7 +13,6 @@ import UserButton from "./UserButton.tsx";
 import FilterButton from "./FilterButton.tsx";
 import SearchButton from "./SearchButton.tsx";
 
-
 export default function NavigationBar() {
     const location = useLocation();
     const id = location.pathname.split("/")[2]
@@ -23,11 +22,9 @@ export default function NavigationBar() {
     const [project, setProject] = useState<Project | undefined>(undefined);
     const [participationVisible, setParticipationVisible] = useState(false);
 
-
     useEffect(() => {
         setPage(checkPage(location.pathname))
     }, [location, checkPage]);
-
 
     useEffect(() => {
         if (id) {
@@ -48,7 +45,6 @@ export default function NavigationBar() {
             setParticipationVisible(false);
         }
     }, [project, project?.category]);
-
 
     return (
         <StyledNavigationWrapper>

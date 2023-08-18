@@ -14,7 +14,6 @@ class MongoUserServiceTest {
     private final IdService idService = mock(IdService.class);
     private final MongoUserService mongoUserService = new MongoUserService(mongoUserRepository, idService);
 
-
     @Test
     void verifyRepoCalls_WhenUserIsRegistered() {
         //Given

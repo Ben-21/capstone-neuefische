@@ -3,16 +3,13 @@ import styled from "@emotion/styled";
 import SearchIcon from '@mui/icons-material/Search';
 import {IconButton} from "@mui/material";
 
-
-export default function SearchButton (){
+export default function SearchButton() {
     const navigate = useNavigate();
-
 
     function handleClick() {
         navigate(`/search`)
         window.scrollTo(0, 0)
     }
-
 
     return (
         <StyledIconButton aria-label="Edit" onClick={handleClick}>

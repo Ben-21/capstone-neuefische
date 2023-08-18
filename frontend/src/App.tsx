@@ -18,7 +18,6 @@ import SearchGallery from "./pages/SearchGallary.tsx";
 import {ThemeProvider} from "@mui/material";
 import GlobalStyles, {StyledTheme} from "./GlobalStyles.tsx";
 
-
 export default function App() {
 
     const fetchProjects = useFetch((state) => state.fetchProjects);
@@ -45,24 +44,24 @@ export default function App() {
         <>
             <GlobalStyles/>
             <ThemeProvider theme={StyledTheme}>
-            <Header/>
-            <ToastContainer/>
-            <Routes>
-                <Route element={<ProtectedRoutes user={userName}/>}>
-                    <Route path="/add" element={<AddEditProject/>}/>
-                    <Route path="/edit/:id" element={<AddEditProject/>}/>
-                    <Route path="/profile" element={<UserProfile/>}/>
-                    <Route path="/donate/:id" element={<AddDonationOrParticipation/>}/>
-                    <Route path="/participate/:id" element={<AddDonationOrParticipation/>}/>
-                </Route>
-                <Route path="/" element={<Home/>}/>
-                <Route path="/filter" element={<FilteredGallery/>}/>
-                <Route path="/details/:id" element={<ShowProject/>}/>
-                <Route path="/login" element={<LoginPage/>}/>
-                <Route path="/register" element={<RegisterPage/>}/>
-                <Route path="/search" element={<SearchGallery/>}/>
-            </Routes>
-            <NavigationBar/>
+                <Header/>
+                <ToastContainer/>
+                <Routes>
+                    <Route element={<ProtectedRoutes user={userName}/>}>
+                        <Route path="/add" element={<AddEditProject/>}/>
+                        <Route path="/edit/:id" element={<AddEditProject/>}/>
+                        <Route path="/profile" element={<UserProfile/>}/>
+                        <Route path="/donate/:id" element={<AddDonationOrParticipation/>}/>
+                        <Route path="/participate/:id" element={<AddDonationOrParticipation/>}/>
+                    </Route>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/filter" element={<FilteredGallery/>}/>
+                    <Route path="/details/:id" element={<ShowProject/>}/>
+                    <Route path="/login" element={<LoginPage/>}/>
+                    <Route path="/register" element={<RegisterPage/>}/>
+                    <Route path="/search" element={<SearchGallery/>}/>
+                </Routes>
+                <NavigationBar/>
             </ThemeProvider>
         </>
     )

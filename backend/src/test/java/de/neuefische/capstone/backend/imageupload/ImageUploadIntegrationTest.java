@@ -30,10 +30,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ImageUploadIntegrationTest {
     @Autowired
     MockMvc mockMvc;
+
     @MockBean
     Cloudinary cloudinary;
-    Uploader uploader = mock(Uploader.class);
 
+    Uploader uploader = mock(Uploader.class);
 
     @WithMockUser
     @Test
@@ -57,6 +58,7 @@ class ImageUploadIntegrationTest {
                         """
                         .getBytes()
         );
+
         MockMultipartFile file = new MockMultipartFile("file",
                 "testImage.png",
                 MediaType.IMAGE_PNG_VALUE,
@@ -71,9 +73,9 @@ class ImageUploadIntegrationTest {
         when(uploader.upload(any(), any())).thenReturn(Map.of("url", "test-url"));
 
         mockMvc.perform(multipart("/api/upload")
-                                .file(data)
-                                .file(file)
-                                .with(csrf()))
+                        .file(data)
+                        .file(file)
+                        .with(csrf()))
 
 
                 .andExpect(status().isCreated())
@@ -82,7 +84,5 @@ class ImageUploadIntegrationTest {
                         "url": "test-url"}
                         """))
                 .andExpect(jsonPath("$.id").isNotEmpty());
-
     }
-
 }

@@ -22,10 +22,7 @@ export default function ProgressBar(props: Props) {
                 </StyledPercentageDiv>
             </>
         );
-
-
     }
-
 
     const [progress, setProgress] = useState(0);
 
@@ -45,7 +42,6 @@ export default function ProgressBar(props: Props) {
         };
     }, [props.project.progress]);
 
-
     return (
         <StyledBox>
             {props.project.progress > 0 &&
@@ -63,4 +59,3 @@ const StyledPercentageDiv = styled.div`
   font-weight: 400;
   margin-top: 10px;
 `;
-

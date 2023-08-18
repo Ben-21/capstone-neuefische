@@ -16,9 +16,9 @@ export default function UserButton() {
     }, [me, userName]);
 
     function handleClick() {
-        if (userName === "anonymousUser"){
+        if (userName === "anonymousUser") {
             navigate("/login")
-        }else {
+        } else {
             navigate("/profile")
         }
     }

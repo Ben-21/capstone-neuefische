@@ -22,7 +22,6 @@ class ImageUploadServiceTest {
     IdService idService = mock(IdService.class);
     ImageUploadService imageUploadService = new ImageUploadService(imageUploadRepo, idService, cloudinaryService);
 
-
     @Test
     void getAllProfiles() {
         //GIVEN

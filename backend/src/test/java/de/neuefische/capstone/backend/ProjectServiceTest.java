@@ -28,7 +28,6 @@ class ProjectServiceTest {
     ProjectCalculations projectCalculations = mock(ProjectCalculations.class);
     MongoUserService mongoUserService = mock(MongoUserService.class);
     ProjectService projectService = new ProjectService(projectRepo, idService, projectCalculations, mongoUserService);
-
     SecurityContext securityContext = mock(SecurityContext.class);
     @Mock
     Authentication authentication = mock(Authentication.class);
@@ -48,7 +47,6 @@ class ProjectServiceTest {
         verify(idService).createRandomId();
         assertEquals(expectedId, actualId);
     }
-
 
     @Test
     void whenProjectAdded_thenReturnAddedProject() {
@@ -100,7 +98,6 @@ class ProjectServiceTest {
         assertEquals(projectWithId, actualProject);
     }
 
-
     @Test
     void returnListOfProjects() {
         //Given
@@ -130,7 +127,6 @@ class ProjectServiceTest {
         assertEquals(expectedProjectList, actualProjectList);
     }
 
-
     @Test
     void returnProjectById() {
         //Given
@@ -159,7 +155,6 @@ class ProjectServiceTest {
         verify(projectRepo).findById(id);
         assertEquals(expectedProject, actualProject);
     }
-
 
     @Test
     void whenProjectUpdated_thenReturnUpdatedProject() {
@@ -273,7 +268,6 @@ class ProjectServiceTest {
         verify(projectRepo).existsById(id);
         verify(projectRepo, never()).deleteById(id);
     }
-
 
     @Test
     void whenDonationAdded_thenReturnProject() {

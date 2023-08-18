@@ -7,12 +7,10 @@ export default function AddButton() {
 
     const navigate = useNavigate();
 
-
     function handleClick() {
         navigate("/add")
         window.scrollTo(0, 0);
     }
-
 
     return (
         <StyledIconButton aria-label="Add" onClick={handleClick}>
