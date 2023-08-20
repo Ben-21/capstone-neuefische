@@ -74,9 +74,9 @@ In Conclusion:
   - User
   - Donation
   - Volunteer
- 
 - Progress Calculation
-- Top Tier Calculation 
+- Top Tier Calculation
+- Image Upload
 
 ## Usage
 
