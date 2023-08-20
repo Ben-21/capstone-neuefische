@@ -64,7 +64,6 @@ In Conclusion:
 - React
 - MongoDB
 - REST
-- OpenAl
 - Docker
 
 ## Features
