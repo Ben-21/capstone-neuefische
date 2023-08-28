@@ -22,7 +22,7 @@
 
 - [Overview](#overview)
 - [Wireframes](#wireframes)
-- [Models / Database-Structure](#models-/-database--structure)
+- [Models / Database-Structure](#models-and-database-structure)
 - [Tech Stack](#tech-stack)
 - [Features](#features)
 - [Usage](#usage)
@@ -59,7 +59,7 @@ In Conclusion:
 ## Wireframes
 ![image](https://github.com/Ben-21/capstone-neuefische/assets/118177877/c976f272-1c18-4cd6-b213-9ea95f9c2c13)
 
-## Models / Database-Structure
+## Models and Database Structure
 ![image](https://github.com/Ben-21/capstone-neuefische/assets/118177877/d9a1a9ae-9079-4deb-b80d-cb53c0ffa25c)
 
 
