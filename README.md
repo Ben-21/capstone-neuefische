@@ -21,6 +21,8 @@
 ## Table of Contents
 
 - [Overview](#overview)
+- [Wireframes](#wireframes)
+- [Models / Database-Structure](#models/ database-structure)
 - [Tech Stack](#tech-stack)
 - [Features](#features)
 - [Usage](#usage)
@@ -53,6 +55,16 @@ Users gain access to personalized insights, including lists of their own project
 
 In Conclusion:
 "Be Human" is a compelling application that leverages an array of cutting-edge technologies to facilitate engagement in humanitarian projects. The platform's user-friendly interface, robust security features, motivational progress tracking, and insightful analytics converge to encourage active participation in noble causes. Everyone shall be reminded of the importance of performing acts of kindness.
+
+## Wireframes
+![image](https://github.com/Ben-21/capstone-neuefische/assets/118177877/c976f272-1c18-4cd6-b213-9ea95f9c2c13)
+
+## Models / Database-Structure
+![image](https://github.com/Ben-21/capstone-neuefische/assets/118177877/d9a1a9ae-9079-4deb-b80d-cb53c0ffa25c)
+
+
+
+
 
 ## Tech Stack
 
