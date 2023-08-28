@@ -22,7 +22,7 @@
 
 - [Overview](#overview)
 - [Wireframes](#wireframes)
-- [Models / Database-Structure](#models-/-database-structure)
+- [Models / Database-Structure](#models-/-databasestructure)
 - [Tech Stack](#tech-stack)
 - [Features](#features)
 - [Usage](#usage)
