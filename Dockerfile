@@ -2,7 +2,7 @@ FROM openjdk:20
 
 ENV ENVIRONMENT=prod
 
-LABEL maintainer="bs@schaefer-inet.de"
+LABEL maintainer="bs"
 
 EXPOSE 8080
 
