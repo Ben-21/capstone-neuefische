@@ -1,6 +1,7 @@
 package de.neuefische.capstone.backend.imageupload;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,9 @@ public class CloudinaryService {
 
         Map response = cloudinary.uploader().upload(fileToUpload, Collections.emptyMap());
 
-        return response.get("url").toString();
+        String httpUrl = response.get("url").toString();
+        String httpsUrl = httpUrl.replace("http://", "https://");
+
+        return httpsUrl;
     }
 }
