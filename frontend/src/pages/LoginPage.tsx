@@ -2,8 +2,7 @@ import {ChangeEvent, FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useFetch} from "../hooks/useFetch.tsx";
 import LoginIcon from '@mui/icons-material/Login';
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import {StyledBody, StyledButton, StyledForm, StyledSpan, StyledTextField} from "../GlobalStyles.tsx";
+import {StyledBody, StyledButton, StyledForm, StyledTextField} from "../GlobalStyles.tsx";
 
 export default function LoginPage() {
 
