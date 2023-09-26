@@ -39,9 +39,9 @@ export default function LoginPage() {
                                  type="password"/>
                 <StyledButton type={"submit"} variant="outlined"
                               endIcon={<LoginIcon/>}>LOGIN</StyledButton>
-                <StyledSpan>OR</StyledSpan>
-                <StyledButton type={"button"} onClick={() => navigate("/register")} variant="outlined"
-                              endIcon={<AppRegistrationIcon/>}>REGISTER</StyledButton>
+                {/*<StyledSpan>OR</StyledSpan>*/}
+                {/*<StyledButton type={"button"} onClick={() => navigate("/register")} variant="outlined"*/}
+                {/*              endIcon={<AppRegistrationIcon/>}>REGISTER</StyledButton>*/}
             </StyledForm>
         </StyledBody>
     );
