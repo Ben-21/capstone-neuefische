@@ -94,9 +94,10 @@ jobs:
           #Set dockerhub project (replace "bartfastiel/deploy-to-aws-with-github-actions")
           script: |
             cd /home/ben/services/
-            docker-compose pull app-be-human
-            docker-compose down  app-be-human
-            docker-compose up -d  app-be-human
+            docker compose pull app-be-human
+            docker stop be-human
+            docker rm be-human
+            docker compose up -d --no-deps  app-be-human
       - name: Check the deployed service URL
         uses: jtalk/url-health-check-action@v3
         with:
