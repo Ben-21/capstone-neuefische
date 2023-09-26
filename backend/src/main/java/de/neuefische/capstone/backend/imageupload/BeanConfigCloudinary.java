@@ -11,7 +11,7 @@ import java.util.Map;
 public class BeanConfigCloudinary {
     private static final String CLOUD_NAME = "dfzzbhu3x";
     private static final String API_KEY = "399958539413299";
-    private static final String API_SECRET = "O4UId7cxw2-Hg5Z5ZwHXgms3-80";
+    private static final String API_SECRET = System.getenv("CLOUDINARY_SECRET");
     @Bean
     public Cloudinary createCloudinary() {
         Map<String, String> config = new HashMap<>();
