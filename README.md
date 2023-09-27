@@ -3,7 +3,7 @@
 <img alt="Be Human" src="https://github.com/Ben-21/capstone-neuefische/assets/118177877/8bc02cf3-20f8-4028-8f2d-34d6cdee4d64"></img>
 </p>
   
-> "Be Human" is my capstone project, developed during the neuefische Java Full Stack Bootcamp, showcasing skills in Java Fullstack Backend Development and Fullstack Development by implementing crud operations.  
+> "Be Human" is my Fullstack capstone project, developed during the neuefische Java Full Stack Bootcamp, showcasing skills in Java Backend Development and React / TypeScript Development by implementing crud operations.  
 
 
 ## SonarCloud
@@ -30,7 +30,10 @@
 
 ## Overview
 
-Title: Be Human - Humanitarian Project Platform
+The deployed project can be found at [Be Human](https://be-human.schaefer-inet.de)  
+The app is **only for mobile view** designed - please use your phone or switch your browser, via inspect/ dev-tools, to mobile view.
+
+Title: Be Human - A Humanitarian Project Platform
 
 Summary:
 "Be Human" is an innovative application developed using a comprehensive tech stack that includes Java, Spring Boot, REST, Maven, JUnit, React, TypeScript, MongoDB, and Docker. The platform serves as a hub for fostering participation in humanitarian initiatives.
