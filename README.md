@@ -31,7 +31,7 @@
 
 ## CI / CD
 The project runs on my own cloud server and is developed using continous integration and contionous deployment. For this I set up a  NGINX-Webserver and a Docker Environment. My App, the NGINX-Webserver and Certbot (for SSL Certificates) run as a container. All is configured and started using one Docker-Compose file. 
-CI and CD is triggered by merging a branch into the Main-Branch.
+CI and CD is triggered by merging a branch into the Main-Branch. For both I used Github Actions (build with Maven and SonarCloud for CI - own yml. Files for CD to my DigitalOcean Cloudserver).
 
 ## Overview
 
