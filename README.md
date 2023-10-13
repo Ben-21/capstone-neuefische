@@ -20,6 +20,7 @@
 
 ## Table of Contents
 
+- [CI / CD](#ci--cd)
 - [Overview](#overview)
 - [Wireframes](#wireframes)
 - [Models / Database-Structure](#models-and-database-structure)
@@ -27,6 +28,10 @@
 - [Features](#features)
 - [Usage](#usage)
 - [License](#license)
+
+## CI / CD
+The project runs on my own cloud server and is developed using continous integration and contionous deployment. For this I set up a  NGINX-Webserver and a Docker Environment. My App, the NGINX-Webserver and Certbot (for SSL Certificates) run as a container. All is configured and started using one Docker-Compose file. 
+CI and CD is triggered by merging a branch into the Main-Branch.
 
 ## Overview
 
